@@ -17,7 +17,7 @@ import static de.tum.i13.shared.ServerUtility.getFreePort;
 
 class TestEnron {
   
-  private static final int serverCount = 2;
+  private static final int serverCount = 5;
   private static int[] ports = new int[serverCount];
   private static final String address = "127.0.0.1";
   private static final Thread[] servers = new Thread[serverCount];
@@ -36,13 +36,12 @@ class TestEnron {
       ports[i] = getFreePort(address);
       servers[i] = createServer(address, ports[i], bootstrap);
       servers[i].start();
-      Thread.sleep(200);
+      Thread.sleep(3000);
     }
     
-    Thread.sleep(1000);  
+    Thread.sleep(2000);  
   } 
   
-  // issues sometimes with 4+ servers, sometimes doesnt terminate for 2+ servers
   @Test
   public void TestEnronSet() throws IOException, InterruptedException {    
     ClientLibrary cl = new ClientLibrary();
@@ -52,14 +51,14 @@ class TestEnron {
     BufferedReader enronSet = new BufferedReader(new FileReader("bi320.txt"));  
     String line;
     while ((line = enronSet.readLine()) != null) {
-      String[] comp = line.split("\\s+",2);
+      String[] comp = line.split("\\s+", 2);
       cl.putRequest(comp[0], "\"" + comp[1]+ "\""); // adding quotation marks
     }
     enronSet.close();
     
     enronSet = new BufferedReader(new FileReader("bi320.txt"));  
     while ((line = enronSet.readLine()) != null) {
-      String[] comp = line.split("\\s+",2);
+      String[] comp = line.split("\\s+", 2);
       assertEquals(comp[1], cl.getRequest(comp[0]));
     }
     enronSet.close(); 
@@ -67,4 +66,3 @@ class TestEnron {
     cl.disconnect();
   }
 }
- No newline at end of file

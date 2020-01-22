@@ -10,15 +10,17 @@ import java.net.Socket;
 import java.net.SocketException;
 import de.tum.i13.server.chat.ChatManager;
 import de.tum.i13.server.kv.KVCommandProcessor;
-import de.tum.i13.server.threadperconnection.Main.ECSCommThread.ServerToECS;
+import de.tum.i13.server.threadperconnection.Main.ServerToECS;
 import de.tum.i13.shared.Constants;
 
 public class ConnectionHandleThread extends Thread {
   private KVCommandProcessor cp;
   private Socket clientSocket;
   private boolean running = true;
+  private ServerToECS ste;
 
-  public ConnectionHandleThread(KVCommandProcessor commandProcessor, Socket clientSocket) {
+  public ConnectionHandleThread(KVCommandProcessor commandProcessor, Socket clientSocket, ServerToECS ste) {
+    this.ste = ste;
     cp = commandProcessor;
     this.clientSocket = clientSocket;
   }
@@ -65,7 +67,7 @@ public class ConnectionHandleThread extends Thread {
         }
       }
       
-      ServerToECS.removeUser(username);
+      ste.removeUser(username);
       cp.connectionClosed(remoteAddress.getAddress());
 
     } catch (IOException e) {
@@ -75,7 +77,7 @@ public class ConnectionHandleThread extends Thread {
 
   private String addUser(BufferedReader in, PrintWriter out) throws IOException {
     String username = in.readLine();
-    String result = ServerToECS.addUser(username);
+    String result = ste.addUser(username);
     boolean success = result != null;
     result = "user_" + (success ? "success " + result : "error " + username);
     out.println(result);

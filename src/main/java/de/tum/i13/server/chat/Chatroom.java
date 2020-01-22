@@ -12,10 +12,10 @@ public class Chatroom {
 
   public static enum ChatroomType {PUBLIC, PRIVATE};
   
-  public Chatroom(String chatID) {
+  public Chatroom(String chatID, String kvAddress) {
     this.chatID = chatID;
     try {
-      bot = new ChatBot(chatID);
+      bot = new ChatBot(chatID, kvAddress);
     } catch (IOException e) {
       System.out.println("Error during chatbot creation: " + e.getLocalizedMessage());
     }

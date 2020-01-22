@@ -25,7 +25,7 @@ public class ServerCommThread extends Thread {
   private String kvAddress;
   private final Socket serverSocket;
   private BufferedReader in;
-  private ECSLibrary lib;
+  private final ECSLibrary lib;
   private final HashRing hr;
   
   private static enum Event {OPEN, CLOSE, UPDATE};
@@ -245,7 +245,7 @@ public class ServerCommThread extends Thread {
     private final Timer pinger = new Timer();
     
     public SignalThread() {
-      pinger.scheduleAtFixedRate(new PingTask(), 1000, 1000);
+      pinger.scheduleAtFixedRate(new PingTask(), 15000, 1500);
     }
 
     @Override
@@ -253,6 +253,7 @@ public class ServerCommThread extends Thread {
       try {
         readLoop: while (!serverSocket.isClosed()) {
           String line = in.readLine();
+          //System.out.println("ECS: server " + kvAddress + " says " + line);
           switch (line) {
             case "closing": {
               logger.info("Server " + kvAddress + " closing..");
@@ -370,7 +371,7 @@ public class ServerCommThread extends Thread {
         }
         lib.ping();
         try {
-          Thread.sleep(1300);
+          Thread.sleep(3000);
           shutdown();
         } catch (InterruptedException e) { // nothing to handle, server is alive
         } catch (IOException e) {

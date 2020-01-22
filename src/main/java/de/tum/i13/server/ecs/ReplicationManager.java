@@ -238,19 +238,26 @@ public class ReplicationManager {
 
     // setup replicas and inform the follower server of the leaders address
     for (int i = 1; i >= 0; i--) {
-      brs[i].readLine(); // empty
-      String address = brs[i].readLine();
-      port = Integer.parseInt(brs[i].readLine());
+      String address = readNoNull(brs[i]);
+      port = Integer.parseInt(readNoNull(brs[i]));
       PrintWriter out = outs[(i + 1) % 2];
       sendSocketAddress(out, address, port);
       InetSocketAddress sa = new InetSocketAddress(address, port);
       setReplica((i + 1) % 2, sa);
       threads[i].start();
-    }
+    } 
     
     for (int i = 0; i<=1; i++) {
       kvs.replicateData(replicaWriters[i], 0); 
     }
+  }
+  
+  private String readNoNull(BufferedReader br) throws IOException {
+    String res = br.readLine();
+    while (res.isBlank()) {
+      res = br.readLine();
+    }
+    return res;
   }
 
   /**
@@ -266,7 +273,7 @@ public class ReplicationManager {
     try {
       Socket s = setReplica(replicaNum, socketAddress);
       BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-      br.readLine();
+      readNoNull(br);
       if (replicaNum == 1) {
         leader(replicaWriters[1], myPort);
         follower(br, 0);

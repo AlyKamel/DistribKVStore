@@ -38,10 +38,10 @@ public class ChatBot {
    * @param address Address of the server he tries to connect to
    * @param port Port of the server he tries to connect to
    */
-  public ChatBot(String chatID) throws IOException {
+  public ChatBot(String chatID, String kvAddress) throws IOException {
     botID = "BOT_" + chatID;
-    String address = ServerUtility.getAddress(Main.kvAddress);
-    int port = ServerUtility.getPort(Main.kvAddress);
+    String address = ServerUtility.getAddress(kvAddress);
+    int port = ServerUtility.getPort(kvAddress);
     cl.connect(address, port);
     cl.setUsername(botID);
   }

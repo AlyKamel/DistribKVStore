@@ -67,11 +67,11 @@ public class TestReplication {
 
     String coordinator = hr.getCoordinator(testKey);
     int coordinatorPort = ServerUtility.getPort(coordinator);
-    System.out.println("co: " + coordinatorPort);
+    //System.out.println("key: " + testKey);
     
     setupConnection(coordinatorPort);
     ac.send("put " + testKey + " " + testValue);
-    ac.receive();
+    System.out.println(ac.receive());
     ac.close();
 
     for (int i = 0; i < addressArray.length; i++) {
@@ -79,7 +79,7 @@ public class TestReplication {
       ac.send("get " + testKey);
       String reply = ac.receive();
 
-      System.out.println(ports[i] + ":" + reply);
+      System.out.println("TEST: " + addressArray[i] + ": " + reply);
       if (hr.isReadResponsible(addressArray[i], testKey)) {
         assertEquals(success, reply);
       } else {

@@ -6,8 +6,8 @@ public class PrivateChatroom extends Chatroom {
   private String passwordHash;
   private boolean verified = true;
   
-  public PrivateChatroom(String chatID, String passwordHash) {
-    super(chatID);
+  public PrivateChatroom(String chatID, String passwordHash, String kvAddress) {
+    super(chatID, kvAddress);
     this.passwordHash = passwordHash;
   }
   

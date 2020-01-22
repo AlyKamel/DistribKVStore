@@ -319,7 +319,7 @@ public class DiskStore implements KVStorageSystem {
    * 
    * @return array of all the .txt files in the directory
    */
-  private File[] getAllTxtFiles() {
+  private File[] getAllTxtFiles() { // TODO problem: could return chat files
     FilenameFilter filter = new FilenameFilter() {
       @Override
       public boolean accept(File dir, String name) {
@@ -327,7 +327,7 @@ public class DiskStore implements KVStorageSystem {
       }
     };
     File folder = new File(lookPath);
-    return folder.listFiles(filter);
+    return folder.listFiles(filter); // TODO returns null because directory gets deleted
   }
   
   /**

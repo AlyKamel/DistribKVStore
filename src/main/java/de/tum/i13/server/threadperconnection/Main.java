@@ -20,14 +20,15 @@ import de.tum.i13.shared.ServerStart;
 import de.tum.i13.shared.ServerUtility;
 
 public class Main {
-  private static KVCommandProcessor cp;
-  public static HashRing hr = new HashRing();
-  private static ArrayList<ConnectionHandleThread> chtList = new ArrayList<ConnectionHandleThread>();
-  private static boolean writeLock = false;
-  private final static Object hrLock = new Object();
-  private final static Logger logger = Logger.getLogger(Main.class.getName());
+  private KVCommandProcessor cp;
+  public HashRing hr = new HashRing();
+  private ArrayList<ConnectionHandleThread> chtList = new ArrayList<ConnectionHandleThread>();
+  private boolean writeLock = false;
+  private final Object hrLock = new Object();
+  private final Logger logger = Logger.getLogger(Main.class.getName());
   
-  public static String kvAddress; // address which clients use to reach the server
+  public String kvAddress; // address which clients use to reach the server
+  private ECSCommThread ecsThread;
   
   public static void main(String[] args) throws IOException {
     ConfigServer cfg = parseCommandlineArgs(args);
@@ -58,7 +59,7 @@ public class Main {
     setupLogging(cfg.logfile, cfg.loglevel);
     cp = ServerStart.getCommandProcessor(cfg);
 
-    ECSCommThread ecsThread = new ECSCommThread(cfg.bootstrap);
+    ecsThread = new ECSCommThread(cfg.bootstrap);
     ecsThread.start();
 
     Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -89,11 +90,12 @@ public class Main {
   }
 
   private void start(ServerSocket socket) throws IOException {
+    ServerToECS ste = new ServerToECS(ecsThread.out);
     logger.info("Server " + kvAddress + " starting..");
     while (true) {  // listen to new clients and open a thread to handle each one of them
       Socket clientSocket = socket.accept();
       cp.updateServerRing(hr.getKeyRange()); // make sure hash ring is up to date
-      ConnectionHandleThread th = new ConnectionHandleThread(cp, clientSocket);
+      ConnectionHandleThread th = new ConnectionHandleThread(cp, clientSocket, ste);
       th.setWriteLock(writeLock); // potentially set write lock
       chtList.add(th);
       th.start();
@@ -101,13 +103,64 @@ public class Main {
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+  
+  
+  public static class ServerToECS {
+    private static String username;
+    private static final Object userLock = new Object();
+    private PrintWriter out;
+    
+    public ServerToECS(PrintWriter out) {
+      this.out = out;
+    }
+    
+    public String addUser(String username) {
+      out.println("addUser");
+      out.println(username);
+      out.flush();
+      synchronized (ServerToECS.class) {
+        synchronized (userLock) {
+          try {
+            userLock.wait(); 
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+        } 
+      }
+      return ServerToECS.username;
+    }
+    
+    public boolean removeUser(String username) {
+      out.println("removeUser");
+      out.println(username);
+      out.flush();
+      synchronized (ServerToECS.class) {
+        synchronized (userLock) {
+          try {
+            userLock.wait(); 
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+        } 
+      }
+      return ServerToECS.username != null;
+    }
+    
+    public static void setUsername(String username) {
+      synchronized (userLock) {
+        ServerToECS.username = username;
+        userLock.notify(); 
+      }
+    }
+  }
+  
+  
   /**
    * Communicates with the ECS to always keep the server up to date
    */
-  public static class ECSCommThread extends Thread {
+  public class ECSCommThread extends Thread {
     private final Socket ecsSocket;
-    private static PrintWriter out;
+    private PrintWriter out;
 
     public ECSCommThread(InetSocketAddress bootstrap) {
       ecsSocket = new Socket();
@@ -119,45 +172,6 @@ public class Main {
       }
     }
     
-    
-    public static class ServerToECS {
-      private static String username;
-      private static final Object userLock = new Object();
-      
-      public static synchronized String addUser(String username) {
-        sendMessage("addUser");
-        sendMessage(username);
-        synchronized (userLock) {
-          try {
-            userLock.wait(); 
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
-        }
-        return ServerToECS.username;
-      }
-      
-      public static synchronized boolean removeUser(String username) {
-        sendMessage("removeUser");
-        sendMessage(username);
-        synchronized (userLock) {
-          try {
-            userLock.wait(); 
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
-        }
-        return ServerToECS.username != null;
-      }
-      
-      public static void setUsername(String username) {
-        synchronized (userLock) {
-          ServerToECS.username = username;
-          userLock.notify(); 
-        }
-      }
-    }
-    
     @Override
     public void run() {
       sendMessage(kvAddress);
@@ -165,6 +179,7 @@ public class Main {
       try (Scanner in = new Scanner(ecsSocket.getInputStream())) {
         readLoop: while (!ecsSocket.isClosed()) {
           String cmd = in.next();
+          //System.out.println(kvAddress + ": ECS says " + cmd);
           synchronized (this) {
             switch (cmd) {
               case "receive": {
@@ -313,7 +328,7 @@ public class Main {
       chtList.forEach(t -> t.setWriteLock(writeLock));
     }
 
-    private static void sendMessage(String msg) {
+    private void sendMessage(String msg) {
       out.println(msg);
       out.flush();
     }

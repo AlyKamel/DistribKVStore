@@ -84,7 +84,7 @@ public class ChatManager {
   }
 
   private void createChatroom(ChatroomType type, String passwordHash) {
-    chatroom = type == PRIVATE ? new PrivateChatroom(chatID, passwordHash) : new Chatroom(chatID);
+    chatroom = type == PRIVATE ? new PrivateChatroom(chatID, passwordHash, kvcp.sr.getServer()) : new Chatroom(chatID, kvcp.sr.getServer());
     chatroom.addUser(username, pw);
     chs.add(chatroom);
   }
