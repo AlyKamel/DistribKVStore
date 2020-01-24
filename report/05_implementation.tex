@@ -14,13 +14,10 @@ In this section the implementation of the chatroom is examined in depth. Firstly
 \end{figure}
 
 The client side consists of the three following main components as seen in figure \ref{fig:client_arch}:
-\begin{enumerate}
-  \item ClientApp\\
-   The ClientApp represents the client interface which allows input through the console. From there the client is able to issue commands to: connect to and disconnect from the system, interact with the key-value store and chat. The input is then checked and parsed before getting sent to the ClientLibrary.
-  \item ClientLibrary\\
-The ClientLibrary serves as a bridge between the client and the server.
-  \item ActiveConnection\\
-  ActiveConnection abstracts the TCP socket connection to the server which allows the client to connect to the server socket and exchange data without worrying about the underlying structure.
+\begin{enumerate} %TODO make first word italic
+  \item ClientApp: represents the client interface which allows input through the console. From there the client is able to issue commands to: connect to and disconnect from the system, interact with the key-value store and chat. The input is then checked and parsed before getting sent to the ClientLibrary. The result of the user command is displayed on the console through the ClientApp.
+  \item ClientLibrary: serves as a bridge between the client and the server.
+  \item ActiveConnection: abstracts the TCP socket connection to the server which allows the client to connect to the server socket and exchange data without worrying about the underlying structure.
 \end{enumerate}
  
 \subsection{Server Side Implementation}
