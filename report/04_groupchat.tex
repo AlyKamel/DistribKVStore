@@ -40,6 +40,8 @@ To start off, in the same sense as milestone 4, initially the External Configura
 \subsubsection{Unique Username}
 \label{sec:groupchat_executionoftheworkflow_uniqueusername}
 After successfully connecting to a key-value server, the client has to either enter a username or use the command QUIT to have a username randomly assigned to him. Usernames are implemented as globally unique identifiers for the clients, which prevents different clients from having the same username in different chatrooms. That way users are guaranteed to know who they are communicating with as long as their partner is connected to the system. 
+
+In order to avoid unnecessary extra connections, the ECS stores a list of users. Whenever a client tries to set its username, the request gets sent through the server to the ECS, which then checks if the username has been already taken by a client connected to any of the servers online. The end user either receives a welcome message with the username displayed if the operation was succesful, or an error message otherwise.
  
 \subsubsection{Chat Command}
 \label{sec:groupchat_executionoftheworkflow_chatcommand}
@@ -62,6 +64,12 @@ When a client joins a chatroom, all the messages which sent until that time, wil
 The messages are saved into a .txt file under the directory of the respective server.\\
 
 Whenever a client wants to leave the chatroom, QUIT can be typed in order to use the functionalities of replicated and distributed database from milestone 4. To enable the chatroom service client only needs to enter “chat” command with the desired chatID. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{figures/chat_graph.png}
+	\caption{Client side architecture}
+\end{figure}
 
 
 

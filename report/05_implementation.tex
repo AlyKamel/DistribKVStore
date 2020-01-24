@@ -13,7 +13,7 @@ In this section the implementation of the chatroom is examined in depth. Firstly
 	\label{fig:client_arch}
 \end{figure}
 
-The client side consists of three following main components as seen in the figure above:
+The client side consists of the three following main components as seen in figure \ref{fig:client_arch}:
 \begin{enumerate}
   \item ClientApp\\
    The ClientApp represents the client interface which allows input through the console. From there the client is able to issue commands to: connect to and disconnect from the system, interact with the key-value store and chat. The input is then checked and parsed before getting sent to the ClientLibrary.
@@ -43,12 +43,11 @@ Our idea for the chatting functionality was for it to be as lightweight as possi
 
 \subsection{Chat System}
 \label{sec:implementation_chatsystem}
-The Chat system consists of three following main components as seen in Figure 2, namely:
+The Chat system consists of three main components as seen in figure \ref{fig:chatsystem}, namely:
 \begin{enumerate}
-	\item ChatManager\\
-	TODO
-	\item Chatroom\\
-	TODO
-	\item ChatBot\\
-	TODO
+	\item ChatManager, who is in charge of providing all chat functionalties to the client, including connecting to a chatroom and sending messages.
+	\item Chatroom, which is identified by a chatID. A Chatroom object contains a map of all connected users and their sockets, in order to be able to forward messages.
+	\item ChatBot, which is responsible to execute PUT and GET commands during a chat session. The chatbot acts exactly like a client, meaning it first has to connect to the responsible server and then send its request.
+	
+	 By utilizing a chatbot, chat requests containing a key-value operation are slowed down, since only one 'client' is performing those operations. However, if each chat user is tasked with executing the commands himself instead, then whenever a key is located at a server different from the server responsible for the chatroom, the client would need to reconnect twice. Not only that, but also all chat messages sent while the user was disconnected would either get lost or will be displayed after the user has reconnected, which would make the user temporarily unavailable. As mentioned in \ref{sec:backgorund_cap}, our system focuses on being available.
 \end{enumerate}
