@@ -5,38 +5,60 @@ One of the main goals implementing milestone 4 and milestone 5 is to have a syst
 % TODO change enumeration method 
 \subsection{CAP Theorem}
 \label{sec:backgorund_cap}  % TODO change citation
-According to the CAP Theorem, distributed database systems have three substantial properties to consider which stand for the name of the theorem itself: consistency, availability and partition tolerance. Eric Brewer, the founder of the CAP theorem, aimed to clarify with this theorem that a distributed database system can have at most two of the three mentioned properties. Reference: E. Brewer, "Towards Robust Distributed Systems
+According to the CAP Theorem, distributed database systems have three substantial properties to consider which stand for the name of the theorem itself: consistency, availability and partition tolerance. Eric Brewer, the founder of the CAP theorem, aimed to clarify with this theorem that a distributed database system can have at most two of the three mentioned properties simultaneously. Reference: E. Brewer, "Towards Robust Distributed Systems
 
-\subsubsection{Consistency}
-\label{sec:backgorund_cap_consistency}
-When a system is focusing on consistency, clients should be provided with the most up-to-date data, meaning the fresh data that after the last write operation.
+\begin{itemize}
+  \item Consistency: \\
+  When a system is focusing on consistency, clients should be provided with the most up-to-date data, meaning the fresh data that after the last write operation.
+  \item Availability:\\
+  "A" in CAP referring to the property availability, centres upon responding the request of the client in any cases. Every non-failing node in the system must be able to serve to the client in a reasonable amount of time.
+  \item Partition tolerance:\\
+Partitions are failures which can be encountered in distributed database systems, namely crashed servers or dropped packets. If a system maintains partition tolerance, the system will handle the problem without having to shut down.
+\end{itemize}
 
-\subsubsection{Availability}
-\label{sec:backgorund_cap_avaiability}
-"A" in CAP referring to the property availability, centres upon responding the request of the client in any cases.
-
-\subsubsection{Partition tolerance}
-\label{sec:backgorund_cap_partitiontolarence}
-Partitions are failures which can be encountered in distributed database systems, namely crashed servers or dropped packets. Lastly, if a system maintains partition tolerance, the system will handle the problem without having to shut down.\\
-\\
 %TODO change citations
-Later on, Brewer mentions in his article "Cap 12 Years Later: How the Rules Have Changed" that designers do not have to abide strictly to the 2 of 3 principle, it is rather a spectrum than binary options. In other words, a distributed database system can favour high level of consistency and partition tolerance by having low level of availability. Thus, the initial theorem is improved by not having to sacrifice availability completely. Reference:Cap twelve years later
+Later on, Brewer mentions in his article "Cap 12 Years Later: How the Rules Have Changed" that designers do not have to abide strictly to the 2 of 3 principle, it is rather a spectrum than binary options. In other words, a distributed database system can favour high level of consistency and partition tolerance by having low level of availability. Thus, the initial theorem is improved by not having to sacrifice availability completely in this case. Reference:Cap twelve years later
+
+There are two design approaches for distributed database systems, namely: ACID and BASE. According to Brewer, these two design approaches may be referred as opposites of each other because of their priorities and use cases.  ACID approach is used most of the times for relational database systems(SQL)and focuses on consistency to maintain reliability. On the contrary BASE is more suitable for the non-relational database systems(NoSQL) concentrating on providing the client high level of availability.
+
+\subsection{ACID}
+\label{sec:backgorund_acid}
+ACID is a traditional design approach when it comes to large-scaled distributed systems. The main goal of ACID is that even having partitions in the system client should be provided with consistent values. It is an acronym which stands for four following properties:
+\begin{itemize}
+\item Atomicity:\\
+A set of transactions succeed all at once or fail all together. In other words, it is an all or nothing strategy.
+\item Consistency:\\
+Consistency in ACID ensures that the system will not contain any stale data. When a client wants to read from any server, the returned value has to be the value from the last write commit.
+\item Isolation:\\
+All transactions happen isolated from each other. Thus, no transaction is affected by an another transaction.
+\item Durability:\\
+If a crash occurs in the system, data will be stored permanently on disk. A client is informed after a transaction is successfully committed, that means that this transaction must have really succeeded.  
+\end{itemize} 
 
 \subsection{BASE}
 \label{sec:backgorund_base}
-BASE is one of the design approaches in terms of the CAP theorem which is also created by Eric Brewer. Non-relational database systems(NoSql) make use of the BASE approach, which concentrates on high availability. BASE is an acronym which stands for basic availability, soft state and eventual consistency. With milestone 4, replication is added to the system with the intention of increasing the availability by distributing the data records to the two replica servers.
+BASE is one of the design approaches in terms of the CAP theorem which is also created by Eric Brewer. Non-relational database systems make use of the BASE approach, which concentrates on high availability and forfeits consistency. Big systems such as Amazon's Dynamo, Facebook's Cassandra or Google's BigTable have millions of active users that have an expectation of an available service at all time. Nevertheless there has to be trade-offs. By not guaranteeing the consistency at all time, the system cost is reduced and clients are happier, but a client might not get an immediate response to his/her request.
 
-\subsubsection{Basic Availability}
-\label{sec:backgorund_base_basicavailability}
-Client is guaranteed to get a response from the servers in a matter of time, but the returned value may be stale, stated in other words not consistent, since the system is focusing on high availability.
-\subsubsection{Soft State}
-\label{sec:backgorund_base_softstate}
-Without any updates state changes can be observed within the system.
-\subsubsection{Eventual Consistency}
-\label{sec:backgorund_base_eventualconsistency}
-If there are no updates in the system for a long time, then all servers will gradually become consistent. reference: Milestone4 slides\\
-\\
-Implementing the program, we paid attention that the system we created, provided the above-mentioned properties on a high scale.\\Our system contains the first property of BASE being basic availability, because servers will respond to request of the clients even if a latency occurs. Since single failing nodes can be tolerated due to replication, partition tolerance is provided as well. At last, eventual consistency is achieved within the system. If there are no updates for a long time all the replicas will become eventually consistent.
+BASE is an acronym which stands for basic availability, soft state and eventual consistency. With milestone 4, replication is added to the system with the intention of increasing the availability by distributing the data records to the two replica servers. Redundancy comes along with the replication strategy, however when a node crashes or fails, read operations can be processed via replicated servers.
+
+\begin{itemize}
+  \item Basic Availability:\\
+ Client is guaranteed to get a response from the servers in a matter of time, but the returned value may be stale, stated in other words not consistent, since the system is focusing on high availability.
+  \item Soft State:\\
+Without any updates state changes can be observed within the system. The property soft state is an outcome of eventual consistency.
+  \item Eventual Consistency:\\
+If there are no updates in the system for a long time, then all servers will gradually become consistent. reference: Milestone4 slides
+\end{itemize}
+
+Implementing the program, we paid attention that the system we created, provided the above-mentioned properties on a high scale.
+
+Our system contains the first property of BASE being basic availability, because servers will respond to the request of the clients even if a latency occurs. The groupchat extension works on a single server with limited amount of chatrooms and limited amount of clients in one chatroom to maintain availability without making the clients wait for a long time.
+
+Eventual consistency is achieved within the system due to requirements of Milestone 4. If there are no updates for a long time all the replicas will become eventually consistent by updating key ranges of the coordinator and replica nodes placed on an hashring. 
+
+Since the implementation of Milestone 3, it is possible to monitor key-value stores continuously. External Configuration Service pings the KVStores every 700 ms to be informed about the availability. It can occure that a KVStore is not reachable because of network partitions and if that is the sitaution the KVStore is considered shutdown. Improving the system with replication, single failing nodes can be tolerated, thus partition tolerance is provided as well.
+
+One of the downsides of our system is that the chat system runs just one of the requested servers by the client. Thus, partition tolerance may not be covered in case of that particular serving crashing. As in the most database systems there are trade-offs between the properties: availability, consistency and partition tolerance.
 
     
 
