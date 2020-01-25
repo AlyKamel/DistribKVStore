@@ -2,10 +2,9 @@
 \label{sec:background}
 In this section, we elaborate on some of the basic concepts that our key-value system depends on. First, we discuss the CAP theorem and analyze where our system lies on that spectrum. Then, we mention two design paradigms, namely BASE and ACID, and explain the differences between them.
 
-% TODO change enumeration method 
 \subsection{CAP Theorem}
 \label{sec:background_cap} 
-According to the CAP Theorem, distributed databasess have three substantial properties to consider: consistency, availability and partition tolerance. Eric Brewer, the man behind the CAP theorem, stated that a distributed database can fulfill at most two of three properties \cite{brewer2000cap}:
+According to the CAP Theorem, distributed databases have three substantial properties to consider: consistency, availability and partition tolerance. Eric Brewer, the man behind the CAP theorem, stated that a distributed database can fulfill at most two of three properties\cite{brewer2000cap}:
 
 \begin{itemize}
   \item Consistency: \\
@@ -17,9 +16,9 @@ According to the CAP Theorem, distributed databasess have three substantial prop
 \end{itemize}
 
 %TODO change citations
-Later on, Brewer mentions in his article "Cap 12 Years Later: How the Rules Have Changed" that designers do not have to abide strictly to the 2 of 3 principle, it is rather a spectrum than binary options. In other words, a distributed database system can favor high level of consistency and partition tolerance by having low level of availability. Thus, the initial theorem is improved by not having to sacrifice availability completely in this case. Reference:Cap twelve years later
+Later on, Brewer mentions in his article "Cap 12 Years Later: How the Rules Have Changed" that designers do not have to abide strictly to the 2 of 3 principle, it is rather a spectrum than binary options. In other words, a distributed database system can favour high level of consistency and partition tolerance by having low level of availability. Thus, the initial theorem is improved by not having to sacrifice availability completely in this case.
 
-There are two design approaches for distributed database systems, namely ACID and BASE. According to Brewer, these two design approaches may be referred as opposites of each other because of their priorities and use cases. ACID approach is used most of the times for relational database systems(SQL) and focuses on consistency to maintain reliability. On the contrary BASE is more suitable for the non-relational database systems(NoSQL) concentrating on providing the client high level of availability.
+There are two design approaches for distributed database systems, namely ACID and BASE. According to Brewer, these two design approaches may be referred as opposites of each other\cite{brewer2012cap} because of their priorities and use cases. ACID approach is used most of the times for relational database systems(SQL) and focuses on consistency to maintain reliability. On the contrary BASE is more suitable for the non-relational database systems(NoSQL) concentrating on providing the client high level of availability\cite{brewer2000towards}.
 
 \subsection{ACID}
 \label{sec:background_acid}
