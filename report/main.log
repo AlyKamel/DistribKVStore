@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.13)  25 JAN 2020 17:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.13)  25 JAN 2020 17:54
 entering extended mode
 **./main.tex
 (main.tex
@@ -1444,22 +1444,17 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 9.0pt on input line 10.
-
-
-Package natbib Warning: Citation `brewer2000towards' on page 2 undefined on inp
-ut line 21.
-
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 31.
+(Font)              scaled to size 9.0pt on input line 30.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 7.0pt on input line 31.
-[2.2]
-Overfull \hbox (4.61589pt too wide) in paragraph at lines 46--48
+(Font)              scaled to size 7.0pt on input line 30.
+ [2.2]
+Overfull \hbox (4.61589pt too wide) in paragraph at lines 45--47
 \T1/LinuxLibertineT-TLF/m/n/9 (-20) Since stale data is per-mit-ted, servers ne
 ver truly know whether
  []
 
-LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 54
+LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 53
 .
 
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/inconsolata\t1zi4.
@@ -1467,13 +1462,13 @@ fd"
 File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
 )
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 9.0pt on input line 54.
+(Font)              scaled to size 9.0pt on input line 53.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zi4' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 ) (03_key-valueserver.tex
-<figures/kvs_arch.png, id=136, 1774.63pt x 1175.39125pt>
+<figures/kvs_arch.png, id=141, 1774.63pt x 1175.39125pt>
 File: figures/kvs_arch.png Graphic file (type png)
 <use figures/kvs_arch.png>
 Package pdftex.def Info: figures/kvs_arch.png  used on input line 6.
@@ -1502,7 +1497,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 64--65
 
  []
 
-<figures/chat_graph.png, id=145, 2196.205pt x 2092.81876pt>
+<figures/chat_graph.png, id=150, 2196.205pt x 2092.81876pt>
 File: figures/chat_graph.png Graphic file (type png)
 <use figures/chat_graph.png>
 Package pdftex.def Info: figures/chat_graph.png  used on input line 70.
@@ -1513,8 +1508,8 @@ Class acmart Warning: A possible image without description on input line 72.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) (05_implementation.tex [4.4]
-<figures/client_arch.png, id=163, 2114.90125pt x 282.05376pt>
+) (05_implementation.tex
+<figures/client_arch.png, id=151, 2114.90125pt x 282.05376pt>
 File: figures/client_arch.png Graphic file (type png)
 <use figures/client_arch.png>
 Package pdftex.def Info: figures/client_arch.png  used on input line 11.
@@ -1523,6 +1518,7 @@ Package pdftex.def Info: figures/client_arch.png  used on input line 11.
 
 Class acmart Warning: A possible image without description on input line 14.
 
+[4.4]
 
 LaTeX Warning: Reference `sec:backgorund_cap' on page 5 undefined on input line
  42.
@@ -1531,33 +1527,10 @@ LaTeX Warning: Reference `sec:backgorund_cap' on page 5 undefined on input line
 graph.png> <./figures/client_arch.png>]
 LaTeX Info: Redefining \tempurl on input line 87.
 LaTeX Info: Redefining \tempurl on input line 124.
-
-! Illegal parameter number in definition of \reserved@a.
-<to be read again> 
-                   3
-l.134   more}}
-              .
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-! You can't use `macro parameter character #' in horizontal mode.
-<argument> Redis weekly update ##
-                                 3 - Pub/Sub and more
-l.134   more}}
-              .
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-LaTeX Info: Redefining \tempurl on input line 137.
-LaTeX Info: Redefining \tempurl on input line 149.
-LaTeX Info: Redefining \tempurl on input line 161.
+LaTeX Info: Redefining \tempurl on input line 136.
+LaTeX Info: Redefining \tempurl on input line 148.
+LaTeX Info: Redefining \tempurl on input line 160.
 )
-
-Package natbib Warning: There were undefined citations.
-
 
 Class acmart Warning: Some images may lack descriptions.
 
@@ -1571,10 +1544,6 @@ Class acmart Warning: CCS concepts are mandatory for papers over two pages.
 Package glossaries Warning: No \printglossary or \printglossaries found. 
 (Remove \makeglossaries if you don't want any glossaries.) 
 This document will not have a glossary.
-
-
-Overfull \vbox (1.54099pt too high) has occurred while \output is active []
-
 
 [6.6]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 59.
@@ -1590,13 +1559,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 23175 strings out of 492484
- 357455 string characters out of 3121601
- 512306 words of memory out of 3000000
+ 23178 strings out of 492484
+ 357533 string characters out of 3121601
+ 511306 words of memory out of 3000000
  26524 multiletter control sequences out of 15000+200000
- 165479 words of font info for 305 fonts, out of 3000000 for 9000
+ 165850 words of font info for 307 fonts, out of 3000000 for 9000
  1303 hyphenation exceptions out of 8191
- 63i,11n,100p,1033b,559s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 63i,11n,100p,1033b,561s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/libertine/l
 btn_25tcsq.enc}{C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvip
 s/inconsolata/i4-t1-4.enc}{C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fon
@@ -1618,9 +1587,9 @@ mk/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/libertine/LinLibertineT
 I.pfb><C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/newt
 x/txmiaX.pfb><C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
 ic/newtx/txsys.pfb>
-Output written on main.pdf (6 pages, 653011 bytes).
+Output written on main.pdf (6 pages, 653776 bytes).
 PDF statistics:
- 264 PDF objects out of 1000 (max. 8388607)
+ 269 PDF objects out of 1000 (max. 8388607)
  61 named destinations out of 1000 (max. 500000)
  50372 words of extra memory for PDF output out of 51595 (max. 10000000)
 

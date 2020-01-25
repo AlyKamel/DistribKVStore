@@ -130,8 +130,7 @@
         {sanfilippo2010pubsub}
 \bibfield{author}{\bibinfo{person}{Salvatore Sanfilippo}.}
   \bibinfo{year}{2010}\natexlab{}.
-\newblock \bibinfo{booktitle}{\emph{Redis weekly update #3 - Pub/Sub and
-  more}}.
+\newblock \bibinfo{booktitle}{\emph{Redis}}.
 \newblock
 \urldef\tempurl%
 \url{http://oldblog.antirez.com/post/redis-weekly-update-3-publish-submit.html}

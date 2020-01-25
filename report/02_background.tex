@@ -1,10 +1,10 @@
 \section{Background}
 \label{sec:background}
-In this section, we elaborate on some of the basic concepts that our key-value system depends on. First, we discuss the CAP theorem and analyze where our system lies on that spectrum. Then, we mention two design paradigms, namely BASE and ACID, and explain the differences between them.
+In this section, we elaborate on some of the basic concepts that our key-value system depends on. First, we discuss the CAP theorem and analyse where our system lies on that spectrum. Then, we mention two design paradigms, namely BASE and ACID, and explain the differences between them.
 
 \subsection{CAP Theorem}
 \label{sec:background_cap} 
-According to the CAP Theorem, distributed databases have three substantial properties to consider: consistency, availability and partition tolerance. Eric Brewer, the man behind the CAP theorem, stated that a distributed database can fulfill at most two of three properties\cite{brewer2000cap}:
+According to the CAP Theorem, distributed databases have three substantial properties to consider: consistency, availability and partition tolerance\cite{brewer2012cap}. Eric Brewer, the man behind the CAP theorem, stated that a distributed database can fulfil at most two of three properties\cite{brewer2000cap}:
 
 \begin{itemize}
   \item Consistency: \\
@@ -15,30 +15,29 @@ According to the CAP Theorem, distributed databases have three substantial prope
   Whenever a server crashes, the rest of the system will still stay functional after the crash, without any information being lost. This is mainly secured by replicating data across multiple servers.
 \end{itemize}
 
-%TODO change citations
-Later on, Brewer mentions in his article "Cap 12 Years Later: How the Rules Have Changed" that designers do not have to abide strictly to the 2 of 3 principle, it is rather a spectrum than binary options. In other words, a distributed database system can favour high level of consistency and partition tolerance by having low level of availability. Thus, the initial theorem is improved by not having to sacrifice availability completely in this case.
+Later, Brewer mentions that designers do not have to abide strictly to the 2 of 3 principle, it is rather a spectrum than binary\cite{brewer2012cap}. In other words, a distributed database system can favour high level of consistency and partition tolerance by having low level of availability. Thus, the initial theorem is improved by not having to sacrifice availability completely in this case.
 
-There are two design approaches for distributed database systems, namely ACID and BASE. According to Brewer, these two design approaches may be referred as opposites of each other\cite{brewer2012cap} because of their priorities and use cases. ACID approach is used most of the times for relational database systems(SQL) and focuses on consistency to maintain reliability. On the contrary BASE is more suitable for the non-relational database systems(NoSQL) concentrating on providing the client high level of availability\cite{brewer2000towards}.
+There are two design approaches for distributed database systems, namely ACID and BASE. According to Brewer, these two design approaches may be referred as opposites of each other\cite{brewer2012cap} because of their priorities and use cases. ACID approach is used most of the times for relational database systems (SQL) and focuses on consistency to maintain reliability. On the contrary BASE is more suitable for the non-relational database systems (NoSQL) concentrating on providing the client high level of availability\cite{brewer2000cap}.
 
 \subsection{ACID}
 \label{sec:background_acid}
-ACID is a traditional design approach when it comes to large-scaled distributed systems. The main goal of ACID is that despite the system having partitions, the client should always be provided with consistent values. It is an acronym which stands for the four following properties:
+ACID is a traditional design approach\cite{brewer2012cap} when it comes to large-scaled distributed systems. The main goal of ACID is that despite the system having partitions, the client should always be provided with consistent values. It is an acronym which stands for the four following properties:
 \begin{itemize}
 \item Atomicity:\\
 A set of transactions succeed all at once or fail all together. In other words, it is an all or nothing strategy.
 \item Consistency: \\
-The system never contains any stale data. When a client wants to read from any server, the returned value has to be the value from the last write commit by any client. In other words, all clients should always get the same result whenever they try to fetch the same information.
+The system never contains any stale data. When a client wants to read from any server, the returned value must be the value from the last write commit by any client. In other words, all clients should always get the same result whenever they try to fetch the same information.
 \item Isolation:\\
 All transactions happen isolated from each other and do not affect each other. Thus, if one transaction fails, all others are undisturbed.
 \item Durability:\\
-Once a client is informed that a transaction has been successfully committed, even if a crash occurs, the transaction would still stay commited. This is ensured by persisting data permanently on disk.
+Once a client is informed that a transaction has been successfully committed, even if a crash occurs, the transaction would still stay committed. This is ensured by persisting data permanently on disk.
 \end{itemize} 
 
 \subsection{BASE}
 \label{sec:background_base}
-BASE, another design approach defined by Brewer, offers looser requirements than ACID. Non-relational database systems concentrating on high availability make use of the BASE approach, which sacrificies strong consistency in favor of being always accessible. Examples include huge storage services such as Amazon's Dynamo, Facebook's Cassandra or Google's BigTable, where millions of active users expect the service to be available at all times. Nevertheless, there has to be trade-offs. By not guaranteeing the consistency at all time, the system cost is reduced and clients are happier, but a client might not get an immediate response to his/her request.
+BASE, another design approach defined by Brewer, offers looser requirements than ACID\cite{brewer2012cap}. Non-relational database systems concentrating on high availability make use of the BASE approach, which sacrifices strong consistency in favour of being always accessible. Examples include huge storage services such as Amazon's Dynamo, Facebook's Cassandra or Google's BigTable, where millions of active users always expect the service to be available. Nevertheless, there must be trade-offs. By not guaranteeing the consistency at all time, the system cost is reduced, and clients are happier, but a client might not get an immediate response to his/her request.
 
-With milestone 4, replication is added to the system with the intention of increasing the availability by distributing the data records to the two replica servers. Redundancy comes along with the replication strategy, however when a node crashes or fails, read operations can be processed via replicated servers.
+With Milestone 4, replication is added to the system with the intention of increasing the availability by distributing the data records to the two replica servers. Redundancy comes along with the replication strategy, however when a node crashes or fails, read operations can be processed via replicated servers.
 
 \begin{itemize}
   \item Basic Availability:\\
@@ -53,9 +52,10 @@ Our system conforms to the first property of BASE by being generally available, 
 
 Eventual consistency is achieved within the system due to requirements of Milestone 4. If there are no updates for a long time all the replicas will become eventually consistent by updating key ranges of the coordinator and replica nodes placed on an hashring. In order to maintain strong consistency as described in \ref{sec:background_acid}, a client performing a \texttt{PUT} operation would have to also wait until the value gets sent over to both of the servers replicas, which would result in slower \texttt{PUT}s. Since our system is not designed to handle important real-time transactions, such as in a banking system, eventual consistency satisfies our database needs while allowing faster response times and higher availability. 
 
-Since the implementation of Milestone 3, it is possible to monitor key-value stores continuously. The ECS pings each key-value server every 700 ms to be informed about the servers availability. If a server is does not respond to the ping within a given period, it is considered shutdown. With replication active, single failing server nodes can be tolerated, thus partition tolerance is provided as well. Since each piece of data exists on three different servers, the only way information can get permanently lost is if all three responsible servers crash simultaneously with no time in between to transfer data to a running server.
+Since the implementation of Milestone 3, it is possible to monitor key-value stores continuously. The ECS pings each key-value server every 700 ms to be informed about the servers’ availability. If a server is does not respond to the ping within a given period, it is considered shutdown. With replication active, single failing server nodes can be tolerated, thus partition tolerance is provided as well. Since each piece of data exists on three different servers, the only way information can get permanently lost is if all three responsible servers crash simultaneously with no time in between to transfer data to a running server.
 
-One of the downsides of our system is that the chat system runs just one of the requested servers by the client. Thus, partition tolerance may not be covered in case of that particular serving crashing. As in the most database systems there are trade-offs between the properties: availability, consistency and partition tolerance.
+One of the downsides of our system is that the chat system runs just one of the requested servers by the client. Thus, partition tolerance may not be covered in case of that serving crashing. As in the most database systems there are trade-offs between the properties: availability, consistency and partition tolerance.
+
 
     
 
