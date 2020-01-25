@@ -3,34 +3,27 @@
 
 To develop a key-value database, one of the main qualifications to consider is, how to handle large amount of data while making the system available for multiple clients. Currently, there are lots of large-scaled cloud database systems, such as Amazon Web Services, Microsoft Azure SQL or Oracle Database, that have a system consisting of properties: scalability, cost effectiveness and latest technology availability. 
 
-<<<<<<< HEAD
-Amazon DynamoDB is a non-relational database system, which provides low latency, to be more specific single-digit millisecond latency \cite{amazon}, considering the system is used all over the world. Data records are stored with a primary or composite key and several attributes depending on client's request. The only constraint is that these records, including attribute names and attribute values, cannot exceed 400 KB which is rather a large space for storing the provided data \cite{amazon}.
-
-Apache Cassandra is another commonly used key-value based database system, which is known for managing some of the world's largest datasets on clusters with the help of thousands of nodes distributed amongst multiple data centres. The distributed database system focuses on high level of availability by scaling millions of read and write requests per second. System handles the network partitions gracefully, in cases such as, single node failure or even entire data set errors \cite{chebotko2015big}.
-=======
 Another property that key-value stores such as BigTable and PNUTS maintain in their system is elasticity. Elasticity is measured whether a system can be scaled-up dynamically by adding more nodes or can be scaled-down by removing nodes\cite{agrawal2011database}. The feature is provided in our final program by clients being able to add any number of servers to the system or shutting them down.
 
-In the following, some of the popular key-value databases are described for the purpose of  discussing the design approaches and compare them with our system.
+In the following, some of the popular key-value databases are described for the purpose of discussing the design approaches and compare them with our system.
 
 Amazon DynamoDB is a non-relational database system, which provides low latency, to be more specific single-digit millisecond latency\cite{amazon}, considering the system is used all over the world. Data records are stored with a primary or composite key and several attributes depending on client's request.\cite{kalid2017big}. The only constraint is that these records, including attribute names and attribute values, cannot exceed 400 KB which is rather a large space for storing the provided data\cite{amazon}.
 
 Apache Cassandra is another commonly used key-value based database system, which is known for managing some of the world's largest datasets on clusters with the help of thousands of nodes distributed amongst multiple data centres \cite{chebotko2015big}. For the professionals Cassandra is the first choice since it offers more flexibility regarding fault handling and managing wide range data, unlike BigTable and Dynamo\cite{kalid2017big}. The system focuses on high level of availability by scaling millions of read and write requests per second.
->>>>>>> 32b3c1869a9efa3f944deffd3168e2d89219e893
 
 Another example, and one of our biggest inspirations, is Redis. This key-value store rose in popularity after its creation in 2009 and got deployed by many big companies such as Instagram \cite{krieger2011instagram} and Twitter \cite{yu2014twitter}, which require gigantic databases and fast responses to the millions of users they serve. One of its multiple features is the Pub/Sub system \cite{redis2020pubsub}, added in March 2010 \cite{sanfilippo2010pubsub}. Using that, clients can choose specific keys they are interested in and receive an update whenever the value gets changed. The way this is modeled is that the Redis clients keep waiting on their socket for the server to send them an update. In a way, it allows really basic communication between the different clients.
-During this period, while publishers are allowed to execute other commands normally, subscribers are limited to only subscribtion related commands.
+During this period, while publishers are allowed to execute other commands normally, subscribers are limited to only subscription related commands.
 
-<<<<<<< HEAD
 %TODO join: browse chatrooms in list, append user and sendall  https://making.pusher.com/redis-pubsub-under-the-hood/
-% TODO leave: O(1) and sendall (O(n) if chatroom empty)
 
-In our implementation, we wanted to extend on this idea, but make it so that clients are not blocked during a subscribtion session. We wanted to maintain the main use case of our system, mainly accessing and manipulating key-value pairs, even while a client is subscribed to channels. Also, we did not want to distinguish publishers from subscribers. All clients who are interested in a key should be able to exchange information with each other.
-And not only should subscribers be able to store and obtain information from the database, but also send back information to the publishers. So the way we modeled it in the end, was having a many-to-many relationship to all other subscribers on the same key, effectively, implementing a group chat functionality. Subscribers on the same key represent users in the same chatroom. 
 
-By observing the provided features of above-mentioned databases, one can say that our program is a small scaled version of them. It provides the core functionalities such as responding the client with consistent values as fast as possible, being available within a certain amount of time, and maintaining resilience towards partitions in the network.
-=======
+%TODO leave: O(1) and sendall (O(n) if chatroom empty)
+
+In our implementation, we wanted to extend on this idea, but make it so that clients are not blocked during a subscription session. We wanted to maintain the main use case of our system, mainly accessing and manipulating key-value pairs, even while a client is subscribed to channels. Also, we did not want to distinguish publishers from subscribers. All clients who are interested in a key should be able to exchange information with each other.
+
+And not only should subscribers be able to store and obtain information from the database, but also send back information to the publishers. So the way we modelled it in the end, was having a many-to-many relationship to all other subscribers on the same key, effectively, implementing a group chat functionality. Subscribers on the same key represent users in the same chatroom. 
+
 By observing the provided features of above-mentioned databases, one can say that our program is a very small scaled version of them. It provides the core functionalities such as providing elasticity, responding the client with consistent values as fast as possible, being available within a certain amount of time, and maintaining resilience towards partitions in the network.
->>>>>>> 32b3c1869a9efa3f944deffd3168e2d89219e893
 
 Cloud Data Bases Praktikum started off with a simple implementation of a client with the aim of a better understanding of the client/server architecture and socket programming. Nonetheless, the system is developed with implementing a one-to-many relationship being one server and multiple clients. The program is improved with a basic key-value storage service extension for clients to perform read and write operations with the help of mentioned storage server. 
 

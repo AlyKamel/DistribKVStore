@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.13)  25 JAN 2020 16:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.13)  25 JAN 2020 17:21
 entering extended mode
 **./main.tex
 (main.tex
@@ -1440,16 +1440,20 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 ])
 (02_background.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 9.0pt on input line 10.
 
-Underfull \vbox (badness 1990) has occurred while \output is active []
+
+Package natbib Warning: Citation `brewer2000towards' on page 2 undefined on inp
+ut line 21.
 
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 41.
+(Font)              scaled to size 9.0pt on input line 31.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 7.0pt on input line 41.
- [2.2]
+(Font)              scaled to size 7.0pt on input line 31.
+[2.2]
 Overfull \hbox (4.61589pt too wide) in paragraph at lines 46--48
 \T1/LinuxLibertineT-TLF/m/n/9 (-20) Since stale data is per-mit-ted, servers ne
 ver truly know whether
@@ -1469,7 +1473,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 ) (03_key-valueserver.tex
-<figures/kvs_arch.png, id=132, 1774.63pt x 1175.39125pt>
+<figures/kvs_arch.png, id=136, 1774.63pt x 1175.39125pt>
 File: figures/kvs_arch.png Graphic file (type png)
 <use figures/kvs_arch.png>
 Package pdftex.def Info: figures/kvs_arch.png  used on input line 6.
@@ -1478,11 +1482,7 @@ Package pdftex.def Info: figures/kvs_arch.png  used on input line 6.
 
 Class acmart Warning: A possible image without description on input line 8.
 
-
-Underfull \vbox (badness 2096) has occurred while \output is active []
-
-)
-(04_groupchat.tex
+) (04_groupchat.tex
 
 Package Fancyhdr Warning: \headheight is too small (13.0pt): 
 Make it at least 15.19852pt.
@@ -1502,7 +1502,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 64--65
 
  []
 
-<figures/chat_graph.png, id=144, 2196.205pt x 2092.81876pt>
+<figures/chat_graph.png, id=145, 2196.205pt x 2092.81876pt>
 File: figures/chat_graph.png Graphic file (type png)
 <use figures/chat_graph.png>
 Package pdftex.def Info: figures/chat_graph.png  used on input line 70.
@@ -1510,8 +1510,11 @@ Package pdftex.def Info: figures/chat_graph.png  used on input line 70.
 
 Class acmart Warning: A possible image without description on input line 72.
 
-) (05_implementation.tex [4.4 <./figures/chat_graph.png>]
-<figures/client_arch.png, id=161, 2114.90125pt x 282.05376pt>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) (05_implementation.tex [4.4]
+<figures/client_arch.png, id=163, 2114.90125pt x 282.05376pt>
 File: figures/client_arch.png Graphic file (type png)
 <use figures/client_arch.png>
 Package pdftex.def Info: figures/client_arch.png  used on input line 11.
@@ -1524,9 +1527,37 @@ Class acmart Warning: A possible image without description on input line 14.
 LaTeX Warning: Reference `sec:backgorund_cap' on page 5 undefined on input line
  42.
 
-) (06_performanceanalysis.tex) (03_summary.tex) (main.bbl
-LaTeX Info: Redefining \tempurl on input line 96.
+) (06_performanceanalysis.tex) (03_summary.tex) (main.bbl [5.5 <./figures/chat_
+graph.png> <./figures/client_arch.png>]
+LaTeX Info: Redefining \tempurl on input line 87.
+LaTeX Info: Redefining \tempurl on input line 124.
+
+! Illegal parameter number in definition of \reserved@a.
+<to be read again> 
+                   3
+l.134   more}}
+              .
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! You can't use `macro parameter character #' in horizontal mode.
+<argument> Redis weekly update ##
+                                 3 - Pub/Sub and more
+l.134   more}}
+              .
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+LaTeX Info: Redefining \tempurl on input line 137.
+LaTeX Info: Redefining \tempurl on input line 149.
+LaTeX Info: Redefining \tempurl on input line 161.
 )
+
+Package natbib Warning: There were undefined citations.
+
 
 Class acmart Warning: Some images may lack descriptions.
 
@@ -1542,10 +1573,10 @@ Package glossaries Warning: No \printglossary or \printglossaries found.
 This document will not have a glossary.
 
 
-Package balance Warning: You have called \balance in second column
-(balance)                Columns might not be balanced.
+Overfull \vbox (1.54099pt too high) has occurred while \output is active []
 
-[5.5 <./figures/client_arch.png>]
+
+[6.6]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 59.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 59.
  (main.aux)
@@ -1559,13 +1590,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 23157 strings out of 492484
- 357088 string characters out of 3121601
- 512249 words of memory out of 3000000
- 26518 multiletter control sequences out of 15000+200000
- 164075 words of font info for 298 fonts, out of 3000000 for 9000
+ 23175 strings out of 492484
+ 357455 string characters out of 3121601
+ 512306 words of memory out of 3000000
+ 26524 multiletter control sequences out of 15000+200000
+ 165479 words of font info for 305 fonts, out of 3000000 for 9000
  1303 hyphenation exceptions out of 8191
- 63i,12n,100p,1033b,512s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 63i,11n,100p,1033b,559s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/libertine/l
 btn_25tcsq.enc}{C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvip
 s/inconsolata/i4-t1-4.enc}{C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fon
@@ -1585,10 +1616,11 @@ fonts/type1/public/libertine/LinLibertineT.pfb><C:/Users/iremk/AppData/Local/Pr
 ograms/MiKTeX 2.9/fonts/type1/public/libertine/LinLibertineTB.pfb><C:/Users/ire
 mk/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/libertine/LinLibertineT
 I.pfb><C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/newt
-x/txsys.pfb>
-Output written on main.pdf (5 pages, 642116 bytes).
+x/txmiaX.pfb><C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
+ic/newtx/txsys.pfb>
+Output written on main.pdf (6 pages, 653011 bytes).
 PDF statistics:
- 242 PDF objects out of 1000 (max. 8388607)
- 58 named destinations out of 1000 (max. 500000)
+ 264 PDF objects out of 1000 (max. 8388607)
+ 61 named destinations out of 1000 (max. 500000)
  50372 words of extra memory for PDF output out of 51595 (max. 10000000)
 
