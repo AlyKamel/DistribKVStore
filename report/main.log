@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.13)  24 JAN 2020 20:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.13)  25 JAN 2020 11:36
 entering extended mode
 **./main.tex
 (main.tex
@@ -1441,6 +1441,10 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 
 ]) (02_background.tex
+
+Package natbib Warning: Citation `brewer2000towards' on page 2 undefined on inp
+ut line 8.
+
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 9.0pt on input line 11.
 
@@ -1454,7 +1458,7 @@ LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
 (Font)              scaled to size 7.0pt on input line 43.
 [2.2]) (03_key-valueserver.tex
-<figures/kvs_arch.png, id=127, 1774.63pt x 1175.39125pt>
+<figures/kvs_arch.png, id=122, 1774.63pt x 1175.39125pt>
 File: figures/kvs_arch.png Graphic file (type png)
 <use figures/kvs_arch.png>
 Package pdftex.def Info: figures/kvs_arch.png  used on input line 6.
@@ -1486,7 +1490,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 64--65
 
  []
 
-<figures/chat_graph.png, id=140, 2196.205pt x 2092.81876pt>
+<figures/chat_graph.png, id=135, 2196.205pt x 2092.81876pt>
 File: figures/chat_graph.png Graphic file (type png)
 <use figures/chat_graph.png>
 Package pdftex.def Info: figures/chat_graph.png  used on input line 70.
@@ -1495,7 +1499,7 @@ Package pdftex.def Info: figures/chat_graph.png  used on input line 70.
 Class acmart Warning: A possible image without description on input line 72.
 
 ) (05_implementation.tex
-<figures/client_arch.png, id=141, 2114.90125pt x 282.05376pt>
+<figures/client_arch.png, id=136, 2114.90125pt x 282.05376pt>
 File: figures/client_arch.png Graphic file (type png)
 <use figures/client_arch.png>
 Package pdftex.def Info: figures/client_arch.png  used on input line 11.
@@ -1508,7 +1512,7 @@ Class acmart Warning: A possible image without description on input line 14.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [4.4 <./figures/chat_graph.png>]
-<figures/chatsystem.png, id=158, 2262.4525pt x 682.55pt>
+<figures/chatsystem.png, id=153, 2262.4525pt x 682.55pt>
 File: figures/chatsystem.png Graphic file (type png)
 <use figures/chatsystem.png>
 Package pdftex.def Info: figures/chatsystem.png  used on input line 31.
@@ -1526,6 +1530,9 @@ eT-TLF/m/it/7 (+20) "CAP Twelve Years Later: How the "Rules" Have
  []
 
 )
+
+Package natbib Warning: There were undefined citations.
+
 
 Class acmart Warning: Some images may lack descriptions.
 
@@ -1548,11 +1555,11 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 418CE562973A4A46DB20F73AFA41DCBC;2916.
  ) 
 Here is how much of TeX's memory you used:
- 23137 strings out of 492484
- 356901 string characters out of 3121601
+ 23140 strings out of 492484
+ 356973 string characters out of 3121601
  511177 words of memory out of 3000000
  26509 multiletter control sequences out of 15000+200000
- 168956 words of font info for 294 fonts, out of 3000000 for 9000
+ 169229 words of font info for 296 fonts, out of 3000000 for 9000
  1303 hyphenation exceptions out of 8191
  63i,11n,100p,1033b,514s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/libertine/l
@@ -1572,9 +1579,9 @@ bertineT.pfb><C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
 ic/libertine/LinLibertineTB.pfb><C:/Users/iremk/AppData/Local/Programs/MiKTeX 2
 .9/fonts/type1/public/libertine/LinLibertineTI.pfb><C:/Users/iremk/AppData/Loca
 l/Programs/MiKTeX 2.9/fonts/type1/public/newtx/txsys.pfb>
-Output written on main.pdf (5 pages, 701928 bytes).
+Output written on main.pdf (5 pages, 701580 bytes).
 PDF statistics:
- 237 PDF objects out of 1000 (max. 8388607)
+ 234 PDF objects out of 1000 (max. 8388607)
  58 named destinations out of 1000 (max. 500000)
  54473 words of extra memory for PDF output out of 61914 (max. 10000000)
 
