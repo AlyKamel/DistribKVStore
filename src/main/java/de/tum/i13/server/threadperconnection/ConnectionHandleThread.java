@@ -76,7 +76,9 @@ public class ConnectionHandleThread extends Thread {
   }
 
   private String addUser(BufferedReader in, PrintWriter out) throws IOException {
-    String username = in.readLine();
+    String username;
+    while ((username = in.readLine()) == null) {     
+    }
     String result = ste.addUser(username);
     boolean success = result != null;
     result = "user_" + (success ? "success " + result : "error " + username);
