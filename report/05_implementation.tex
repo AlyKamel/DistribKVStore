@@ -32,12 +32,12 @@ Our idea for the chatting functionality was for it to be as lightweight as possi
 
 \subsection{Chat System}
 \label{sec:implementation_chatsystem}
-The Chat system consists of three main components as namely:
+The chat system consists of three main components as namely:
 \begin{enumerate}
 	\item \textit{ChatManager}, who is in charge of providing all chat functionalities to the client, including connecting to a chatroom and sending messages.
 	\item \textit{ChatRoom}, which is identified by a chatID. A Chatroom object contains a map of all connected users and their sockets, in order to be able to forward messages.
 	\item \textit{ChatBot}, which is responsible to execute PUT and GET commands during a chat session. The chatbot acts exactly like a client, meaning it first has to connect to the responsible server and then send its request.
 	
-By utilizing a chatbot, chat requests containing a key-value operation are slowed down, since only one 'client' is performing those operations. However, if each chat user is tasked with executing the commands himself instead, then whenever a key is located at a server different from the server responsible for the chatroom, the client would need to reconnect twice. Not only that, but also all chat messages sent while the user was disconnected would either get lost or will be displayed after the user has reconnected, which would make the user temporarily unavailable. As mentioned in \ref{sec:backgorund_cap}, our system focuses on being available. 	
+By utilizing a chatbot, chat requests containing a key-value operation are slowed down, since only one "client" is performing those operations. However, if each chat user is tasked with executing the commands himself instead, then whenever a key is located at a server different from the server responsible for the chatroom, the client would need to reconnect twice. Not only that, but also all chat messages sent while the user was disconnected would either get lost or will be displayed after the user has reconnected, which would make the user temporarily unavailable. As mentioned in section \ref{sec:background_cap}, our system focuses on being available. 	
 
 \end{enumerate}

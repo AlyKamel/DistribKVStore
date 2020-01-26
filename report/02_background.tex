@@ -10,12 +10,12 @@ According to the CAP Theorem, distributed databases have three substantial prope
   \item Consistency: \\
   Clients are provided with fresh data, meaning the most up-to-date version of the data that got stored after the last write operation.
   \item Availability: \\
-  Servers respond to the request of clients at all cases. Every non-failing node in the system must be able to serve the client in a reasonable amount of time.
+  Servers respond to the request of clients at all cases. Every non-failing node in the system must be able to serve the client in a reasonable amount of time\cite{gilbert2002brewer}.
   \item Partition tolerance: \\
   Whenever a server crashes, the rest of the system will still stay functional after the crash, without any information being lost. This is mainly secured by replicating data across multiple servers.
 \end{itemize}
 
-Later, Brewer mentions that designers do not have to abide strictly to the 2 of 3 principle, it is rather a spectrum than binary\cite{brewer2012cap}. In other words, a distributed database system can favour high level of consistency and partition tolerance by having low level of availability. Thus, the initial theorem is improved by not having to sacrifice availability completely in this case.
+12 years later, Brewer mentions that designers do not have to abide strictly to the 2 of 3 principle, it is rather a spectrum than binary\cite{brewer2012cap}. In other words, a distributed database system can favour high level of consistency and partition tolerance by having low level of availability. Thus, the initial theorem is improved by not having to sacrifice availability completely in this case.
 
 There are two design approaches for distributed database systems, namely ACID and BASE. According to Brewer, these two design approaches may be referred as opposites of each other\cite{brewer2012cap} because of their priorities and use cases. ACID approach is used most of the times for relational database systems (SQL) and focuses on consistency to maintain reliability. On the contrary BASE is more suitable for the non-relational database systems (NoSQL) concentrating on providing the client high level of availability\cite{brewer2000cap}.
 
@@ -45,7 +45,7 @@ With Milestone 4, replication is added to the system with the intention of incre
   \item Soft State:\\
 Since stale data is permitted, servers never truly know whether they are currently up-to-date or if they still contain invalid data.
   \item Eventual Consistency:\\
-If there are no updates in the system for a long time, then all servers will gradually become consistent. Since the time is not specified, servers are always in a soft state, as explained above. reference: Milestone4 slides
+If there are no updates in the system for a long time, then all servers will gradually become consistent. Since the time is not specified, servers are always in a soft state, as explained above.
 \end{itemize}
 
 Our system conforms to the first property of BASE by being generally available, because servers respond to clients requests even if a latency occurs. The group chat extension, later to be discussed thoroughly, preserves the same requirements.

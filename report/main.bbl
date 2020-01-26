@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{10}
+\begin{thebibliography}{11}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -97,6 +97,17 @@
 \newblock \showarticletitle{A big data modeling methodology for Apache
   Cassandra}. In \bibinfo{booktitle}{\emph{2015 IEEE International Congress on
   Big Data}}. IEEE, \bibinfo{pages}{238--245}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Gilbert and Lynch}{Gilbert and Lynch}{2002}]%
+        {gilbert2002brewer}
+\bibfield{author}{\bibinfo{person}{Seth Gilbert} {and} \bibinfo{person}{Nancy
+  Lynch}.} \bibinfo{year}{2002}\natexlab{}.
+\newblock \showarticletitle{Brewer's conjecture and the feasibility of
+  consistent, available, partition-tolerant web services}.
+\newblock \bibinfo{journal}{\emph{Acm Sigact News}} \bibinfo{volume}{33},
+  \bibinfo{number}{2} (\bibinfo{year}{2002}), \bibinfo{pages}{51--59}.
 \newblock
 
 
