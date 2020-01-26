@@ -1,0 +1,13 @@
+put a aa
+put b bb
+put c cc
+put d dd
+put A AA
+put B BB
+put C CC
+put D DD
+put empty  
+put / //
+put & &&
+put * **
+put " ""

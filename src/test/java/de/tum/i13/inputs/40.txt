@@ -1,0 +1,14 @@
+del a
+del b
+del c
+del d
+del A
+del B
+del C
+del D
+del empty
+del /
+del &
+del *
+del "
+del notexist

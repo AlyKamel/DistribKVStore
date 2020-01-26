@@ -1,0 +1,14 @@
+get a
+get b
+get c
+get d
+get A
+get B
+get C
+get D
+get empty  x
+get / x/
+get & x&
+get * x*
+get " x"
+get notexist
