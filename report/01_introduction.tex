@@ -7,34 +7,17 @@ Another property that key-value stores such as BigTable and PNUTS maintain in th
 
 In the following, some of the popular key-value databases are described for the purpose of discussing the design approaches and compare them with our system.
 
-Amazon DynamoDB is a non-relational database system, which provides low latency, to be more specific single-digit millisecond latency\cite{amazon}, considering the system is used all over the world. Data records are stored with a primary or composite key and several attributes depending on client's request.\cite{kalid2017big}. The only constraint is that these records, including attribute names and attribute values, cannot exceed 400 KB which is rather a large space for storing the provided data\cite{amazon}.
+Amazon DynamoDB is a non-relational database system, which provides low latency, to be more specific single-digit millisecond latency\cite{amazon}, considering the system is used all over the world. Data records are stored with a primary or composite key and several attributes depending on client's request\cite{kalid2017big}. The only constraint is that these records, including attribute names and attribute values, cannot exceed 400 KB which is rather a large space for storing the provided data\cite{amazon}.
 
-Apache Cassandra is another commonly used key-value based database system, which is known for managing some of the world's largest datasets on clusters with the help of thousands of nodes distributed amongst multiple data centres \cite{chebotko2015big}. For the professionals Cassandra is the first choice since it offers more flexibility regarding fault handling and managing wide range data, unlike BigTable and Dynamo\cite{kalid2017big}. The system focuses on high level of availability by scaling millions of read and write requests per second.
+Apache Cassandra is another commonly used key-value based database system, which is known for managing some of the world's largest datasets on clusters with the help of thousands of nodes distributed amongst multiple data centres \cite{chebotko2015big}. For the professionals Cassandra is the first choice since it offers more flexibility regarding fault handling and managing wide range data, unlike BigTable and Dynamo\cite{kalid2017big}. The system focuses on high level of availability by scaling millions of read and write requests per second\cite{chebotko2015big}.
 
 Another example, and one of our biggest inspirations, is Redis. This key-value store rose in popularity after its creation in 2009 and got deployed by many big companies such as Instagram \cite{krieger2011instagram} and Twitter \cite{yu2014twitter}, which require gigantic databases and fast responses to the millions of users they serve. One of its multiple features is the Pub/Sub system \cite{redis2020pubsub}, added in March 2010 \cite{sanfilippo2010pubsub}. Using that, clients can choose specific keys they are interested in and receive an update whenever the value gets changed. The way this is modeled is that the Redis clients keep waiting on their socket for the server to send them an update. In a way, it allows really basic communication between the different clients.
 During this period, while publishers are allowed to execute other commands normally, subscribers are limited to only subscription related commands.
 
 %TODO join: browse chatrooms in list, append user and sendall  https://making.pusher.com/redis-pubsub-under-the-hood/
 
-
 %TODO leave: O(1) and sendall (O(n) if chatroom empty)
 
-In our implementation, we wanted to extend on this idea, but make it so that clients are not blocked during a subscription session. We wanted to maintain the main use case of our system, mainly accessing and manipulating key-value pairs, even while a client is subscribed to channels. Also, we did not want to distinguish publishers from subscribers. All clients who are interested in a key should be able to exchange information with each other.
-
-And not only should subscribers be able to store and obtain information from the database, but also send back information to the publishers. So the way we modelled it in the end, was having a many-to-many relationship to all other subscribers on the same key, effectively, implementing a group chat functionality. Subscribers on the same key represent users in the same chatroom. 
-
 By observing the provided features of above-mentioned databases, one can say that our program is a very small scaled version of them. It provides the core functionalities such as providing elasticity, responding the client with consistent values as fast as possible, being available within a certain amount of time, and maintaining resilience towards partitions in the network.
-
-Cloud Data Bases Praktikum started off with a simple implementation of a client with the aim of a better understanding of the client/server architecture and socket programming. Nonetheless, the system is developed with implementing a one-to-many relationship being one server and multiple clients. The program is improved with a basic key-value storage service extension for clients to perform read and write operations with the help of mentioned storage server. 
-
-In the following milestones, the architecture is enhanced to a many-to-many relationship consisting of multiple servers and multiple clients. To manage the servers an External Configuration Service is created, thus the servers which are placed on an hashring can communicate with each other. Following that replication strategy is added to the system in order to maintain availability, consistency and partition tolerance. 
-
-In the last step, namely milestone 5, we extended our program with a groupchat feature. In the decision process, our initial goal was to come up with an idea that the clients can make the most use of.
-
-We started with examining the features of various database systems to get inspired. Thereafter, we opted to have a chat system, where multiple clients can enter a chatroom and exchange messages. All messages send in the same room will be sent to all active members of that chatroom. The essence of providing chatrooms for clients is for them to retrieve information in a short amount of time by being able to ask their questions other members of the same chatroom. 
-
-Going into more detail, we decided to have two different chatroom options, being public and private rooms. In a public room, clients can exchange more general information, such as TODO. In contrast, private rooms are more suitable for sharing sensitive information, such as credit card passwords. Since a private chatroom can only be accessed via a password, clients are ensured to keep their messages safe.
-
-Since clients can perform read and write operations while chatting, we wanted to have a chatbot to handle such requests. All messages, including the commands put and get, are directed to the chatbot which is responsible to access to the database and perform the requests.
  
-This report focuses on giving a detailed explanation of our extension and discussing the outcomes of the performance analysis.
+In the following section our motivation of creating a group chat is explained beginning with a brief description of how our system is built up during the Cloud Data Bases Praktikum. Nevertheless our report focuses mainly on the detailed analysis of our extension and evaluation of the performance tests.

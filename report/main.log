@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.13)  25 JAN 2020 17:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.13)  26 JAN 2020 13:21
 entering extended mode
 **./main.tex
 (main.tex
@@ -932,7 +932,9 @@ nuxLibertineT-TLF.
 )
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 9.0pt on input line 2895.
-) (settings.tex
+)
+Class acmart Info: Suppressing bibformat on input line 3.
+ (settings.tex
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/glossaries/base\gl
 ossaries.sty"
 Package: glossaries 2019/12/06 v4.44 (NLCT)
@@ -1125,7 +1127,7 @@ Package glossaries Info: Writing glossary file main.acn on input line 30.
 \c@commalistori=\count173
 \enitdp@commalistor=\count174
 )
-Package hyperref Info: Option `pdfdisplaydoctitle' set `true' on input line 7.
+Package hyperref Info: Option `pdfdisplaydoctitle' set `true' on input line 9.
 \c@theorem=\count175
 
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/preprint\balance.s
@@ -1136,61 +1138,61 @@ Package: balance 1999/02/23 4.3 (PWD)
 Include comment 'anonsuppress' (main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/nxlmi/m/it on input line 7.
+LaTeX Font Info:    Checking defaults for OML/nxlmi/m/it on input line 9.
 LaTeX Font Info:    Trying to load font information for OML+nxlmi on input line
- 7.
+ 9.
 
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/newtx\omlnxlmi.fd"
 File: omlnxlmi.fd 2013/11/19 Fontinst v1.933 font definitions for OML/nxlmi.
 )
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for U/ntxexa/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for U/ntxexa/m/n on input line 9.
 LaTeX Font Info:    Trying to load font information for U+ntxexa on input line 
-7.
+9.
  ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/newtx\untxexa.fd"
 File: untxexa.fd 2012/04/16 Fontinst v1.933 font definitions for U/ntxexa.
 )
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 7.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 7
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 9.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 9
 .
  ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\ts1cmr.fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for LMS/ntxsy/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for LMS/ntxsy/m/n on input line 9.
 LaTeX Font Info:    Trying to load font information for LMS+ntxsy on input line
- 7.
+ 9.
  ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/newtx\lmsntxsy.fd
 "
 File: lmsntxsy.fd 2016/07/02 Fontinst v1.933 font definitions for LMS/ntxsy.
 )
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for LMX/ntxexx/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for LMX/ntxexx/m/n on input line 9.
 LaTeX Font Info:    Trying to load font information for LMX+ntxexx on input lin
-e 7.
+e 9.
 
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/newtx\lmxntxexx.fd
 "
 File: lmxntxexx.fd 2016/07/03 Fontinst v1.933 font definitions for LMX/ntxexx.
 )
-LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    ... okay on input line 9.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 7.0pt on input line 7.
+(Font)              scaled to size 7.0pt on input line 9.
 LaTeX Font Info:    Trying to load font information for OT1+LinuxLibertineT-TLF
- on input line 7.
+ on input line 9.
 
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/libertine\ot1linux
 libertinet-tlf.fd"
@@ -1198,43 +1200,43 @@ File: OT1LinuxLibertineT-TLF.fd 2017/03/20 (autoinst) Font definitions for OT1/
 LinuxLibertineT-TLF.
 )
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 7.3pt on input line 7.
+(Font)              scaled to size 7.3pt on input line 9.
 <<ot1.cmap>>
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 5.5pt on input line 7.
+(Font)              scaled to size 5.5pt on input line 9.
 <<oml.cmap>>
-LaTeX Font Info:    Trying to load font information for U+msa on input line 7.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 9.
 
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 7.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 9.
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for U+ntxmia on input line 
-7.
+9.
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/newtx\untxmia.fd"
 File: untxmia.fd 2018/04/14 Fontinst v1.933 font definitions for U/ntxmia.
 )
 LaTeX Font Info:    Trying to load font information for U+ntxsym on input line 
-7.
+9.
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/newtx\untxsym.fd"
 File: untxsym.fd 2015/03/20 Fontinst v1.933 font definitions for U/ntxsym.
 )
 LaTeX Font Info:    Trying to load font information for U+ntxsyc on input line 
-7.
+9.
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/newtx\untxsyc.fd"
 File: untxsyc.fd 2012/04/12 Fontinst v1.933 font definitions for U/ntxsyc.
 )
-LaTeX Info: Redefining \microtypecontext on input line 7.
+LaTeX Info: Redefining \microtypecontext on input line 9.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `basictext'.
-LaTeX Info: Redefining \showhyphens on input line 7.
+LaTeX Info: Redefining \showhyphens on input line 9.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -1244,7 +1246,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
 ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box41
-Package hyperref Info: Link coloring OFF on input line 7.
+Package hyperref Info: Link coloring OFF on input line 9.
 
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\nameref.s
 ty"
@@ -1256,9 +1258,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count176
 )
-LaTeX Info: Redefining \ref on input line 7.
-LaTeX Info: Redefining \pageref on input line 7.
-LaTeX Info: Redefining \nameref on input line 7.
+LaTeX Info: Redefining \ref on input line 9.
+LaTeX Info: Redefining \pageref on input line 9.
+LaTeX Info: Redefining \nameref on input line 9.
  (main.out) (main.out)
 \@outlinefile=\write7
 \openout7 = `main.out'.
@@ -1346,11 +1348,11 @@ Package: ltcaption 2018/08/26 v1.4a longtable captions (AR)
 )
 Package caption Info: supertabular package is loaded.
 Package caption Info: End \AtBeginDocument code.
- (authors.tex) (abstract.tex) Excluding 'CCSXML' comment.
+ (authors.tex) (abstract.tex)
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 17.28pt on input line 40.
+(Font)              scaled to size 17.28pt on input line 17.
 LaTeX Font Info:    Trying to load font information for T1+LinuxBiolinumT-TLF o
-n input line 40.
+n input line 17.
 
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/libertine\t1linuxb
 iolinumt-tlf.fd"
@@ -1358,25 +1360,25 @@ File: T1LinuxBiolinumT-TLF.fd 2017/03/20 (autoinst) Font definitions for T1/Lin
 uxBiolinumT-TLF.
 )
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 17.28pt on input line 40.
+(Font)              scaled to size 17.28pt on input line 17.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxBiolinumT-TLF' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
-(Font)              scaled to size 17.28pt on input line 40.
+(Font)              scaled to size 17.28pt on input line 17.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 12.0pt on input line 40.
+(Font)              scaled to size 12.0pt on input line 17.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 12.0pt on input line 40.
+(Font)              scaled to size 12.0pt on input line 17.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxLibertineT-TLF' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.8pt on input line 40.
+(Font)              scaled to size 8.8pt on input line 17.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.6pt on input line 40.
+(Font)              scaled to size 6.6pt on input line 17.
 
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/microtype\mt-msa.c
 fg"
@@ -1387,7 +1389,7 @@ fg"
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Trying to load font information for TS1+LinuxLibertineT-TLF
- on input line 40.
+ on input line 17.
 
 ("C:\Users\iremk\AppData\Local\Programs\MiKTeX 2.9\tex/latex/libertine\ts1linux
 libertinet-tlf.fd"
@@ -1395,43 +1397,29 @@ File: TS1LinuxLibertineT-TLF.fd 2017/03/20 (autoinst) Font definitions for TS1/
 LinuxLibertineT-TLF.
 )
 LaTeX Font Info:    Font shape `TS1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.8pt on input line 40.
+(Font)              scaled to size 8.8pt on input line 17.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxLibertineT-TLF' (encoding: TS1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 40.
+(Font)              scaled to size 10.0pt on input line 17.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 40.
+(Font)              scaled to size 10.0pt on input line 17.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 5.5pt on input line 40.
+(Font)              scaled to size 5.5pt on input line 17.
 LaTeX Font Info:    Font shape `TS1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 5.5pt on input line 40.
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 7.0pt on input line 40.
-LaTeX Font Info:    Font shape `TS1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 7.0pt on input line 40.
+(Font)              scaled to size 5.5pt on input line 17.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 9.0pt on input line 40.
+(Font)              scaled to size 9.0pt on input line 17.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 10.95pt on input line 40.
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 40.
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 8.0pt on input line 40.
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 8.0pt on input line 40.
-LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 40.
-LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.2pt on input line 40.
+(Font)              scaled to size 10.95pt on input line 17.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\\' on input line 40.
+(hyperref)                removing `\\' on input line 17.
 
-(01_introduction.tex
+(01_introduction.tex) (00_motivation.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [1.1{C:/Users/iremk/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
@@ -1467,8 +1455,12 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zi4' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-) (03_key-valueserver.tex
-<figures/kvs_arch.png, id=141, 1774.63pt x 1175.39125pt>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+)
+(03_key-valueserver.tex
+<figures/kvs_arch.png, id=140, 1774.63pt x 1175.39125pt>
 File: figures/kvs_arch.png Graphic file (type png)
 <use figures/kvs_arch.png>
 Package pdftex.def Info: figures/kvs_arch.png  used on input line 6.
@@ -1497,7 +1489,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 64--65
 
  []
 
-<figures/chat_graph.png, id=150, 2196.205pt x 2092.81876pt>
+<figures/chat_graph.png, id=149, 2196.205pt x 2092.81876pt>
 File: figures/chat_graph.png Graphic file (type png)
 <use figures/chat_graph.png>
 Package pdftex.def Info: figures/chat_graph.png  used on input line 70.
@@ -1509,7 +1501,7 @@ Class acmart Warning: A possible image without description on input line 72.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 ) (05_implementation.tex
-<figures/client_arch.png, id=151, 2114.90125pt x 282.05376pt>
+<figures/client_arch.png, id=150, 2114.90125pt x 282.05376pt>
 File: figures/client_arch.png Graphic file (type png)
 <use figures/client_arch.png>
 Package pdftex.def Info: figures/client_arch.png  used on input line 11.
@@ -1523,8 +1515,10 @@ Class acmart Warning: A possible image without description on input line 14.
 LaTeX Warning: Reference `sec:backgorund_cap' on page 5 undefined on input line
  42.
 
-) (06_performanceanalysis.tex) (03_summary.tex) (main.bbl [5.5 <./figures/chat_
-graph.png> <./figures/client_arch.png>]
+) (06_performanceanalysis.tex) (03_summary.tex) (main.bbl
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
+(Font)              scaled to size 7.0pt on input line 43.
+ [5.5 <./figures/chat_graph.png> <./figures/client_arch.png>]
 LaTeX Info: Redefining \tempurl on input line 87.
 LaTeX Info: Redefining \tempurl on input line 124.
 LaTeX Info: Redefining \tempurl on input line 136.
@@ -1538,6 +1532,10 @@ Class acmart Warning: Some images may lack descriptions.
 Class acmart Warning: ACM keywords are mandatory for papers over two pages.
 
 
+Class acmart Warning: ACM reference format is mandatory for papers over one pag
+e.
+
+
 Class acmart Warning: CCS concepts are mandatory for papers over two pages.
 
 
@@ -1546,30 +1544,30 @@ Package glossaries Warning: No \printglossary or \printglossaries found.
 This document will not have a glossary.
 
 [6.6]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 59.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 59.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 37.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 37.
  (main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 59.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 59.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 37.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 37.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: D1180F492EC46D711527B36F3F453F5E;2931.
+(rerunfilecheck)             Checksum: C53FAADE707B840E4E95DE7685FAA4B2;3038.
 
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 23178 strings out of 492484
- 357533 string characters out of 3121601
- 511306 words of memory out of 3000000
- 26524 multiletter control sequences out of 15000+200000
- 165850 words of font info for 307 fonts, out of 3000000 for 9000
+ 23094 strings out of 492484
+ 355626 string characters out of 3121601
+ 511244 words of memory out of 3000000
+ 26476 multiletter control sequences out of 15000+200000
+ 136179 words of font info for 262 fonts, out of 3000000 for 9000
  1303 hyphenation exceptions out of 8191
  63i,11n,100p,1033b,561s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/libertine/l
-btn_25tcsq.enc}{C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvip
-s/inconsolata/i4-t1-4.enc}{C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fon
-ts/enc/dvips/libertine/lbtn_7grukw.enc}{C:/Users/iremk/AppData/Local/Programs/M
+btn_7grukw.enc}{C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvip
+s/libertine/lbtn_25tcsq.enc}{C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/f
+onts/enc/dvips/inconsolata/i4-t1-4.enc}{C:/Users/iremk/AppData/Local/Programs/M
 iKTeX 2.9/fonts/enc/dvips/libertine/lbtn_nh77jq.enc}{C:/Users/iremk/AppData/Loc
 al/Programs/MiKTeX 2.9/fonts/enc/dvips/libertine/lbtn_naooyc.enc}{C:/Users/irem
 k/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/libertine/lbtn_76gpa5.enc}<
@@ -1587,9 +1585,9 @@ mk/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/libertine/LinLibertineT
 I.pfb><C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/newt
 x/txmiaX.pfb><C:/Users/iremk/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
 ic/newtx/txsys.pfb>
-Output written on main.pdf (6 pages, 653776 bytes).
+Output written on main.pdf (6 pages, 651769 bytes).
 PDF statistics:
- 269 PDF objects out of 1000 (max. 8388607)
- 61 named destinations out of 1000 (max. 500000)
- 50372 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 271 PDF objects out of 1000 (max. 8388607)
+ 62 named destinations out of 1000 (max. 500000)
+ 38604 words of extra memory for PDF output out of 42996 (max. 10000000)
 
