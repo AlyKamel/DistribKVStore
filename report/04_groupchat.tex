@@ -1,13 +1,17 @@
 \section{Group Chat}
 \label{sec:groupchat}
 
-The developed system is based on a client/server architecture, which uses a many-to-many relationship. The program enables multiple clients to communicate with multiple servers. Besides replicated and distributed storage service, with the created extension clients are now able to exchange messages with each other.\\ In the following sections the functionalities of the groupchat is described by first representing newly added commands to the client library and then explaining the execution of the workflow. \\
+The developed system is based on a client/server architecture, which uses a many-to-many relationship. The program enables multiple clients to communicate with multiple servers. Besides replicated and distributed storage service, with the created extension clients are now able to exchange messages with each other.
+
+In the following sections the functionalities of the group chat is described by first representing newly added commands to the client library and then explaining the execution of the workflow.
+
 The main goal here is to clarify the usage of the system for a client, who does not have the full knowledge of how a distributed database system works.
 
 \subsection{New Commands for the Group Chat}
 \label{sec:groupchat_commands}
 
-In addition to already implemented commands, such as "put" or "get" with the purpose of accessing the database or commands like "logLevel" for changing the level of the logs dynamically, seven more commands are implemented in order to realise the groupchat extension.\\
+In addition to already implemented commands, such as "put" or "get" with the purpose of accessing the database or commands like "logLevel" for changing the level of the logs dynamically, seven more commands are implemented in order to realise the groupchat extension.
+
 Following commands are possible during a chat session:
 \begin{enumerate}
   \item 	PUT <key> <value>: \\
@@ -25,11 +29,12 @@ Sends a whisper to the users provided by the client. It is possible for a chatro
   \item HELP:\\
   Displays the help text.
 \end{enumerate}
+
 Put and delete operations are fulfilled with the help of a chatbot. Most of the software systems include a chatbot in their system to work as a costumer service. Our intention by implementing a chatbot is to decrease the workload of the chatroom.
 
 \subsection{Chatbot}
 \label{sec:groupchat_chatbot}
-One of the extensions followed by the groupchat is a chatbot which is designed to help chatrooms to access the distributed database. The chatbot shares a lot of similarities with the client application. When a client wants to perform read or write operations while chatting, requests are directed to the chatbot.
+One of the extensions followed by the group chat is a chatbot which is designed to help chatrooms to access the distributed database. The chatbot shares a lot of similarities with the client application. When a client wants to perform read or write operations while chatting, requests are directed to the chatbot. --> TODO
 
 
 \subsection{Execution of the Workflow}
@@ -41,7 +46,7 @@ To start off, in the same sense as Milestone 4, initially the External Configura
 \label{sec:groupchat_executionoftheworkflow_uniqueusername}
 After successfully connecting to a key-value server, the client has to either enter a username or use the command QUIT to have a username randomly assigned to him. Usernames are implemented as globally unique identifiers for the clients, which prevents different clients from having the same username in different chatrooms. That way users are guaranteed to know who they are communicating with as long as their partner is connected to the system. 
 
-In order to avoid unnecessary extra connections, the ECS stores a list of users. Whenever a client tries to set its username, the request gets sent through the server to the ECS, which then checks if the username has been already taken by a client connected to any of the servers online. The end user either receives a welcome message with the username displayed if the operation was succesful, or an error message otherwise.
+In order to avoid unnecessary extra connections, the ECS stores a list of users. Whenever a client tries to set its username, the request gets sent through the server to the ECS, which then checks if the username has been already taken by a client connected to any of the servers online. The end user either receives a welcome message with the username displayed if the operation was succesful, or an error message.
  
 \subsubsection{Chat Command}
 \label{sec:groupchat_executionoftheworkflow_chatcommand}

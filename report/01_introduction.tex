@@ -17,10 +17,6 @@ Another example, and one of our biggest inspirations, is Redis. This key-value s
 %TODO leave: O(1) and sendall (O(n) if chatroom empty)
 %TODO mention: https://cloud.google.com/pubsub, https://pusher.com/chatkit, https://making.pusher.com/redis-pubsub-under-the-hood/, 
 
-In our implementation, we wanted to extend on this idea, but make it so that clients are not blocked during a subscription session. The main use case of our system, mainly accessing and manipulating key-value pairs, should still be accessible, even while a client is subscribed to channels. Also, we did not want to distinguish publishers from subscribers. All clients who are interested in a key should be able to exchange information with each other.
-
-And not only should subscribers be able to store and obtain information from the database, but also send back information to the publishers. So the way we modelled it in the end, was having a many-to-many relationship to all other subscribers on the same key, effectively, implementing a group chat functionality. Subscribers on the same key represent users in the same chatroom. 
-
 By observing the provided features of above-mentioned databases, one can say that our program is a very small scaled version of them. It provides the core functionalities such as providing elasticity, responding the client with consistent values as fast as possible, being available within a certain amount of time, and maintaining resilience towards partitions in the network.
  
-In the following section our motivation of creating a group chat is explained beginning with a brief description of how our system is built up during the Cloud Data Bases Praktikum. Nevertheless our report focuses mainly on the detailed analysis of our extension and evaluation of the performance tests.
+In the following section our motivation of creating a group chat is explained beginning with a brief description of how our system is built up during the Cloud Data Bases Praktikum. Nevertheless, our report focuses mainly on the detailed analysis of our extension and evaluation of the performance tests.

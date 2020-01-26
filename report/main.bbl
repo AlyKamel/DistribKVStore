@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{11}
+\begin{thebibliography}{12}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -46,6 +46,17 @@
 \url{"https://aws.amazon.com/tr/nosql/key-value/"}
 \showURL{%
 \tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Abadi}{Abadi}{2012}]%
+        {abadi2012consistency}
+\bibfield{author}{\bibinfo{person}{Daniel Abadi}.}
+  \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Consistency tradeoffs in modern distributed
+  database system design: CAP is only part of the story}.
+\newblock \bibinfo{journal}{\emph{Computer}} \bibinfo{volume}{45},
+  \bibinfo{number}{2} (\bibinfo{year}{2012}), \bibinfo{pages}{37--42}.
+\newblock
 
 
 \bibitem[\protect\citeauthoryear{Agrawal, El~Abbadi, Das, and Elmore}{Agrawal
