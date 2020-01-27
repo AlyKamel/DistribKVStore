@@ -48,7 +48,7 @@ public class ClientThread extends Thread {
   public void test(int mode) {
     this.mode = mode;
     for (String line : input) {
-      String result = doLine(line);
+      doLine(line);
       //System.out.println(pref + result);
       
       // try waiting before sending next command
@@ -60,31 +60,28 @@ public class ClientThread extends Thread {
     }
   }
 
-  public String doLine(String line) {
-    String result = null;
+  public void doLine(String line) {
     String[] comp = line.split("\\s+", 2);
     try {
       switch (mode) {
         case 0:
-          result = cl.putRequest(comp[0], "\"" + comp[1] + "\"");
+          cl.putRequest(comp[0], "\"" + comp[1] + "\"");
           //assertEquals("SUCCESS", result);
           break;
         case 1:
-          result = cl.getRequest(comp[0]);
+        	cl.getRequest(comp[0]);
           //assertEquals(comp[1], result);
           break;
         case 2:
-          result = cl.deleteRequest(comp[0]);
+        	cl.deleteRequest(comp[0]);
           //assertEquals("SUCCESS", result);
           break;
         default:
-          result = "unknown command, not put, get or del";
+        	System.out.println("unknown command, not put, get or del");
       }
     } catch (IOException e) {
       e.printStackTrace();
-      result = "ioexception";
+      System.out.println("ioexception");
     }
-    
-    return result;
   }
 }

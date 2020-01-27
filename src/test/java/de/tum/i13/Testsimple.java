@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 public class Testsimple {
 
   private static final int clientCount = 1;
-  private static final int serverCount = 4;
+  private static final int serverCount = 1;
   
   private static int[] ports = new int[serverCount];
   private static final String address = "127.0.0.1";

@@ -43,40 +43,37 @@ public class ChattyClientThread extends ClientThread {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      String result = doLine(line);
+      doLine(line);
       //System.out.println(pref + result);
     }
   }
 
   @Override
-  public String doLine(String line) {
-    String result = null;
+  public void doLine(String line) {
     String[] comp = line.split("\\s+", 2);
     try {
       switch (mode) {
         case 0:
           cl.chatSend("PUT " + comp[0] + " \"" + comp[1] + "\"");
-          result = cl.chatReceive();
+          cl.chatReceive();
           //assertEquals("SUCCESS", result);
           break;
         case 1:
           cl.chatSend("GET{" + comp[0] + "}");
-          result = cl.chatReceive();
+          cl.chatReceive();
           //assertEquals(pref + comp[1], result);
           break;
         case 2:
           cl.chatSend("PUT " + comp[0]);
-          result = cl.chatReceive();
+          cl.chatReceive();
           //assertEquals("SUCCESS", result);
           break;
         default:
-          result = "unknown command, not put, get or del";
+          System.out.println("unknown command, not put, get or del");
       }
     } catch (IOException e) {
       e.printStackTrace();
-      result = "ioexception";
+      System.out.println("ioexception");
     }
-    
-    return result;
   }
 }
