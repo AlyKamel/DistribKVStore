@@ -54,23 +54,16 @@ public class ClientThread extends Thread {
     this.mode = mode;
     for (String line : input) {
       doLine(line);
-      //System.out.println(pref + result);
-      
-      // try waiting before sending next command
-//    try {
-//    Thread.sleep(40);
-//  } catch (InterruptedException e) {
-//    e.printStackTrace();
-//  }
     }
   }
 
   public void doLine(String line) {
     String[] comp = line.split("\\s+", 2);
+    //String res;
     try {
       switch (mode) {
         case 0:
-          cl.putRequest(comp[0], "\"" + comp[1] + "\"");
+           cl.putRequest(comp[0], "\"" + comp[1] + "\"");
           //assertEquals("SUCCESS", result);
           break;
         case 1:
@@ -81,9 +74,8 @@ public class ClientThread extends Thread {
         	cl.deleteRequest(comp[0]);
           //assertEquals("SUCCESS", result);
           break;
-        default:
-        	System.out.println("unknown command, not put, get or del");
       }
+      //System.out.println(pref + res);
     } catch (IOException e) {
       e.printStackTrace();
       System.out.println("ioexception");

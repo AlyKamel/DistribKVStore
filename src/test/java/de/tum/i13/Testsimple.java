@@ -55,8 +55,13 @@ public class Testsimple {
 
     // start clients
     for (int i = 0; i < clientCount; i++) {
+      try {
+        Thread.sleep(50);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
       clients[i].start();
-      System.out.println("Client" + i + ": Start");
+      //System.out.println("Client" + i + ": Start");
     }
 
     // wait for clients

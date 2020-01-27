@@ -67,7 +67,7 @@ public class ConnectionHandleThread extends Thread {
         }
       }
       
-      ste.removeUser(username);
+      //ste.removeUser(username);
       cp.connectionClosed(remoteAddress.getAddress());
 
     } catch (IOException e) {
@@ -83,9 +83,9 @@ public class ConnectionHandleThread extends Thread {
     boolean success = result != null;
     result = "user_" + (success ? "success " + result : "error " + username);
     out.println(result);
-    if (!success) {
-      return addUser(in, out);
-    }
+//    if (!success) {
+//      return addUser(in, out);
+//    }
     return username;
   }
 

@@ -13,7 +13,7 @@ public class ConfigServer extends ConfigECS {
   @CommandLine.Option(names = "-d", description = "Directory for files", defaultValue = "data/")
   public Path dataDir; 
 
-  @CommandLine.Option(names = "-c", description = "Sets the cachesize, e.g., 100 keys", defaultValue = "100")
+  @CommandLine.Option(names = "-c", description = "Sets the cachesize, e.g., 100 keys", defaultValue = "16")
   public int cachesize;
 
   @CommandLine.Option(names = "-s", description = "Sets the cache displacement strategy, FIFO, LRU, LFU", defaultValue = "LRU")
