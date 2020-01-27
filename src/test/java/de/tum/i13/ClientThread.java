@@ -2,6 +2,7 @@ package de.tum.i13;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import de.tum.i13.client.ClientLibrary;
 
@@ -30,12 +31,14 @@ public class ClientThread extends Thread {
     test(0);
     long putTime = System.nanoTime() - putStart;
     
-    
+    Collections.shuffle(input);
     
     System.out.println("\n" + pref + "DOING GET");
     long getStart = System.nanoTime();
     test(1);
     long getTime = System.nanoTime() - getStart;
+    
+    Collections.shuffle(input);
     
     System.out.println("\n" + pref + "DOING DEL");
     long delStart = System.nanoTime();
