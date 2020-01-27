@@ -30,6 +30,8 @@ public class ClientThread extends Thread {
     test(0);
     long putTime = System.nanoTime() - putStart;
     
+    
+    
     System.out.println("\n" + pref + "DOING GET");
     long getStart = System.nanoTime();
     test(1);
