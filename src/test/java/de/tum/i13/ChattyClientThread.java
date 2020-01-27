@@ -7,6 +7,7 @@ import java.util.List;
 public class ChattyClientThread extends ClientThread {
 
   private int chatAmount;
+  private Thread rc;
 
   public ChattyClientThread(int clientNum, String addr, int port, List<String> input, int chatAmount) {
     super(clientNum, addr, port, input);
@@ -23,20 +24,45 @@ public class ChattyClientThread extends ClientThread {
     }
   }
   
+  private class Receiver extends Thread {
+    @Override
+    public void run() {
+      int counter = 320 * chatAmount;
+      while (counter-- > 0) {
+        try {
+          cl.chatReceive();
+          //System.out.println(cl.chatReceive());
+        } catch (IOException e) {
+          e.printStackTrace();
+        } 
+      }
+    }
+  }
+  
   private void sendMessage() throws IOException {
     for (int i = 0; i < chatAmount; i++) {
       cl.chatSend("o");
+      //System.out.println(pref + " send o");
     }
+  }
+  
+  @Override
+  public void run() {
+    super.run();
+    //running = false;
     
-    for (int i = 0; i < chatAmount; i++) {
-      String result = cl.chatReceive(); 
-      //System.out.print(result);
+    try {
+      cl.endChat();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
   @Override
   public void test(int mode) {
     this.mode = mode;
+    //rc = new Receiver();
+    //rc.start();
     for (String line : input) {
       try {
         sendMessage();
@@ -44,8 +70,12 @@ public class ChattyClientThread extends ClientThread {
         e.printStackTrace();
       }
       doLine(line);
-      //System.out.println(pref + result);
     }
+//    try {
+//      rc.join();
+//    } catch (InterruptedException e) {
+//      e.printStackTrace();
+//    }
   }
 
   @Override
@@ -55,22 +85,23 @@ public class ChattyClientThread extends ClientThread {
       switch (mode) {
         case 0:
           cl.chatSend("PUT " + comp[0] + " \"" + comp[1] + "\"");
-          cl.chatReceive();
+          //cl.chatReceive();
           //assertEquals("SUCCESS", result);
           break;
         case 1:
           cl.chatSend("GET{" + comp[0] + "}");
-          cl.chatReceive();
+          //cl.chatReceive();
           //assertEquals(pref + comp[1], result);
           break;
         case 2:
           cl.chatSend("PUT " + comp[0]);
-          cl.chatReceive();
+          //cl.chatReceive();
           //assertEquals("SUCCESS", result);
           break;
         default:
           System.out.println("unknown command, not put, get or del");
       }
+      //System.out.println(cl.chatReceive());
     } catch (IOException e) {
       e.printStackTrace();
       System.out.println("ioexception");

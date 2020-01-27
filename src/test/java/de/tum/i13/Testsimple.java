@@ -12,9 +12,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class Testsimple {
-
-  private static final int clientCount = 1;
-  private static final int serverCount = 1;
+  private static final int clientCount = 2;
+  private static final int serverCount = 3;
   
   private static int[] ports = new int[serverCount];
   private static final String address = "127.0.0.1";
@@ -49,8 +48,8 @@ public class Testsimple {
     // setup clients (choose if chatty or not, add chatAmount if chatty)
     ClientThread[] clients = new ClientThread[clientCount];
     for (int i = 0; i < clientCount; i++) {
-      clients[i] = new ClientThread(i, address, ports[0], input);
-      //clients[i] = new ChattyClientThread(i, address, ports[0], input, chatAmount);
+      //clients[i] = new ClientThread(i, address, ports[0], input);
+      clients[i] = new ChattyClientThread(i, address, ports[0], input, 0);
     }
 
     // start clients
@@ -73,6 +72,7 @@ public class Testsimple {
       }
       System.out.println("Client" + i + ": End");
     }
+    System.out.println("clients: " + clientCount +", servers: " + serverCount);
     System.out.println("\n###END###\n");
   }
 }
