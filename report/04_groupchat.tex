@@ -10,7 +10,7 @@ The main goal here is to clarify the usage of the system for a client, who does 
 \subsection{New Commands for the Group Chat}
 \label{sec:groupchat_commands}
 
-In addition to already implemented commands, such as "put" or "get" with the purpose of accessing the database or commands like "logLevel" for changing the level of the logs dynamically, seven more commands are implemented in order to realise the groupchat extension.
+In addition to already implemented commands, such as "put" or "get" with the purpose of accessing the database, or commands like "logLevel" for changing the level of the logs dynamically, seven more commands are implemented in order to realise the group chat extension.
 
 Following commands are possible during a chat session:
 \begin{enumerate}
@@ -21,11 +21,11 @@ Deletes the value assigned to the given key.
   \item GET{<key>}:\\
 Inserts the value assigned to the given key into the message.
   \item WSP <user1>,..,<userN> <msg>:\\
-Sends a whisper to the users provided by the client. It is possible for a chatroom to have     up to 30 clients in it. The logic behind whispering feature is a client should be able to send messages during a chat session, only to the people who he/she wants to share it with.  
+Sends a whisper to the users provided by the client. It is possible for a chatroom to have up to 30 clients in it. The logic behind whispering feature is a client should be able to send messages during a chat session, only to the people who he wants to share it with.  
   \item QUIT:\\
   Leaves the chat session.
   \item ACTIVE:\\
-   Returns a list of all users in the chatroom. A client does not have to always keep up with the notifications about who joined the chat or left it, that is why the command "ACTIVE" eases for a client to see online members at that moment.
+   Returns a list of all users in the chatroom. A client does not have to always keep up with the notifications about who joined the chat or left it. That is why the command "ACTIVE" eases for a client to check the members of the chatroom at any time.
   \item HELP:\\
   Displays the help text.
 \end{enumerate}
@@ -59,14 +59,15 @@ If the client is the first person to create a private chatroom, then the right t
 \subsubsection{Password}
 \label{sec:groupchat_executionoftheworkflow_chatrooms_password}
 
-Another client who is connected to the same server and wants to chat in the same chatroom can only access to the private room with the selected password by the client, who created the private chatroom. The password is hashed in order to provide safety for the client. If client wants to have a public chatroom, then a password is not needed.\\
-\\
-To prevent heavy workload for a server, a chatroom has the maximum capacity of 30 people. The chatroom offers a communication platform for all the clients sharing the same chatroom. Every message sent by the clients have timestamps in order to keep on track with the flow of the messages for other clients. One message can contain maximum 200 characters.\\
+Another client who is connected to the same server and wants to chat in the same chatroom can only access to the private room with the selected password by the client, who created the private chatroom. The password is hashed in order to provide safety for the client. If client wants to have a public chatroom, then a password is not needed.
+
+To prevent heavy workload for a server, a chatroom has the maximum capacity of 30 people. The chatroom offers a communication platform for all the clients sharing the same chatroom. Every message sent by the clients have timestamps in order to keep on track with the flow of the messages for other clients. One message can contain maximum 200 characters.
+
 When a client joins a chatroom, all the messages which sent until that time, will be visible to the latest joined client and all the members will be informed about who joined or left the chatroom. 
 \subsubsection{Saved Messages}
 \label{sec:groupchat_executionoftheworkflow_savedmessages}
 
-The messages are saved into a .txt file under the directory of the respective server.\\
+The messages are saved into a .txt file under the directory of the respective server. We provided this feautere, in case a network partition occurs in the system and messages get lost.
 
 Whenever a client wants to leave the chatroom, QUIT can be typed in order to use the functionalities of replicated and distributed database service from Milestone 4. To enable the chatroom service client only needs to enter “chat” command with the desired chatID. 
 

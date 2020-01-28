@@ -15,7 +15,7 @@ According to the CAP Theorem, distributed databases have three substantial prope
   Whenever a server crashes, the rest of the system will still stay functional after the crash, without any information being lost. This is mainly secured by replicating data across multiple servers.
 \end{itemize}
 
-12 years later from proposing the CAP theorem, Brewer mentions that designers do not have to abide strictly to the 2 of 3 principle, it is rather a spectrum than binary\cite{brewer2012cap}. In other words, a distributed database system can favour high level of consistency and partition tolerance by having low level of availability. Thus, the initial theorem is improved by not having to sacrifice availability completely in this case.
+12 years later from proposing the CAP theorem, Brewer mentioned that designers do not have to abide strictly to the 2 of 3 principle, it is rather a spectrum than binary\cite{brewer2012cap}. In other words, a distributed database system can favour high level of consistency and partition tolerance by having low level of availability. Thus, the initial theorem is improved by not having to sacrifice availability completely in this case.
 
 There are two design approaches for distributed database systems, namely ACID and BASE. According to Brewer, these two design approaches may be referred as opposites of each other\cite{brewer2012cap} because of their priorities and use cases. ACID approach is used most of the times for relational database systems (SQL) and focuses on consistency to maintain reliability. On the contrary BASE is more suitable for the non-relational database systems (NoSQL) concentrating on providing the client high level of availability\cite{brewer2000cap}.
 
@@ -26,7 +26,7 @@ ACID is a traditional design approach\cite{brewer2012cap} when it comes to large
 \item Atomicity:\\
 A set of transactions succeed all at once or fail all together. In other words, it is an all or nothing strategy.
 \item Consistency: \\
-The system never contains any stale data. When a client wants to read from any server, the returned value must be the value from the last write commit by any client. In other words, all clients should always get the same result whenever they try to fetch the same information.
+The system never contains any stale data. When a client wants to read from any server, the returned value must be the value from the last write commit by any client. All clients should always get the same result whenever they try to fetch the same information.
 \item Isolation:\\
 All transactions happen isolated from each other and do not affect each other. Thus, if one transaction fails, all others are undisturbed.
 \item Durability:\\
@@ -35,7 +35,7 @@ Once a client is informed that a transaction has been successfully committed, ev
 
 \subsection{BASE}
 \label{sec:background_base}
-BASE, another design approach defined by Brewer, offers looser requirements than ACID\cite{brewer2012cap}. Non-relational database systems concentrating on high availability make use of the BASE approach, which sacrifices strong consistency in favour of being always accessible. Examples include huge storage services such as Amazon's Dynamo, Facebook's Cassandra or Google's BigTable, where millions of active users always expect the service to be available. Nevertheless, there must be trade-offs. By not guaranteeing the consistency at all time, the system cost is reduced, and clients are happier, but a client might not get an immediate response to his/her request.
+BASE, another design approach defined by Brewer, offers looser requirements than ACID\cite{brewer2012cap}. Non-relational database systems concentrating on high availability make use of the BASE approach, which sacrifices strong consistency in favour of being always accessible. Examples include huge storage services such as Amazon's Dynamo, Facebook's Cassandra or Google's BigTable, where millions of active users always expect the service to be available\cite{kalid2017big}. Nevertheless, there must be trade-offs. By not guaranteeing the consistency at all time, the system cost is reduced, and clients are happier, but a client might not get an immediate response to his request.
 
 With Milestone 4, replication is added to the system with the intention of increasing the availability by distributing the data records to the two replica servers. Redundancy comes along with the replication strategy, however when a node crashes or fails, read operations can be processed via replicated servers.
 

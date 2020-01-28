@@ -1,9 +1,9 @@
 \section{Motivation}
 \label{sec:motivation}
 
-Cloud Data Bases Praktikum started off with a simple implementation of a client with the aim of a better understanding of the client/server architecture and socket programming. Nonetheless, the system is developed with implementing a one-to-many relationship being one server and multiple clients. The program is improved with a basic key-value storage service extension for clients to perform read and write operations with the help of mentioned storage server. 
+Cloud Data Bases Praktikum started off with a simple implementation of a client with the aim of a better understanding of the client/server architecture and socket programming. Nonetheless, the system is developed with implementing a one-to-many relationship being one server and multiple clients. The program is improved with a basic key-value storage service extension for clients to perform read and write operations with the help of the mentioned storage server. 
 
-In the following milestones, the architecture is enhanced to a many-to-many relationship consisting of multiple servers and multiple clients. To manage the servers an External Configuration Service is created, hence the servers which are placed on an hashring could communicate with each other. Following that replication strategy is added to the system in order to maintain availability, consistency and partition tolerance. 
+In the following milestones, the architecture is enhanced to a many-to-many relationship consisting of multiple servers and multiple clients. To manage the servers an External Configuration Service(ECS) is created, hence the servers which are placed on an hashring could communicate with each other. Following that, replication strategy is added to the system in order to maintain availability, consistency and partition tolerance. 
 
 In the last step, namely Milestone 5, we extended our program with a group chat feature. In the decision process, our initial goal was to come up with an idea that the clients can make the most use of.
 
@@ -18,7 +18,7 @@ to the publishers. Thus, the way we modelled it in the end, was
 having a many-to-many relationship to all other subscribers on
 the same key, effectively, implementing a group chat functionality. Subscribers on the same key represent users in the same chatroom.
 
-Going into more detail, we decided to have two different chatroom options, being public and private rooms. In a public room, clients can exchange more general information, such as TODO. In contrast, private rooms are more suitable for sharing sensitive information, such as credit card passwords. Since a private chatroom can only be accessed via a password, clients are ensured to keep their messages safe.
+Going into more detail, we decided to have two different chatroom options, being public and private rooms. In a public room, clients can exchange more general information. In contrast, private rooms are more suitable for sharing sensitive information, for instance credit card passwords. Since a private chatroom can only be accessed via a password, clients are ensured to keep their messages safe.
 
 In order for clients to perform read and write operations while chatting, we wanted to have a chatbot to handle such requests. All messages, including the commands put and get, are directed to the chatbot which is responsible to access to the database and perform the requests.
 
