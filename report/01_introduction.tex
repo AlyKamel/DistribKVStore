@@ -1,22 +1,18 @@
 \section{Introduction}
 \label{sec:introduction}
 
-One of the main criteria when developing a key-value database (DB), is how to handle large amounts of data while making the system available for multiple clients. DB systems, such as AmazonWeb Services, Microsoft Azure SQL or Oracle Database offer the combination of scalability and cost effectiveness.
+One of the main criteria when developing a key-value database(DB), is being able to handle large amounts of data while making the system available for multiple clients. DB systems, such as AmazonWeb Services, Microsoft Azure SQL and Oracle Database offer the combination of scalability and cost effectiveness.
 
-Another important feature is elasticy. Elasticity is measured whether a system can be dynamically scaled-up by adding more nodes or down by removing them. The key-value DB BigTable and PNUTS are great examples\cite{agrawal2011database}.
+Another important feature is elasticity which measures the ability of a system to dynamically scaled up or down. The key-value DB BigTable and PNUTS are great examples\cite{agrawal2011database}.
 
-There are also more key-value DB mentionable.
+Amazon DynamoDB is a non-relational database system which provides single-digit millisecond latency \cite{amazon}, considering the system is used worldwide. Data records are stored with a primary or composite key and several attributes depending on client's request \cite{kalid2017big}. 
 
-Amazon DynamoDB is a non-relational database system which provides single-digit millisecond latency\cite{amazon}, considering the system is used world wide. Data records are stored with a primary or composite key and several attributes depending on client's request\cite{kalid2017big}. The only constraint is that these records, including attribute names and attribute values, cannot exceed 400 KB\cite{amazon}, which is rather a large space for storing the provided data.
+Apache Cassandra is another key-value based high scaled \cite{abadi2012consistency} DB system, which is known for managing some of the world's largest datasets on clusters with the help of thousands of nodes distributed amongst multiple data centres \cite{chebotko2015big}. Cassandra offers more flexibility regarding fault handling and managing wide range data, unlike BigTable and Dynamo \cite{kalid2017big}. The system focuses on high level of availability by scaling millions of read and write requests per second\cite{chebotko2015big}.
 
-Apache Cassandra is another key-value based high scaled\cite{abadi2012consistency} DB system, which is known for managing some of the world's largest datasets on clusters with the help of thousands of nodes distributed amongst multiple data centres \cite{chebotko2015big}. For the professionals Cassandra is the first choice since it offers more flexibility regarding fault handling and managing wide range data, unlike BigTable and Dynamo\cite{kalid2017big}. The system focuses on high level of availability by scaling millions of read and write requests per second\cite{chebotko2015big}.
+Our inspiration mainly came from the DB Redis. It rose in popularity after its creation in 2009 and got deployed by many big companies such as Instagram \cite{krieger2011instagram} and Twitter \cite{yu2014twitter}, which require enormous DBs and fast responses to the millions of users they serve. One of its multiple features is the Pub/Sub system \cite{redis2020pubsub}, added in March 2010 \cite{sanfilippo2010pubsub}. With it, clients are able to subscribe to a set of keys, namely topics, and receive an update whenever their associated values get overwritten. In this model, clients keep waiting for the server to send them an update. During that period, subscribers are expected to use only subscription related operations.
 
-Though, our main inspiration was the DB Redis. It rose in popularity after its creation in 2009 and got deployed by many big companies such as Instagram \cite{krieger2011instagram} and Twitter \cite{yu2014twitter}, which require enormous DBs and fast responses to the millions of users they serve. One of its multiple features is the Pub/Sub system \cite{redis2020pubsub}, added in March 2010 \cite{sanfilippo2010pubsub}. 
+In our system, we wanted for there to be no distinction between publishers and subscribers with everyone being able to both publish and receive updates. Apart from that, access to the DB should still be possible. 
 
-With it, clients were able to subscribe to a set of keys, namely a topic, and receive an update whenever their associated value got overwritten. In this model clients keep waiting for the server to send them an update. During this period, subscribers are limited to only subscription related operations, whereas the publishers are allowed to execute other commands normally.
-
-In our model there is no distinction between the publisher and its subscribers. Everyone is equal. Also instead of a topic there is now a shared place where everyone is supposed to write on and receive from. This way every participant is publisher and subscriber at the same time. Apart from that being “subscribed” to it doesn’t bring any limitations regarding the access to the rest of the DB. 
-
-Thus, the way we modelled it in the end, was having a many-to-many relationship of all subscribed clients, effectively, implementing a group chat functionality.
+Thus, the way we modelled our system in the end, was having a many-to-many relationship of all subscribed clients, effectively, implementing a group chat functionality.
 
 
