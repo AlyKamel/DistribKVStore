@@ -1,15 +1,13 @@
 \section{Summary}
 \label{sec:summary}
-
-
 To conclude our paper, the benefits and weaknesses of our implementation are evaluated thoroughly.
 
 The decision, to make the chatrooms accessible only from one server has both its advantages and disadvantages. For one, it reduces the complexity of the system because otherwise servers would need a way to exchange updates regarding the active chatrooms and chat users whenever a user joins or leaves. Our idea for the chatting functionality was for it to be as light-weighted as possible with clients entering and leaving chatrooms regularly.
 
 A problem with our implementation is that if the chatIDs are not equally distributed across all servers, which may occur due to the unpredictable nature of the hashing function, a single server could then be in charge of most chatrooms. This would cause that a server to be overloaded with requests and would lead to greater response times and, in the worst-case scenario, would result in a bottleneck for the whole system. In order to combat this issue, we limit the number of chatrooms belonging to one server to 15 and the number of users in a single chatroom to 30. This means a server is responsible for up to 450 chat users. These limits could also be easily changed depending on the intended use case of the system.
 
-Considering the implementation of the chatbot, it is a bottleneck in the system. If the maximum amount of clients start doing their own DOPs, all operations will be executed just by one chatbot. Thereby, the workload of 30 sockets will be pressed into one. This leads to a significant efficiency loss. Heavy modification and updates of the DB should be done outside of chatrooms, to make full use of the clients individual socket.
-
 Another downside of our system is that the chat only allows words as strings. Nowadays, it is standard to be able to send other data types such as pictures, videos or files. Therefore, our system is more favourable for people who do not need to use data types other than strings.
 
-Finally, we highly recommend our extension especially for light-weighted communication.
+Considering the implementation of the chatbot, it is really beneficial for the client since it accesses the database to perform read and write operations for the client while chatting. By allowing the database access our system provides high availability. However, the chatbot is a bottleneck in the system as explained in \ref{sec:groupchat_chatbot}. If the maximum amount of clients start doing their own DOPs, all operations will be executed just by one chatbot. Thereby, the workload of 30 sockets will be pressed into one. This leads to a significant efficiency loss. Heavy modification and updates of the DB should be done outside of chatrooms, to make full use of the clients individual socket.
+
+Finally, we highly recommend our extension especially for light-weighted communication. We sacrificed strong consistency in order to maintain high availability with the help of the chatbot and partition tolerance due to the replication.
