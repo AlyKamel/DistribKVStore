@@ -3,14 +3,16 @@
 In this section, we elaborate on some of the basic concepts that our key-value system depends on. First, we discuss the CAP theorem and analyse where our system lies on that spectrum. Then, we mention two design paradigms, namely BASE and ACID, and explain the differences between them.
 
 \subsection{Key-value store}
-Key-value stores are perhaps the simplest type of a NoSQL database. Values, which in our case are limited to strings, can be easily stored and retrieved just by providing the key they were assigned with. 
+Key-value stores are perhaps the simplest type of a NoSQL DB. Every information is saved in the form of key value pairs. Typically the key’s memory space is very small compared to the one of the values. The key is used as an identifier to the actual data saved in the value. The client will always need to have a key in order to work with the DB. 
+
+In our case values are limited to strings and can be easily stored and retrieved just by providing the corresponding key, which is also limited to a string.
 
 \subsection{Caching}
 Caching is a way of storing information so that information can be retrieved faster on demand. A storage method, namely write trough, enables to write the information into the cache as well as in to the disk store simultaneously. Thus, the data will not only be returned quickly because of caching, it will be saved in the disk ensuring that no data will get lost in case of any partitions in the network. Since the write operation is performed two times the storage system has redundancy. One of the upsides of redundancy is tolerating loss of data. However, it increases the latency by making the response times longer.
 
 \subsection{CAP Theorem}
 \label{sec:background_cap} 
-According to the CAP Theorem, distributed databases have three substantial properties to consider: consistency, availability and partition tolerance\cite{brewer2012cap}. Eric Brewer, the man behind the CAP theorem, stated that a distributed database can fulfil at most two of three properties\cite{brewer2000cap}:
+According to the CAP Theorem, distributed DBs have three substantial properties to consider: consistency, availability and partition tolerance\cite{brewer2012cap}. Eric Brewer, the man behind the CAP theorem, stated that a distributed database can fulfil at most two of three properties\cite{brewer2000cap}:
 
 \begin{itemize}
   \item Consistency: \\
