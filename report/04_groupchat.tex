@@ -1,24 +1,22 @@
 \section{Group Chat}
 \label{sec:groupchat}
-With the Milestone 5 we extended our program with a group chat feature which enables for clients to exchange messages with each other through chatrooms. Additionally, we developed our group chat in such a way that clients can access the databases while being in the chatroom with the help of a chatbot.
+With the MS5 we extended our program with a group chat feature which enables clients to exchange messages with each other through chatrooms. Additionally, we developed our group chat in such a way that clients can access the DB while being in the chatroom with the help of a chatbot.
  
-In the following, the basic functionalities of the group chat are described step by step, subsequently the chat system consisting of three main components, namely ChatManager, ChatRoom and ChatBot is examined in depth. Lastly, since the client is allowed to perform read and write operations during chatting, the database access is discussed thoroughly.  
+In the following, the basic functionalities of the group chat are described step by step, subsequently the chat system and its components are examined in depth. Lastly, we discuss how client can access the DB while chatting.
 
 \subsection{Basic Functionalities}
 \label{sec:groupchat_functionalities}
-The main intention here is to clarify the usage of the system for a client, who does not have the full knowledge of how our group chat feature works.
-
-To start off, in the same sense as Milestone 4, initially the External Configuration Service (ECS), where the storage servers are monitored and controlled, is executed. Following that, depending on client's decision, a number of servers are created. A client must connect to one of the servers by typing its IP address and port number in order to use the database system.
+To start off, in the same sense as Milestone 4, the External Configuration Service (ECS), where the storage servers are monitored and controlled, is started. Following that a number of servers are created. A client must connect to one of the servers.
 
 \subsubsection{Unique Username}
 \label{sec:groupchat_funtionalities_uniqueusername}
-After successfully connecting to a key-value server, the client has to either enter a username or use the command "QUIT" to have a username randomly assigned to him. Usernames are implemented as globally unique identifiers for the clients, which prevents different clients from having the same username in different chatrooms. That way users are guaranteed to know who they are communicating with as long as their partner is connected to the system. 
+After successfully connecting to a key-value server, the client has to either enter a username or use the command "QUIT" to have a username randomly assigned to him. Usernames are implemented as globally unique identifiers for the clients, which prevents different clients from having the same username in different chatrooms. That way, users are guaranteed to know who they are communicating with, as long as their partner is connected to the system. 
 
 In order to avoid unnecessary extra connections, the ECS stores a list of users. Whenever a client tries to set its username, the request gets sent through the server to the ECS, which then checks if the username has been already taken by a client connected to any of the servers online. The end user either receives a welcome message with the username displayed if the operation was succesful, or an error message.
  
-\subsubsection{Chat Command}
+\subsubsection{Chatrooms}
 \label{sec:groupchat_funtionalities_chatcommand}
-Moreover, to use the chatroom client needs to type “chat” on the console and choose a chatID for the chatroom and type it right next to the command “chat”. A chatroom is created with the given id, which is also a globally unique identifier in the same sense as usernames. A chatID is hashed like a key and which chatroom located on which server depends on the hashed value. Afterwards client have two options: either enter a private room with a password feature or a public room. 
+Moreover, to use the chatroom, the client needs to type “chat” on the console and choose a chatID for the chatroom and type it right next to the command “chat”. A chatroom is created with the given ID, which is also a globally unique identifier in the same sense as usernames. A chatID is hashed like a key and which chatroom located on which server depends on the hashed value. Afterwards client have two options: either enter a private room with a password feature or a public room. 
 
 \subsubsection{Public/Private Chatrooms}
 \label{sec:groupchat_funtionalities_chatrooms}
@@ -26,17 +24,19 @@ Public rooms are not password protected, therefore every client can create one w
 
 \subsubsection{ACTIVE and WSP Commands}
 \label{sec:groupchat_funtionalities_commands}
-After joining or creating a chatroom, clients are able to chat. We implemented some new commands for the clients such as "ACTIVE" and "WSP". "ACTIVE" command returns a list of all users in the chatroom and "WSP" sends a whisper to the users by typing their usernames next to the command.
+"ACTIVE" command returns a list of all users in the chatroom and "WSP" allows the clients to send a private message to users at the same chatroom.
 
 \subsubsection{Saved Messages}
 \label{sec:groupchat_funtionalities_savedmessages}
-The messages are saved into a .txt file under the directory of the respective server. We provided this feature, in case of a network partition occurs in the system and messages get lost.
+The messages are saved into a .txt file under the directory of the respective server. We provide this feature, in case a network partition occurs in the system and messages get lost.
 
-\subsubsection{QUIT Command}
-\label{sec:groupchat_funtionalities_savedmessages}
-Whenever a client wants to leave the chatroom, "QUIT" can be typed in order to end the chat session. To enable the chatroom service again, client only needs to enter “chat” command with the desired chatID. 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{figures/chat/chat_arch.png}
+	\caption{Chat system}
+\end{figure}
 
-The chat system consists of three main components as namely:
+The chat system consists of three main components as seen in the above figure\ref{fig:}:
 \begin{enumerate}
 	\item \textit{ChatManager}, who is in charge of providing all chat functionalities to the client, including connecting to a chatroom and sending messages.
 	\item \textit{ChatRoom}, which is identified by a chatID. A Chatroom object contains a map of all connected users and their sockets, in order to be able to forward messages.
@@ -48,9 +48,7 @@ By utilizing a chatbot, chat requests containing a key-value operation are slowe
 
 \subsection{Database Access}
 \label{sec:groupchat_chatbot}
-The ChatBot
 
-Reason why we need him
 During the development we reached one significant problem. While being connected to a chatroom a client is making use of its only socket. That means he cannot access the database (DB) at the same time.
 
 There are different solutions for that.
@@ -86,11 +84,6 @@ As already mentioned, it isn’t that big of an issue because that won’t happe
 	\caption{Execution of a get command}
 \end{figure}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\linewidth]{figures/chat/chat_arch.png}
-	\caption{Chat system}
-\end{figure}
 
 \begin{figure}[h]
 	\centering
