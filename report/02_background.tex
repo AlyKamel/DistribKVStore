@@ -3,7 +3,10 @@
 In this section, we elaborate on some of the basic concepts that our key-value system depends on. First, we discuss the CAP theorem and analyse where our system lies on that spectrum. Then, we mention two design paradigms, namely BASE and ACID, and explain the differences between them.
 
 \subsection{Key-value store}
-Key-value stores are perhaps the simplest type of a NoSQL database. Values, which in our case are limited to strings, can be easily stored and retrieved just by providing the key they were assigned with. 
+Key-value stores are perhaps the simplest type of a NoSQL DB. Every information is saved in the form of key value pairs. Typically the key’s memory space is very small compared to the one of the values. The key is used as an identifier to the actual data saved in the value. The client will always need to have a key in order to work with the DB. 
+
+In our case values are limited to strings and can be easily stored and retrieved just by providing the corresponding key, which is also limited to a string.
+
 
 \subsection{Persistence}
 %TODO add how data gets stored on disk
@@ -24,7 +27,7 @@ According to the CAP Theorem, distributed databases have three substantial prope
   Whenever a server crashes, the rest of the system will still stay functional after the crash, without any information being lost.
 \end{itemize}
 
-Twelve years after from proposing the CAP theorem, Brewer mentioned that software engineers do not have to strictly abide to the 2 of 3 principle, it is rather a spectrum than a binary choice \cite{brewer2012cap}. In other words, a distributed database system can favour high level of consistency and partition tolerance by having low level of availability. Thus, the initial theorem is improved by not having to sacrifice availability completely in this case.
+Twelve years after from proposing the CAP theorem, Brewer mentioned that software engineers do not have to strictly abide to the 2 of 3 principle, it is rather a spectrum than a binary choice \cite{brewer2012cap}. In other words, a distributed DBS can favour high level of consistency and partition tolerance by having low level of availability. Thus, the initial theorem is improved by not having to sacrifice availability completely in this case.
 
 There are two design approaches for distributed database systems, namely ACID and BASE. According to Brewer, these two design approaches may be referred as opposites of each other\cite{brewer2012cap} because of their priorities and use cases. ACID approach is used most of the times for relational database systems (SQL) and focuses on consistency to maintain reliability. On the contrary BASE is more suitable for the non-relational database systems (NoSQL) concentrating on providing the client high level of availability\cite{brewer2000cap}.
 
