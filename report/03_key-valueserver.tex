@@ -1,28 +1,17 @@
 \section{Key-value server}
-During the first four milestones, we were tasked with developing a distributed key-value storage system, which includes many features such as replication and caching. In this section, we focus on the implementation behind some of those properties.
+ Before we get into the details of MS5, we would like to revist the implementation of the distributed key-value storage system we were tasked to develop and briefly discuss some of its features. Figure \ref{fig:ms4_arch} displays how a client interacts with its Connection Handle Thread (CHT), the helper thread assigned to serve it. In the following sections, we take a deeper look at how the client side and storage system visible in \ref{fig:ms4_arch} are structured and how they function.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth]{figures/kvserver/ms4_structure.png}
-	\caption{KV server architecture}
+	\caption{Key-value server architecture}
+	\label{fig:ms4_arch}
 \end{figure}
 
 
 
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\linewidth]{figures/kvserver/kvs_arch.png}
-	\caption{Client side architecture}
-\end{figure}
-
-
---> Implementation moved here
-
-In this section the implementation of the chatroom is examined in depth. Firstly, the extension for the client side and then for the server side are described respectively. Lastly the chat system is explained in greater detail, since it encapsulates our work for Milestone 5.
-
-\subsection{Client Side Implementation}
-\label{sec:Implementation_clintside}
+%Client Side
+\subsection{Client side}
 
 \begin{figure}[h]
 	\centering
@@ -30,28 +19,43 @@ In this section the implementation of the chatroom is examined in depth. Firstly
 	\caption{Client side architecture}
 	\label{fig:client_arch}
 \end{figure}
+
 The client side consists of the three following main components as seen in figure \ref{fig:client_arch}:
+
 \begin{enumerate} 
-  \item \textit{ClientApp} represents the client interface which allows input through the console. From there the client is able to issue commands to: connect to and disconnect from the system, interact with the key-value store and chat. The input is then checked and parsed before getting sent to the ClientLibrary. The result of the user command is displayed on the console through the ClientApp.
-  \item \textit{ClientLibrary} serves as a bridge between the client and the server.
-  \item \textit{ActiveConnection} abstracts the TCP socket connection to the server which allows the client to connect to the server socket and exchange data without worrying about the underlying structure.
+  \item \textit{ClientApp}: represents the client interface which allows input through the console. From there the client is able to issue commands to connect to and disconnect from the system, interact with the key-value store and chat. The input is then checked and parsed before getting sent to the ClientLibrary. The result of the user's request gets displayed on the console through the ClientApp.
+  \item \textit{ClientLibrary}: serves as a bridge between the client and the server. It contains an instance of the hash ring and is responsible to connect to the correct server.
+  \item \textit{ActiveConnection}: abstracts the TCP socket connection to the server which allows the client to exchange data with the CHT without worrying about the underlying structure.
 \end{enumerate}
  
-\subsection{Server Side Implementation}
-\label{sec:implementation_serverside}
+ 
+ 
+ % Server side
+\subsection{Server side}
 
-Each server owns a list containing the active chatrooms that it is responsible for. In order for a client to join one of those chatrooms is that it would first need to connect to that server, similar to the way storing key-value pair functions. The decision, to make chatrooms accessible only from one server has both its advantages and disadvantages. For one, it reduces the complexity of the system because otherwise servers would need a way to exchange updates regarding the active chatrooms and chat users whenever a user joins or leaves.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{figures/kvserver/kvs_arch.png}
+	\caption{Client side architecture}
+\end{figure}
 
-A problem with our implementation is that if the chatIDs are not equally distributed across all servers, which may occur due to the unpredictable nature of the hashing function, a single server could then be in charge of most chatrooms. This would cause that a server to be overloaded with requests and would lead to greater response times and, in the worst-case scenario, would result in a bottleneck for the whole system. In order to combat this issue, we limit the number of chatrooms belonging to one server to 15 and the number of users in a single chatroom to 30. This means a server is responsible for up to 450 chat users. These limits could also be easily changed depending on the intended use case of the system.
+As previously mentioned, the CHT waits on the socket for the client to send a request. Afterwards, the request is transfered to the key-value processor (KVP), which parses the client's string and translates it into direct DOPs. The ServerRing, which contains information about the hash ring, is called to check whether the current server is responsible for performing the requested operation on the provided key or not. In the former case, the request gets forwarded to the KVStore. There, read operations get passed on to the cache and only then to the DiskStore, in case of a cache miss. Write operations instead are redirected to the cache, the DiskStore and the Replication Manager (RPM). The DiskStore creates at the start of each server a directory containing three subdirectories, one for storing the keys it has write access to and one for each of the key sets it has only read access to. A file inside one of those directories represents a key-value pair with the key being the file name and the value the file content.
+The RPM is in charge of both sending updates to the server's replicas and receiving updates regarding sent by the responsible servers.
 
-The biggest advantage of our decision is that it heavily reduces network traffic. Since all chatroom users are connected to the same server, that server can easily forward messages between them. Otherwise additional socket connections would have been required which would have both increased the load on the network and the overall complexity of the system.
+[moved parts from background to here] (not complete)
+Since we do not block clients from accessing the DB, 
+CAP Partition: This is mainly secured by replicating data across multiple servers.
+ACID Durability : This is ensured by persisting data permanently on disk.
 
-Our idea for the chatting functionality was for it to be as lightweight as possible with clients entering and leaving chatrooms regularly.
+With Milestone 4, replication is added to the system with the intention of increasing the availability by distributing the data records to the two replica servers. Redundancy comes along with the replication strategy, however when a node crashes or fails, read operations can be processed via replicated servers.
+Our system conforms to the first property of BASE by being generally available, because servers respond to clients requests even if a latency occurs. The group chat extension, later to be discussed thoroughly, preserves the same requirements.
 
-server side:
-The client interacts directly only with the ConnectionHandleThread (CHT) created by the server to assist that specific client. At the start of the connection, the CHT contacts the ECS in order to assign the client a unique username. After that the CHT interacts exclusively with KV storage and the chat system, depending on the command issued by the client. The KV storage system provides the basic capabilities of a key-value store and persists data on disk. When more than two servers are online and replication is active, each server contains a replica of two other servers. Whenever a put operation is executed, it has to get forwarded to the server.
+Eventual consistency is achieved within the system due to requirements of Milestone 4. If there are no updates for a long time all the replicas will become eventually consistent by updating key ranges of the coordinator and replica nodes placed on an hashring. In order to maintain strong consistency as described in \ref{sec:background_acid}, a client performing a \texttt{PUT} operation would have to also wait until the value gets sent over to both of the servers replicas, which would result in slower \texttt{PUT}s. Since our system is not designed to handle important real-time transactions, such as in a banking system, eventual consistency satisfies our database needs while allowing faster response times and higher availability. 
 
-kv storage:
-The KVCommandProcessor (KVCP) is responsible to receive commands from the CHT and return the result. Before a value is stored or retrieved, the KVCP utilizes the ServerRing to check whether the server is responsible for the provided key or not. In the latter case, a simple error message is returned back to the client, which would then connect to the responsible server. In the former case, the request is sent over to the KVStore. If it was a GET command issued, the KVStore first tries to retrieve the value from the cache. In case the value has not been found, the DiskStore checks if it is stored on disk.
-With a PUT request, the KVStore sends the key-value pair to both the cache and DiskStore and also to the RepManager. This allows it to get sent over to the two replica servers. The RepManager is also charged with updating the replica on the server whenever one of the coordinators processes a PUT command.
+Since the implementation of Milestone 3, it is possible to monitor key-value stores continuously. The ECS pings each key-value server every 700 ms to be informed about the servers’ availability. If a server does not respond to the ping within a given period, it is considered shutdown. With replication active, single failing server nodes can be tolerated, thus partition tolerance is provided as well. Since each piece of data exists on three different servers, the only way information can get permanently lost is if all three responsible servers crash simultaneously with no time in between to transfer data to a running server.
+
+One of the downsides of our system is that the chat system runs just one of the requested servers by the client. Thus, partition tolerance may not be covered in case of that serving crashing. As in the most database systems there are trade-offs between the properties: availability, consistency and partition tolerance.
+
+
+
 

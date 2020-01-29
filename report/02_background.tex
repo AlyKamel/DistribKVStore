@@ -21,7 +21,7 @@ According to the CAP Theorem, distributed databases have three substantial prope
   \item Availability: \\
   Servers respond to the request of clients at all cases. Every non-failing node in the system must be able to serve the client in a reasonable amount of time\cite{gilbert2002brewer}.
   \item Partition tolerance: \\
-  Whenever a server crashes, the rest of the system will still stay functional after the crash, without any information being lost. This is mainly secured by replicating data across multiple servers.
+  Whenever a server crashes, the rest of the system will still stay functional after the crash, without any information being lost.
 \end{itemize}
 
 Twelve years after from proposing the CAP theorem, Brewer mentioned that software engineers do not have to strictly abide to the 2 of 3 principle, it is rather a spectrum than a binary choice \cite{brewer2012cap}. In other words, a distributed database system can favour high level of consistency and partition tolerance by having low level of availability. Thus, the initial theorem is improved by not having to sacrifice availability completely in this case.
@@ -39,14 +39,12 @@ The system never contains any stale data. When a client wants to read from any s
 \item Isolation:\\
 All transactions happen isolated from each other and do not affect each other. Thus, if one transaction fails, all others are undisturbed.
 \item Durability:\\
-Once a client is informed that a transaction has been successfully committed, even if a crash occurs, the transaction would still stay committed. This is ensured by persisting data permanently on disk.
+Once a client is informed that a transaction has been successfully committed, even if a crash occurs, the transaction would still stay committed.
 \end{itemize} 
 
 \subsection{BASE}
 \label{sec:background_base}
 BASE, another design approach defined by Brewer, offers looser requirements than ACID\cite{brewer2012cap}. Non-relational database systems concentrating on high availability make use of the BASE approach, which sacrifices strong consistency in favour of being always accessible. Examples include huge storage services such as Amazon's Dynamo, Facebook's Cassandra or Google's BigTable, where millions of active users always expect the service to be available\cite{kalid2017big}. Nevertheless, there must be trade-offs. By not guaranteeing the consistency at all time, the system cost is reduced, and clients are happier, but a client might not get an immediate response to his request.
-
-With Milestone 4, replication is added to the system with the intention of increasing the availability by distributing the data records to the two replica servers. Redundancy comes along with the replication strategy, however when a node crashes or fails, read operations can be processed via replicated servers.
 
 \begin{itemize}
   \item Basic Availability:\\
@@ -56,14 +54,6 @@ Since stale data is permitted, servers never truly know whether they are current
   \item Eventual Consistency:\\
 If there are no updates in the system for a long time, then all servers will gradually become consistent. Since the time is not specified, servers are always in a soft state, as explained above.
 \end{itemize}
-
-Our system conforms to the first property of BASE by being generally available, because servers respond to clients requests even if a latency occurs. The group chat extension, later to be discussed thoroughly, preserves the same requirements.
-
-Eventual consistency is achieved within the system due to requirements of Milestone 4. If there are no updates for a long time all the replicas will become eventually consistent by updating key ranges of the coordinator and replica nodes placed on an hashring. In order to maintain strong consistency as described in \ref{sec:background_acid}, a client performing a \texttt{PUT} operation would have to also wait until the value gets sent over to both of the servers replicas, which would result in slower \texttt{PUT}s. Since our system is not designed to handle important real-time transactions, such as in a banking system, eventual consistency satisfies our database needs while allowing faster response times and higher availability. 
-
-Since the implementation of Milestone 3, it is possible to monitor key-value stores continuously. The ECS pings each key-value server every 700 ms to be informed about the servers’ availability. If a server does not respond to the ping within a given period, it is considered shutdown. With replication active, single failing server nodes can be tolerated, thus partition tolerance is provided as well. Since each piece of data exists on three different servers, the only way information can get permanently lost is if all three responsible servers crash simultaneously with no time in between to transfer data to a running server.
-
-One of the downsides of our system is that the chat system runs just one of the requested servers by the client. Thus, partition tolerance may not be covered in case of that serving crashing. As in the most database systems there are trade-offs between the properties: availability, consistency and partition tolerance.
 
     
 
