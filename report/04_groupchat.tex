@@ -1,8 +1,16 @@
 \section{Group Chat}
 \label{sec:groupchat}
-With the MS5 we extended our program with a group chat feature which enables clients to exchange messages with each other through chatrooms. Additionally, we developed our group chat in such a way that clients can access the DB while being in a chatroom with the help of a chatbot.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{figures/chat/chat_full_arch.png}
+	\caption{Server side architecture}
+	\label{fig:chat_arch}
+\end{figure}
+
+In MS5, we extended our program with a group chat feature which enables clients to exchange messages with each other through chatrooms. We are able to integrate the chatting system neatly into our existing key-value server architecture, as seen in figure \ref{fig:chat_arch}. Additionally, we developed our group chat in such a way that clients can access the DB while being in a chatroom with the help of a chatbot.
  
-In the following, the basic functionalities of the group chat are described step by step, subsequently the chat system and its components are examined in depth. Lastly, we discuss how client can access the DB while chatting.
+In the following section, the basic functionalities of the group chat are described step by step, subsequently the chat system and its components are examined in depth. Lastly, we discuss how client can access the DB while chatting.
 
 \subsection{Basic Functionalities}
 \label{sec:groupchat_functionalities}
@@ -11,7 +19,7 @@ To start off, in the same sense as MS4, the External Configuration Service (ECS)
 \subsubsection{Unique Username}
 \label{sec:groupchat_funtionalities_uniqueusername}
 After successfully connecting to a key-value server, the client has to either enter a username or use the command "QUIT" to have a username randomly assigned to him. Usernames are implemented as globally unique identifiers for the clients, which prevents different clients from having the same username in different chatrooms. That way, users are guaranteed to know who they are communicating with, as long as their partner is connected to the system.
-In order to avoid unnecessary extra connections, the ECS stores a list of users. Whenever a client connects and tries to set its username, the request gets sent through the server to the ECS, which then checks if the username has been already taken by a client connected to any of the servers online. The end user either receives a welcome message with the username displayed if the operation was succesful, or an error message.
+In order to avoid unnecessary extra connections, the ECS stores a list of users. Whenever a client connects and tries to set its username, the request gets sent through the CHT to the ECS, as depicted in \ref{fig:chat_arch}, which then checks if the username has been already taken by a client connected to any of the servers online. The end user either receives a welcome message with the username displayed if the operation was succesful, or an error message.
  
 \subsubsection{Chatrooms}
 \label{sec:groupchat_funtionalities_chatcommand}
@@ -46,12 +54,6 @@ The chat system consists of three main components as seen in the above figure\re
 In order to provide the chatting functionality, the server would need a socket to send to and receive messages from. However, the client also requires a socket to connect to the DB. The obvious design decision would be to add an extra socket to the client responsible for just chatting. The drawback of that idea is that the amount of TCP connections per client would get doubled, which would increase the network traffic to a large extent. In our intended use case, clients are not expected to utilize the DB heavily during chat sessions. For that reason, we could allow clients to quickly leave the chatroom to perform the DOPs and then rejoin. However, that might cause the client to miss messages while he is away, which affects the system's availability guarantee described in %TODO \ref{} server.
 
 The approach we decided to follow in the end was creating a chatbot, whose sole purpose is executing DOPs for chat users. The chatbot acts mostly similar to a client by being able to send read and write requests to the DB. Every chatroom gets a chatbot assigned to it, which scans all incoming chat messages for DOPs, signaled by the keywords \texttt{PUT} and \texttt{GET}. Those requests are then sent to the DB and the result is returned to the chat user. In case of a read request, the \texttt{GET} operation in the message is replaced by the retrieved result. Only after this translation will the chatroom send the now modified message to every participant in the chatroom. This allows users to use stored values for communication.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\linewidth]{figures/chat/chat_full_arch.png}
-	\caption{Server side architecture}
-\end{figure}
 
 delete??
 %TODO delete?
