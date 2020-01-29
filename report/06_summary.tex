@@ -1,31 +1,15 @@
 \section{Summary}
 \label{sec:summary}
 
-After consideration of the benefits and weaknesses of the implementation we come to this conclusion.
 
-We highly recommend our extension only for lightweighted communication. 
+To conclude our paper, the benefits and weaknesses of our implementation are evaluated thoroughly.
 
-Firstly, because it might occur that the chatrooms are not equally distributed throughout the system and thereby just one server might have to carry the load of having all the chatrooms. 
+The decision, to make the chatrooms accessible only from one server has both its advantages and disadvantages. For one, it reduces the complexity of the system because otherwise servers would need a way to exchange updates regarding the active chatrooms and chat users whenever a user joins or leaves. Our idea for the chatting functionality was for it to be as light-weighted as possible with clients entering and leaving chatrooms regularly.
 
-That is why we had to set a limitation regarding the number of chatrooms per server to 15 and clients per chatroom to 30. If the user of our group chat prefers to work on a large-scaled messaging platform and can give up on having low latency, the limitations for the number of chatrooms and the clients could be increased.
-
-Secondly, the chat only allows words as messages. Nowadays it is standard to be able to send emojis, pictures, stickers, videos, files, weblinks etc. which is not featured by us. This means that people in general will prefer a more powerful chatroom software since we do not offer these extras.
-
-On the other hand we have an extra that these other softwares do not provide. We can access the DB via the ChatBot and therefore use together with chatroom in one combined application. And since the typical use case wants the chat to be about the data of the DB we consider this a big advantage.
-
-Thinking about the implementation the ChatBot is obviously a bottleneck. Imagine there is a full chat room with 30 users. If they now start doing their own DOPs (for instance updating their weekly report) all operations are executed by one ChatBot. The workload of 30 sockets are pressed into one. This leads to a significant efficiency loss.
-
-That is why our second important recommendation for the extension is that heavy modification and updates of the DB must be done outside of chat rooms, in order to make full use of the clients individual socket capacities.
-
-All in all we believe our extension improved our DB in a significant way, though we know that our chatroom features has a lot of room for enhancement.
-
-
-
-%TODO move?
-Bottleneck of the chatroom
-Thinking about the implementation the ChatBot is obviously a bottleneck. Imagine there is a full chat room with 30 users. If they now start doing their own DOPs (for instance updating their weekly report) all operations are executed by one ChatBot. The workload of 30 sockets are pressed into one. This leads to a significant efficiency loss.
-As already mentioned, it is not that big of an issue because that will not happen in our use case. Heavy modification and updates of the DB should be done outside of chat rooms, to make full use of the clients individual socket.
-The decision, to make chatrooms accessible only from one server has both its advantages and disadvantages. For one, it reduces the complexity of the system because otherwise servers would need a way to exchange updates regarding the active chatrooms and chat users whenever a user joins or leaves.
-Our idea for the chatting functionality was for it to be as lightweight as possible with clients entering and leaving chatrooms regularly.
-To prevent heavy workload for a server, a chatroom has the maximum capacity of 30 people. The chatroom offers a communication platform for all the clients sharing the same chatroom. Every message sent by the clients have timestamps in order to keep on track with the flow of the messages for other clients. One message can contain maximum 200 characters.
 A problem with our implementation is that if the chatIDs are not equally distributed across all servers, which may occur due to the unpredictable nature of the hashing function, a single server could then be in charge of most chatrooms. This would cause that a server to be overloaded with requests and would lead to greater response times and, in the worst-case scenario, would result in a bottleneck for the whole system. In order to combat this issue, we limit the number of chatrooms belonging to one server to 15 and the number of users in a single chatroom to 30. This means a server is responsible for up to 450 chat users. These limits could also be easily changed depending on the intended use case of the system.
+
+Considering the implementation of the chatbot, it is a bottleneck in the system. If the maximum amount of clients start doing their own DOPs, all operations will be executed just by one chatbot. Thereby, the workload of 30 sockets will be pressed into one. This leads to a significant efficiency loss. Heavy modification and updates of the DB should be done outside of chatrooms, to make full use of the clients individual socket.
+
+Another downside of our system is that the chat only allows words as strings. Nowadays, it is standard to be able to send other data types such as pictures, videos or files. Therefore, our system is more favourable for people who do not need to use data types other than strings.
+
+Finally, we highly recommend our extension especially for light-weighted communication.
