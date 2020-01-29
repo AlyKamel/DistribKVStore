@@ -28,16 +28,8 @@ The client side consists of the three following main components as seen in figur
   \item \textit{ActiveConnection}: abstracts the TCP socket connection to the server which allows the client to exchange data with the CHT without worrying about the underlying structure.
 \end{enumerate}
  
- 
- 
  % Server side
 \subsection{Server side}
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\linewidth]{figures/kvserver/kvs_arch.png}
-	\caption{Client side architecture}
-\end{figure}
 
 As previously mentioned, the CHT waits on the socket for the client to send a request. Afterwards, the request is transfered to the key-value processor (KVP), which parses the client's string and translates it into direct DOPs. The ServerRing, which contains information about the hash ring, is called to check whether the current server is responsible for performing the requested operation on the provided key or not. In the former case, the request gets forwarded to the KVStore. There, read operations get passed on to the cache and only then to the DiskStore, in case of a cache miss. Write operations instead are redirected to the cache, the DiskStore and the Replication Manager (RPM). The DiskStore creates at the start of each server a directory containing three subdirectories, one for storing the keys it has write access to and one for each of the key sets it has only read access to. A file inside one of those directories represents a key-value pair with the key being the file name and the value the file content.
 The RPM is in charge of both sending updates to the server's replicas and receiving updates regarding sent by the responsible servers.
@@ -55,7 +47,5 @@ Eventual consistency is achieved within the system due to requirements of Milest
 Since the implementation of Milestone 3, it is possible to monitor key-value stores continuously. The ECS pings each key-value server every 700 ms to be informed about the servers’ availability. If a server does not respond to the ping within a given period, it is considered shutdown. With replication active, single failing server nodes can be tolerated, thus partition tolerance is provided as well. Since each piece of data exists on three different servers, the only way information can get permanently lost is if all three responsible servers crash simultaneously with no time in between to transfer data to a running server.
 
 One of the downsides of our system is that the chat system runs just one of the requested servers by the client. Thus, partition tolerance may not be covered in case of that serving crashing. As in the most database systems there are trade-offs between the properties: availability, consistency and partition tolerance.
-
-
 
 
