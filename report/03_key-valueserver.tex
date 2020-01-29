@@ -48,4 +48,6 @@ Since the implementation of Milestone 3, it is possible to monitor key-value sto
 
 One of the downsides of our system is that the chat system runs just one of the requested servers by the client. Thus, partition tolerance may not be covered in case of that serving crashing. As in the most database systems there are trade-offs between the properties: availability, consistency and partition tolerance.
 
+In our case values are limited to strings and can be easily stored and retrieved just by providing the corresponding key, which is also limited to a string.
+
 

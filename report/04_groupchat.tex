@@ -1,12 +1,12 @@
 \section{Group Chat}
 \label{sec:groupchat}
-With the MS5 we extended our program with a group chat feature which enables clients to exchange messages with each other through chatrooms. Additionally, we developed our group chat in such a way that clients can access the DB while being in the chatroom with the help of a chatbot.
+With the MS5 we extended our program with a group chat feature which enables clients to exchange messages with each other through chatrooms. Additionally, we developed our group chat in such a way that clients can access the DB while being in a chatroom with the help of a chatbot.
  
 In the following, the basic functionalities of the group chat are described step by step, subsequently the chat system and its components are examined in depth. Lastly, we discuss how client can access the DB while chatting.
 
 \subsection{Basic Functionalities}
 \label{sec:groupchat_functionalities}
-To start off, in the same sense as Milestone 4, the External Configuration Service (ECS), where the storage servers are monitored and controlled, is started. Following that a number of servers are created. A client must connect to one of the servers.
+To start off, in the same sense as MS4, the External Configuration Service (ECS), where the storage servers are monitored and controlled, is started. Following that a number of servers are created. A client must connect to one of the servers.
 
 \subsubsection{Unique Username}
 \label{sec:groupchat_funtionalities_uniqueusername}
@@ -16,7 +16,7 @@ In order to avoid unnecessary extra connections, the ECS stores a list of users.
 \subsubsection{Chatrooms}
 \label{sec:groupchat_funtionalities_chatcommand}
 In order to use to start chatting, the client has to join a chatroom. This is done by typing \texttt{chat} and providing the ID of the chatroom. In case the room does not exist, the user is allowed to create one. The next time a user executes the \texttt{chat} command with the same chatID, he is either granted access to it immediately if it is a public room, or is otherwise first required to enter the password chosen by the person who created the room. The password is hashed on the client side for safety measures and only the hash is required to validate the password attempt.
-Each server owns a list containing the active chatrooms that it is responsible for depending on its position on the hash ring. In order for a client to join one of those chatrooms, is that it would first need to connect to that server, similar to the way storing key-value pair works. 
+Each server owns a list containing the active chatrooms that it is responsible for depending on its position on the hash ring. In order for a client to join one of those chatrooms, is that it would first need to connect to that server, similar to the way storing key-value pair works.
 
 \subsubsection{Saved Messages}
 \label{sec:groupchat_funtionalities_savedmessages}
@@ -25,8 +25,7 @@ Messages sent in a chatroom get stored into a text file under the directory of t
 \subsubsection{Additional Commands}
 \label{sec:groupchat_funtionalities_commands}
 The \texttt{WSP} command allows a private message to be sent to multiple users.
-Whenever a client joins or leaves a chatroom, all users inside get notified. This helps the users keep track <- add something here %TODO
-Otherwise, users could use the \texttt{ACTIVE} command to obtain a list of all users currently in the chatroom. 
+Messages sent in the chatroom get prepended with a timestamp. Also, whenever a client joins or leaves a chatroom, all users inside get notified. This helps the user keep on track with the flow of the messages. Otherwise, users could use the \texttt{ACTIVE} command to obtain a list of all users currently in the chatroom. 
 
 \begin{figure}[h]
 	\centering
@@ -39,8 +38,6 @@ The chat system consists of three main components as seen in the above figure\re
 	\item \textit{ChatManager}, who is in charge of providing all chat functionalities to the client, including connecting to a chatroom and sending messages.
 	\item \textit{ChatRoom}, which is identified by a chatID. A Chatroom object contains a map of all connected users and their sockets, in order to be able to forward messages.
 	\item \textit{ChatBot}, which is responsible to execute PUT and GET commands during a chat session. The chatbot acts exactly like a client, meaning it first has to connect to the responsible server and then send its request.
-	
-By utilizing a chatbot, chat requests containing a key-value operation are slowed down, since only one "client" is performing those operations. However, if each chat user is tasked with executing the commands himself instead, then whenever a key is located at a server different from the server responsible for the chatroom, the client would need to reconnect twice. Not only that, but also all chat messages sent while the user was disconnected would either get lost or will be displayed after the user has reconnected, which would make the user temporarily unavailable. As mentioned in section \ref{sec:background_cap}, our system focuses on being available. 	
 
 \end{enumerate}
 
