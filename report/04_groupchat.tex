@@ -34,7 +34,38 @@ Put and delete operations are fulfilled with the help of a chatbot. Most of the 
 
 \subsection{Chatbot}
 \label{sec:groupchat_chatbot}
-One of the extensions followed by the group chat is a chatbot which is designed to help chatrooms to access the distributed database. The chatbot shares a lot of similarities with the client application. When a client wants to perform read or write operations while chatting, requests are directed to the chatbot. --> TODO
+The ChatBot
+
+Reason why we need him
+During the development we reached one significant problem. While being connected to a chatroom a client is making use of its only socket. That means he cannot access the database (DB) at the same time.
+
+There are different solutions for that.
+
+1.	More sockets 
+The easiest way would be increasing the number of sockets a client uses by one. This way the client has one socket for the database operations (DOPs), whereas the second one is responsible for the connection to the chatroom.
+
+We decided against it, because that would double the amount of TCP connections per client in the network. In our use case when a client is connected to a chatroom he isn’t heavily working with the DB and focuses more on communication. Only a few and small DOPs are necessary while chatting.
+
+2.	Quick Dis- and reconnection
+The client could quickly leave the chatroom and do the DOPs. After that, he quickly rejoins the chatroom.
+
+We decided against it, because then there might be a chance to miss messages. In our use case seeing every message while connected is a crucial aspect.
+
+3.	ChatBot
+In this approach every chatroom of the server gets a ChatBot object assigned to it that executes the DOPs written in the chat messages. Then before writing the chat messages the DOPs will be replaced by the corresponding response of the DB. 
+
+We prefer this solution, because in our use case we expect chatrooms to receive mostly normal messages and not DOPs. 
+
+Functionality
+There is always one ChatBot object per created chatroom. The ChatBot acts mostly similar to a client by connecting to one of the servers of the DB. Since every server is part of the DB it will firstly connect to the server that created it. 
+
+When a normal message and/or DOPs is received, the chatroom object filters the command and calls the ChatBot to execute it. The ChatBot will call every put, get and delete request likewise to client. The chatroom object will then replace the DOP text with the reply of the DB. Only after this translation the chatroom object will send the now modified message to every participant in the chatroom.
+
+Bottleneck of the chatroom
+Thinking about the implementation the ChatBot is obviously a bottleneck. Imagine there is a full chat room with 30 users. If they now start doing their own DOPs (for instance updating their weekly report) all operations are executed by one ChatBot. The workload of 30 sockets are pressed into one. This leads to a significant efficiency loss.
+
+As already mentioned, it isn’t that big of an issue because that won’t happen in our use case. Heavy modification and updates of the DB must be done outside of chat rooms, to make full use of the clients individual socket.
+
 
 
 \subsection{Execution of the Workflow}
