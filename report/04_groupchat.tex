@@ -10,25 +10,23 @@ To start off, in the same sense as Milestone 4, the External Configuration Servi
 
 \subsubsection{Unique Username}
 \label{sec:groupchat_funtionalities_uniqueusername}
-After successfully connecting to a key-value server, the client has to either enter a username or use the command "QUIT" to have a username randomly assigned to him. Usernames are implemented as globally unique identifiers for the clients, which prevents different clients from having the same username in different chatrooms. That way, users are guaranteed to know who they are communicating with, as long as their partner is connected to the system. 
-
-In order to avoid unnecessary extra connections, the ECS stores a list of users. Whenever a client tries to set its username, the request gets sent through the server to the ECS, which then checks if the username has been already taken by a client connected to any of the servers online. The end user either receives a welcome message with the username displayed if the operation was succesful, or an error message.
+After successfully connecting to a key-value server, the client has to either enter a username or use the command "QUIT" to have a username randomly assigned to him. Usernames are implemented as globally unique identifiers for the clients, which prevents different clients from having the same username in different chatrooms. That way, users are guaranteed to know who they are communicating with, as long as their partner is connected to the system.
+In order to avoid unnecessary extra connections, the ECS stores a list of users. Whenever a client connects and tries to set its username, the request gets sent through the server to the ECS, which then checks if the username has been already taken by a client connected to any of the servers online. The end user either receives a welcome message with the username displayed if the operation was succesful, or an error message.
  
 \subsubsection{Chatrooms}
 \label{sec:groupchat_funtionalities_chatcommand}
-Moreover, to use the chatroom, the client needs to type “chat” on the console and choose a chatID for the chatroom and type it right next to the command “chat”. A chatroom is created with the given ID, which is also a globally unique identifier in the same sense as usernames. A chatID is hashed like a key and which chatroom located on which server depends on the hashed value. Afterwards client have two options: either enter a private room with a password feature or a public room. 
-
-\subsubsection{Public/Private Chatrooms}
-\label{sec:groupchat_funtionalities_chatrooms}
-Public rooms are not password protected, therefore every client can create one with a desired chatID or join one. In contrast, if the client wants to create a private chatroom, he has the right to give the room a password. Another client who is connected to the same server and wants to chat in the same chatroom can only access to the private room with the password given by the first client who created the room. The password is hashed in order to provide safety for the client.
-
-\subsubsection{ACTIVE and WSP Commands}
-\label{sec:groupchat_funtionalities_commands}
-"ACTIVE" command returns a list of all users in the chatroom and "WSP" allows the clients to send a private message to users at the same chatroom.
+In order to use to start chatting, the client has to join a chatroom. This is done by typing \texttt{chat} and providing the ID of the chatroom. In case the room does not exist, the user is allowed to create one. The next time a user executes the \texttt{chat} command with the same chatID, he is either granted access to it immediately if it is a public room, or is otherwise first required to enter the password chosen by the person who created the room. The password is hashed on the client side for safety measures and only the hash is required to validate the password attempt.
+Each server owns a list containing the active chatrooms that it is responsible for depending on its position on the hash ring. In order for a client to join one of those chatrooms, is that it would first need to connect to that server, similar to the way storing key-value pair works. 
 
 \subsubsection{Saved Messages}
 \label{sec:groupchat_funtionalities_savedmessages}
-The messages are saved into a .txt file under the directory of the respective server. We provide this feature, in case a network partition occurs in the system and messages get lost.
+Messages sent in a chatroom get stored into a text file under the directory of the responsible server. We provide this feature, in case a network partition occurs in the system, so that we are able to restore messages get lost.
+
+\subsubsection{Additional Commands}
+\label{sec:groupchat_funtionalities_commands}
+The \texttt{WSP} command allows a private message to be sent to multiple users.
+Whenever a client joins or leaves a chatroom, all users inside get notified. This helps the users keep track <- add something here %TODO
+Otherwise, users could use the \texttt{ACTIVE} command to obtain a list of all users currently in the chatroom. 
 
 \begin{figure}[h]
 	\centering
@@ -48,42 +46,19 @@ By utilizing a chatbot, chat requests containing a key-value operation are slowe
 
 \subsection{Database Access}
 \label{sec:groupchat_chatbot}
+In order to provide the chatting functionality, the server would need a socket to send to and receive messages from. However, the client also requires a socket to connect to the DB. The obvious design decision would be to add an extra socket to the client responsible for just chatting. The drawback of that idea is that the amount of TCP connections per client would get doubled, which would increase the network traffic to a large extent. In our intended use case, clients are not expected to utilize the DB heavily during chat sessions. For that reason, we could allow clients to quickly leave the chatroom to perform the DOPs and then rejoin. However, that might cause the client to miss messages while he is away, which affects the system's availability guarantee described in %TODO \ref{} server.
 
-During the development we reached one significant problem. While being connected to a chatroom a client is making use of its only socket. That means he cannot access the database (DB) at the same time.
+The approach we decided to follow in the end was creating a chatbot, whose sole purpose is executing DOPs for chat users. The chatbot acts mostly similar to a client by being able to send read and write requests to the DB. Every chatroom gets a chatbot assigned to it, which scans all incoming chat messages for DOPs, signaled by the keywords \texttt{PUT} and \texttt{GET}. Those requests are then sent to the DB and the result is returned to the chat user. In case of a read request, the \texttt{GET} operation in the message is replaced by the retrieved result. Only after this translation will the chatroom send the now modified message to every participant in the chatroom. This allows users to use stored values for communication.
 
-There are different solutions for that.
-
-1.	More sockets 
-The easiest way would be increasing the number of sockets a client uses by one. This way the client has one socket for the database operations (DOPs), whereas the second one is responsible for the connection to the chatroom.
-
-We decided against it, because that would double the amount of TCP connections per client in the network. In our use case when a client is connected to a chatroom he isn’t heavily working with the DB and focuses more on communication. Only a few and small DOPs are necessary while chatting.
-
-2.	Quick Dis- and reconnection
-The client could quickly leave the chatroom and do the DOPs. After that, he quickly rejoins the chatroom.
-
-We decided against it, because then there might be a chance to miss messages. In our use case seeing every message while connected is a crucial aspect.
-
-3.	ChatBot
-In this approach every chatroom of the server gets a ChatBot object assigned to it that executes the DOPs written in the chat messages. Then before writing the chat messages the DOPs will be replaced by the corresponding response of the DB. 
-
-We prefer this solution, because in our use case we expect chatrooms to receive mostly normal messages and not DOPs. 
-
-Functionality
-There is always one ChatBot object per created chatroom. The ChatBot acts mostly similar to a client by connecting to one of the servers of the DB. Since every server is part of the DB it will firstly connect to the server that created it. 
-
-When a normal message and/or DOPs is received, the chatroom object filters the command and calls the ChatBot to execute it. The ChatBot will call every put, get and delete request likewise to client. The chatroom object will then replace the DOP text with the reply of the DB. Only after this translation the chatroom object will send the now modified message to every participant in the chatroom.
-
+move??
+%TODO move?
 Bottleneck of the chatroom
 Thinking about the implementation the ChatBot is obviously a bottleneck. Imagine there is a full chat room with 30 users. If they now start doing their own DOPs (for instance updating their weekly report) all operations are executed by one ChatBot. The workload of 30 sockets are pressed into one. This leads to a significant efficiency loss.
-
-As already mentioned, it isn’t that big of an issue because that won’t happen in our use case. Heavy modification and updates of the DB must be done outside of chat rooms, to make full use of the clients individual socket.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\linewidth]{figures/chat/chat_graph.png}
-	\caption{Execution of a get command}
-\end{figure}
-
+As already mentioned, it is not that big of an issue because that will not happen in our use case. Heavy modification and updates of the DB should be done outside of chat rooms, to make full use of the clients individual socket.
+The decision, to make chatrooms accessible only from one server has both its advantages and disadvantages. For one, it reduces the complexity of the system because otherwise servers would need a way to exchange updates regarding the active chatrooms and chat users whenever a user joins or leaves.
+Our idea for the chatting functionality was for it to be as lightweight as possible with clients entering and leaving chatrooms regularly.
+To prevent heavy workload for a server, a chatroom has the maximum capacity of 30 people. The chatroom offers a communication platform for all the clients sharing the same chatroom. Every message sent by the clients have timestamps in order to keep on track with the flow of the messages for other clients. One message can contain maximum 200 characters.
+A problem with our implementation is that if the chatIDs are not equally distributed across all servers, which may occur due to the unpredictable nature of the hashing function, a single server could then be in charge of most chatrooms. This would cause that a server to be overloaded with requests and would lead to greater response times and, in the worst-case scenario, would result in a bottleneck for the whole system. In order to combat this issue, we limit the number of chatrooms belonging to one server to 15 and the number of users in a single chatroom to 30. This means a server is responsible for up to 450 chat users. These limits could also be easily changed depending on the intended use case of the system.
 
 \begin{figure}[h]
 	\centering
@@ -91,27 +66,8 @@ As already mentioned, it isn’t that big of an issue because that won’t happe
 	\caption{Server side architecture}
 \end{figure}
 
-addinitonals:
-
+delete??
+%TODO delete?
 chat system:
 All chat related requests get transferred by the CHT to the ChatManager. This has a list of Chatroom objects. When a client tries to connect to a chatroom, the ChatManager checks the list whether a chatroom with the provided chatID already exists or not. In the former case, 
 if the chatroom is public, the client is granted access or, in case of a private chatroom, requested to enter a password. In the event of no chatroom found with the given chatID, the client is allowed to create the chatroom by specifying its type and providing a password, if a private chatroom is chosen. In order to increase security, the password gets hashed on the client side and only the hash of the password is stored at the server side and used for validation.
-
-
-Each server owns a list containing the active chatrooms that it is responsible for. In order for a client to join one of those chatrooms is that it would first need to connect to that server, similar to the way storing key-value pair functions. The decision, to make chatrooms accessible only from one server has both its advantages and disadvantages. For one, it reduces the complexity of the system because otherwise servers would need a way to exchange updates regarding the active chatrooms and chat users whenever a user joins or leaves.
-
-A problem with our implementation is that if the chatIDs are not equally distributed across all servers, which may occur due to the unpredictable nature of the hashing function, a single server could then be in charge of most chatrooms. This would cause that a server to be overloaded with requests and would lead to greater response times and, in the worst-case scenario, would result in a bottleneck for the whole system. In order to combat this issue, we limit the number of chatrooms belonging to one server to 15 and the number of users in a single chatroom to 30. This means a server is responsible for up to 450 chat users. These limits could also be easily changed depending on the intended use case of the system.
-
-The biggest advantage of our decision is that it heavily reduces network traffic. Since all chatroom users are connected to the same server, that server can easily forward messages between them. Otherwise additional socket connections would have been required which would have both increased the load on the network and the overall complexity of the system.
-
-Our idea for the chatting functionality was for it to be as lightweight as possible with clients entering and leaving chatrooms regularly.
-
-To prevent heavy workload for a server, a chatroom has the maximum capacity of 30 people. The chatroom offers a communication platform for all the clients sharing the same chatroom. Every message sent by the clients have timestamps in order to keep on track with the flow of the messages for other clients. One message can contain maximum 200 characters.
-
-When a client joins a chatroom, all the messages which sent until that time, will be visible to the latest joined client and all the members will be informed about who joined or left the chatroom. 
-
-
-/*At the start of the connection, the CHT contacts the ECS in order to assign the client a unique username. After that the CHT interacts exclusively with KV storage and the chat system, depending on the command issued by the client.*/
-
-
-Put and delete operations are fulfilled with the help of a chatbot. Most of the software systems include a chatbot in their system to work as a costumer service. Our intention by implementing a chatbot is to decrease the workload of the chatroom.
