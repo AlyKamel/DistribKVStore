@@ -50,16 +50,6 @@ In order to provide the chatting functionality, the server would need a socket t
 
 The approach we decided to follow in the end was creating a chatbot, whose sole purpose is executing DOPs for chat users. The chatbot acts mostly similar to a client by being able to send read and write requests to the DB. Every chatroom gets a chatbot assigned to it, which scans all incoming chat messages for DOPs, signaled by the keywords \texttt{PUT} and \texttt{GET}. Those requests are then sent to the DB and the result is returned to the chat user. In case of a read request, the \texttt{GET} operation in the message is replaced by the retrieved result. Only after this translation will the chatroom send the now modified message to every participant in the chatroom. This allows users to use stored values for communication.
 
-move??
-%TODO move?
-Bottleneck of the chatroom
-Thinking about the implementation the ChatBot is obviously a bottleneck. Imagine there is a full chat room with 30 users. If they now start doing their own DOPs (for instance updating their weekly report) all operations are executed by one ChatBot. The workload of 30 sockets are pressed into one. This leads to a significant efficiency loss.
-As already mentioned, it is not that big of an issue because that will not happen in our use case. Heavy modification and updates of the DB should be done outside of chat rooms, to make full use of the clients individual socket.
-The decision, to make chatrooms accessible only from one server has both its advantages and disadvantages. For one, it reduces the complexity of the system because otherwise servers would need a way to exchange updates regarding the active chatrooms and chat users whenever a user joins or leaves.
-Our idea for the chatting functionality was for it to be as lightweight as possible with clients entering and leaving chatrooms regularly.
-To prevent heavy workload for a server, a chatroom has the maximum capacity of 30 people. The chatroom offers a communication platform for all the clients sharing the same chatroom. Every message sent by the clients have timestamps in order to keep on track with the flow of the messages for other clients. One message can contain maximum 200 characters.
-A problem with our implementation is that if the chatIDs are not equally distributed across all servers, which may occur due to the unpredictable nature of the hashing function, a single server could then be in charge of most chatrooms. This would cause that a server to be overloaded with requests and would lead to greater response times and, in the worst-case scenario, would result in a bottleneck for the whole system. In order to combat this issue, we limit the number of chatrooms belonging to one server to 15 and the number of users in a single chatroom to 30. This means a server is responsible for up to 450 chat users. These limits could also be easily changed depending on the intended use case of the system.
-
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth]{figures/chat/chat_full_arch.png}

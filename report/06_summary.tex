@@ -18,3 +18,14 @@ Thinking about the implementation the ChatBot is obviously a bottleneck. Imagine
 That is why our second important recommendation for the extension is that heavy modification and updates of the DB must be done outside of chat rooms, in order to make full use of the clients individual socket capacities.
 
 All in all we believe our extension improved our DB in a significant way, though we know that our chatroom features has a lot of room for enhancement.
+
+
+
+%TODO move?
+Bottleneck of the chatroom
+Thinking about the implementation the ChatBot is obviously a bottleneck. Imagine there is a full chat room with 30 users. If they now start doing their own DOPs (for instance updating their weekly report) all operations are executed by one ChatBot. The workload of 30 sockets are pressed into one. This leads to a significant efficiency loss.
+As already mentioned, it is not that big of an issue because that will not happen in our use case. Heavy modification and updates of the DB should be done outside of chat rooms, to make full use of the clients individual socket.
+The decision, to make chatrooms accessible only from one server has both its advantages and disadvantages. For one, it reduces the complexity of the system because otherwise servers would need a way to exchange updates regarding the active chatrooms and chat users whenever a user joins or leaves.
+Our idea for the chatting functionality was for it to be as lightweight as possible with clients entering and leaving chatrooms regularly.
+To prevent heavy workload for a server, a chatroom has the maximum capacity of 30 people. The chatroom offers a communication platform for all the clients sharing the same chatroom. Every message sent by the clients have timestamps in order to keep on track with the flow of the messages for other clients. One message can contain maximum 200 characters.
+A problem with our implementation is that if the chatIDs are not equally distributed across all servers, which may occur due to the unpredictable nature of the hashing function, a single server could then be in charge of most chatrooms. This would cause that a server to be overloaded with requests and would lead to greater response times and, in the worst-case scenario, would result in a bottleneck for the whole system. In order to combat this issue, we limit the number of chatrooms belonging to one server to 15 and the number of users in a single chatroom to 30. This means a server is responsible for up to 450 chat users. These limits could also be easily changed depending on the intended use case of the system.
