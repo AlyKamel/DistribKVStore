@@ -1,26 +1,20 @@
 \section{Summary}
 \label{sec:summary}
 
-To conclude our paper, with the group chat extension in our system we provided clients a chat system which supports low latency and high availability. We got inspired by Redis Pub/Sub strategy and adjusted it in our system by bringing the clients on the same level instead of having publishers and subscribers. As we mentioned in our motivation \ref{sec:motivation} subscribers are waiting on an update of the subscribed key and during this process clients do not use any other functionalities in the system. To prevent the idle time which client just waits a response from the server, we enhanced the system maintaining many-to-many relationship in contrast Redis’ one-to-many relationship.
+After consideration of the benefits and weaknesses of the implementation we come to this conclusion.
 
-During the development process, initially we considered the demands of the client, for instance having globally unique usernames, accessing the database while chatting and having private and public chatrooms. Subsequently, with the implementation of the chat system we fulfilled the potential demands and extent it with features such as “ACTIVE” or “WSP” commands as explained in the section Newly added commands for the group chat \ref{sec:groupchat_commands}.
-We got inspired by Redis Pub/Sub strategy and adjusted it in our system by bringing the clients on the same level instead of having publishers and subscribers.
-During the development process, initially we considered the demands of the client.
+We highly recommend our extension only for lightweighted communication. 
 
-Consequently, after the performance tests we recommend our system for light-weighted communication. The reason for that is as explained in the Server side implementation \ref{sec:implementation_serverside} in greater detail, it might occur that the chatrooms are not equally distributed in the system and thereby just one server might have to carry the load of having all the chatrooms. And this leads us one of our so to say weaknesses in the system which is the limitations. We limited the number of chatrooms to 15 for one server and the number of users using one chatroom to 30. The numbers could be arranged depending on the use case of the system. If the user of our group chat prefers to work on a large-scaled messaging platform and can give up on having low latency, the limitations for the number of chatrooms and the clients could be increased.
+Firstly, because it might occur that the chatrooms are not equally distributed throughout the system and thereby just one server might have to carry the load of having all the chatrooms. 
 
-One of our strengths is allowing the access to the database while clients are chatting.
+That is why we had to set a limitation regarding the number of chatrooms per server to 15 and clients per chatroom to 30. If the user of our group chat prefers to work on a large-scaled messaging platform and can give up on having low latency, the limitations for the number of chatrooms and the clients could be increased.
 
+Secondly, the chat only allows words as messages. Nowadays it is standard to be able to send emojis, pictures, stickers, videos, files, weblinks etc. which is not featured by us. This means that people in general will prefer a more powerful chatroom software since we do not offer these extras.
 
+On the other hand we have an extra that these other softwares do not provide. We can access the DB via the ChatBot and therefore use together with chatroom in one combined application. And since the typical use case wants the chat to be about the data of the DB we consider this a big advantage.
 
-We started from having one client interacting with a basic echo server to creating a whole distributed key-value storage system with a chatting functionality.
-In MS3 and MS4 we worked on adding features essential to any large-scale database like replication and request distribution, which helped to scale up our system. 
-And in the end we were able to add a functionality that both made sense to us and we felt was unique enough of an idea. 
+Thinking about the implementation the ChatBot is obviously a bottleneck. Imagine there is a full chat room with 30 users. If they now start doing their own DOPs (for instance updating their weekly report) all operations are executed by one ChatBot. The workload of 30 sockets are pressed into one. This leads to a significant efficiency loss.
 
+That is why our second important recommendation for the extension is that heavy modification and updates of the DB must be done outside of chat rooms, in order to make full use of the clients individual socket capacities.
 
-We got inspired by Redis Pub/Sub strategy and adjusted it in our system by bringing the clients on the same level instead of having publishers and subscribers. As we mentioned in our motivation \ref{sec:motivation} subscribers are waiting on an update of the subscribed key and during this process clients do not use any other functionalities in the system. To prevent the idle time which client just waits a response from the server, we enhanced the system maintaining many-to-many relationship in contrast Redis’ one-to-many relationship.
-
-
-Consequently, after the performance tests we recommend our system for light-weighted communication. The reason for that is as explained in the Server side implementation \ref{sec:implementation_serverside} in greater detail, it might occur that the chatrooms are not equally distributed in the system and thereby just one server might have to carry the load of having all the chatrooms. And this leads us one of our so to say weaknesses in the system which is the limitations. We limited the number of chatrooms to 15 for one server and the number of users using one chatroom to 30. The numbers could be arranged depending on the use case of the system. If the user of our group chat prefers to work on a large-scaled messaging platform and can give up on having low latency, the limitations for the number of chatrooms and the clients could be increased.
-
-One of our strengths is allowing the access to the database while clients are chatting.
+All in all we believe our extension improved our DB in a significant way, though we know that our chatroom features has a lot of room for enhancement.
