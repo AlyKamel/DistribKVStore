@@ -2,6 +2,15 @@
 \label{sec:background}
 In this section, we elaborate on some of the basic concepts that our key-value system depends on. First, we discuss the CAP theorem and analyse where our system lies on that spectrum. Then, we mention two design paradigms, namely BASE and ACID, and explain the differences between them.
 
+\subsection{Key-value store}
+Key-value stores are perhaps the simplest type of a NoSQL database. Values, which in our case are limited to strings, can be easily stored and retrieved just by providing the key they were assigned with. 
+
+\subsection{Persistence}
+%TODO add how data gets stored on disk
+
+\subsection{Caching}
+write through policy
+
 \subsection{CAP Theorem}
 \label{sec:background_cap} 
 According to the CAP Theorem, distributed databases have three substantial properties to consider: consistency, availability and partition tolerance\cite{brewer2012cap}. Eric Brewer, the man behind the CAP theorem, stated that a distributed database can fulfil at most two of three properties\cite{brewer2000cap}:
@@ -56,7 +65,5 @@ Since the implementation of Milestone 3, it is possible to monitor key-value sto
 
 One of the downsides of our system is that the chat system runs just one of the requested servers by the client. Thus, partition tolerance may not be covered in case of that serving crashing. As in the most database systems there are trade-offs between the properties: availability, consistency and partition tolerance.
 
-
     
-
 
