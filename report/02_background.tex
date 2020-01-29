@@ -1,6 +1,6 @@
 \section{Background}
 \label{sec:background}
-In this section, we elaborate on some of the basic concepts that our key-value system depends on. First, we discuss the CAP theorem and analyse where our system lies on that spectrum. Then, we mention two design paradigms, namely BASE and ACID, and explain the differences between them.
+In this section, we elaborate on some of the basic concepts that our key-value system depends on. First, we briefly discuss the concepts of a key-value store. Then we review the CAP theorem and analyse where our system lies on that spectrum. Then, we mention two design paradigms, namely BASE and ACID, and explain the differences between them.
 
 \subsection{Key-value store}
 Key-value stores are perhaps the simplest type of a NoSQL DB. Every information is saved in the form of key value pairs. Typically the key’s memory space is very small compared to the one of the values. The key is used as an identifier to the actual data saved in the value and is required to retrieve or update it.
@@ -11,24 +11,24 @@ Caching is a way of storing information so that it could be retrieved faster on 
 
 \subsection{CAP Theorem}
 \label{sec:background_cap} 
-According to the CAP Theorem, distributed DBs have three substantial properties to consider: consistency, availability and partition tolerance\cite{brewer2012cap}. Eric Brewer, the man behind the CAP theorem, stated that a distributed database can fulfil at most two of three properties\cite{brewer2000cap}:
+According to the CAP Theorem, distributed DBs have three substantial properties to consider: consistency, availability and partition tolerance \cite{brewer2012cap}. Eric Brewer, the man behind the CAP theorem, stated that a distributed database can fulfil at most two of three properties \cite{brewer2000cap}:
 
 \begin{itemize}
   \item Consistency: \\
   Clients are provided with fresh data, meaning the most up-to-date version of the data that got stored after the last write operation.
   \item Availability: \\
-  Servers respond to the request of clients at all cases. Every non-failing node in the system must be able to serve the client in a reasonable amount of time\cite{gilbert2002brewer}.
+  Servers respond to the request of clients at all cases. Every non-failing node in the system must be able to serve the client in a reasonable amount of time \cite{gilbert2002brewer}.
   \item Partition tolerance: \\
   Whenever a server crashes, the rest of the system will still stay functional after the crash, without any information being lost.
 \end{itemize}
 
 Twelve years after from proposing the CAP theorem, Brewer mentioned that software engineers do not have to strictly abide to the 2 of 3 principle, it is rather a spectrum than a binary choice \cite{brewer2012cap}. In other words, a distributed database system can favour high level of consistency and partition tolerance by having low level of availability. Thus, the initial theorem is improved by not having to sacrifice availability completely in this case.
 
-There are two design approaches for distributed database systems, namely ACID and BASE. According to Brewer, these two design approaches may be referred as opposites of each other\cite{brewer2012cap} because of their priorities and use cases. ACID approach is used most of the times for relational database systems (SQL) and focuses on consistency to maintain reliability. On the contrary BASE is more suitable for the non-relational database systems (NoSQL) concentrating on providing the client high level of availability\cite{brewer2000cap}.
+There are two design approaches for distributed database systems, namely ACID and BASE. According to Brewer, these two design approaches may be referred as opposites of each other \cite{brewer2012cap} because of their priorities and use cases. ACID approach is used most of the times for relational database systems (SQL) and focuses on consistency to maintain reliability. On the contrary BASE is more suitable for the non-relational database systems (NoSQL) concentrating on providing the client high level of availability \cite{brewer2000cap}.
 
 \subsection{ACID}
 \label{sec:background_acid}
-ACID is a traditional design approach\cite{brewer2012cap} when it comes to large-scaled distributed systems. The main goal of ACID is that despite the system having partitions, the client should always be provided with consistent values. It is an acronym which stands for the four following properties:
+ACID is a traditional design approach \cite{brewer2012cap} when it comes to large-scaled distributed systems. The main goal of ACID is that despite the system having partitions, the client should always be provided with consistent values. It is an acronym which stands for the four following properties:
 \begin{itemize}
 \item Atomicity:\\
 A set of transactions succeed all at once or fail all together. In other words, it is an all or nothing strategy.
@@ -42,7 +42,7 @@ Once a client is informed that a transaction has been successfully committed, ev
 
 \subsection{BASE}
 \label{sec:background_base}
-BASE, another design approach defined by Brewer, offers looser requirements than ACID\cite{brewer2012cap}. Non-relational database systems concentrating on high availability make use of the BASE approach, which sacrifices strong consistency in favour of being always accessible. Examples include huge storage services such as Amazon's Dynamo, Facebook's Cassandra or Google's BigTable, where millions of active users always expect the service to be available\cite{kalid2017big}. Nevertheless, there must be trade-offs. By not guaranteeing the consistency at all time, the system cost is reduced, and clients are happier, but a client might not get an immediate response to his request.
+BASE, another design approach defined by Brewer, offers looser requirements than ACID \cite{brewer2012cap}. Non-relational database systems concentrating on high availability make use of the BASE approach, which sacrifices strong consistency in favour of being always accessible. Examples include huge storage services such as Amazon's Dynamo, Facebook's Cassandra or Google's BigTable, where millions of active users always expect the service to be available \cite{kalid2017big}. Nevertheless, there must be trade-offs. By not guaranteeing the consistency at all time, the system cost is reduced, and clients are happier, but a client might not get an immediate response to his request.
 
 \begin{itemize}
   \item Basic Availability:\\

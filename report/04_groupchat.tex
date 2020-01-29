@@ -18,7 +18,7 @@ To start off, in the same sense as MS4, the External Configuration Service (ECS)
 
 \subsubsection{Unique Username}
 \label{sec:groupchat_funtionalities_uniqueusername}
-After successfully connecting to a key-value server, the client has to either enter a username or use the command "QUIT" to have a username randomly assigned to him. Usernames are implemented as globally unique identifiers for the clients, which prevents different clients from having the same username in different chatrooms. That way, users are guaranteed to know who they are communicating with, as long as their partner is connected to the system.
+After successfully connecting to a key-value server, the client has to either enter a username or use the command \texttt{QUIT} to have a username randomly assigned to him. Usernames are implemented as globally unique identifiers for the clients, which prevents different clients from having the same username in different chatrooms. That way, users are guaranteed to know who they are communicating with, as long as their partner is connected to the system.
 In order to avoid unnecessary extra connections, the ECS stores a list of users. Whenever a client connects and tries to set its username, the request gets sent through the CHT to the ECS, as depicted in \ref{fig:chat_arch}, which then checks if the username has been already taken by a client connected to any of the servers online. The end user either receives a welcome message with the username displayed if the operation was succesful, or an error message.
  
 \subsubsection{Chatrooms}
