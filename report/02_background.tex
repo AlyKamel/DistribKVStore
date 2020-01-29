@@ -3,7 +3,7 @@
 In this section, we elaborate on some of the basic concepts that our key-value system depends on. First, we briefly discuss the concepts of a key-value store. Then we review the CAP theorem and analyse where our system lies on that spectrum. Then, we mention two design paradigms, namely BASE and ACID, and explain the differences between them.
 
 \subsection{Key-value store}
-Key-value stores are perhaps the simplest type of a NoSQL DB. Every information is saved in the form of key value pairs. Typically the key’s memory space is very small compared to the one of the values. The key is used as an identifier to the actual data saved in the value and is required to retrieve or update it.
+Key-value stores are perhaps the simplest type of a NoSQL database. Every information is saved in the form of key value pairs. Typically the key’s memory space is very small compared to the one of the values. The key is used as an identifier to the actual data saved in the value and is required to retrieve or update it.
 
 \subsection{Caching}
 \label{sec:caching}
@@ -11,7 +11,7 @@ Caching is a way of storing information so that it could be retrieved faster on 
 
 \subsection{CAP Theorem}
 \label{sec:background_cap} 
-According to the CAP Theorem, distributed DBs have three substantial properties to consider: consistency, availability and partition tolerance \cite{brewer2012cap}. Eric Brewer, the man behind the CAP theorem, stated that a distributed database can fulfil at most two of three properties \cite{brewer2000cap}:
+According to the CAP Theorem, distributed databases have three substantial properties to consider: consistency, availability and partition tolerance \cite{brewer2012cap}. Eric Brewer, the man behind the CAP theorem, stated that a distributed database can fulfil at most two of three properties \cite{brewer2000cap}:
 
 \begin{itemize}
   \item Consistency: \\

@@ -1,7 +1,7 @@
 \section{Performance Analysis}
 \label{sec:perf}
 
-After we were done with the implementation of MS5, we wanted to test our system to 1) analyse the efficiency of the DOPs, and 2) check the impact of the chatting functionality on the response times.
+After we were done with the implementation of milestone 5, we wanted to test our system to 1) analyse the efficiency of the DOPs, and 2) check the impact of the chatting functionality on the response times.
 
 320 key-value pairs were used as input for the tests, which were derived from the Enron email set. The way the test works is that clients executed \texttt{PUT}s on all keys, then they tried obtaining them back with \texttt{GET}s and in the end, all keys got deleted. Each of the three different operations got timed seperatly, so that their efficiency could be compared. The cache replacement strategy in place was Least Recently Used (LRU), which is the default strategy, and the cache size was set to 16, which represents 5\% of the storage size. Before a new set of commands got started, the list of keys got shuffled, which caused both the degree of cache utilization during read operations and the chance of reconnecting to the responsible server to be based on luck.
 In order to avoid skewed results, each data point was calculated by taking the average of five test runs.
@@ -9,13 +9,13 @@ In order to avoid skewed results, each data point was calculated by taking the a
 \begin{figure}
 	\begin{subfigure}[b]{\linewidth}
 	\centering
-	\includegraphics[width=0.8\linewidth]{figures/performance/cc1.png}
+	\includegraphics[width=\linewidth]{figures/performance/cc1.png}
 \caption{}
 \label{fig:perf_cc1}
 	\end{subfigure}
 	\begin{subfigure}[b]{\linewidth}
 	\centering
-	\includegraphics[width=0.8\linewidth]{figures/performance/cc2.png}
+	\includegraphics[width=\linewidth]{figures/performance/cc2.png}
 \caption{}
 \label{fig:perf_cc2}
 	\end{subfigure}
@@ -28,7 +28,7 @@ A significant drop of read response time can be noticed at the three server mark
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.8\linewidth]{figures/performance/chat(linear).png}
+	\includegraphics[width=\linewidth]{figures/performance/chat(linear).png}
 	\caption{Key-value servers performance in chat mode}
 	\label{fig:perf_chat_lin}
 \end{figure}
