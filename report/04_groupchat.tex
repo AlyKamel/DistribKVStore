@@ -107,14 +107,25 @@ Thinking about the implementation the ChatBot is obviously a bottleneck. Imagine
 
 As already mentioned, it isn’t that big of an issue because that won’t happen in our use case. Heavy modification and updates of the DB must be done outside of chat rooms, to make full use of the clients individual socket.
 
-
-
-
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\linewidth]{figures/chat_graph.png}
+	\includegraphics[width=\linewidth]{figures/chat/chat_graph.png}
 	\caption{Client side architecture}
 \end{figure}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{figures/chat/chat_arch.png}
+	\caption{Client side architecture}
+\end{figure}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{figures/chat/chat_full_arch.png}
+	\caption{Client side architecture}
+\end{figure}
+
+chat system:
+All chat related requests get transferred by the CHT to the ChatManager. This has a list of Chatroom objects. When a client tries to connect to a chatroom, the ChatManager checks the list whether a chatroom with the provided chatID already exists or not. In the former case, 
+if the chatroom is public, the client is granted access or, in case of a private chatroom, requested to enter a password. In the event of no chatroom found with the given chatID, the client is allowed to create the chatroom by specifying its type and providing a password, if a private chatroom is chosen. In order to increase security, the password gets hashed on the client side and only the hash of the password is stored at the server side and used for validation.
 

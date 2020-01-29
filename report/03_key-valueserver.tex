@@ -3,7 +3,16 @@ During the first four milestones, we were tasked with developing a distributed k
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\linewidth]{figures/kvs_arch.png}
+	\includegraphics[width=\linewidth]{figures/kvserver/ms4_structure.png}
+	\caption{KV server architecture}
+\end{figure}
+
+
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{figures/kvserver/kvs_arch.png}
 	\caption{Client side architecture}
 \end{figure}
 
@@ -17,7 +26,7 @@ In this section the implementation of the chatroom is examined in depth. Firstly
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\linewidth]{figures/client_arch.png}
+	\includegraphics[width=\linewidth]{figures/kvserver/client_arch.png}
 	\caption{Client side architecture}
 	\label{fig:client_arch}
 \end{figure}
@@ -39,6 +48,10 @@ The biggest advantage of our decision is that it heavily reduces network traffic
 
 Our idea for the chatting functionality was for it to be as lightweight as possible with clients entering and leaving chatrooms regularly.
 
+server side:
+The client interacts directly only with the ConnectionHandleThread (CHT) created by the server to assist that specific client. At the start of the connection, the CHT contacts the ECS in order to assign the client a unique username. After that the CHT interacts exclusively with KV storage and the chat system, depending on the command issued by the client. The KV storage system provides the basic capabilities of a key-value store and persists data on disk. When more than two servers are online and replication is active, each server contains a replica of two other servers. Whenever a put operation is executed, it has to get forwarded to the server.
 
-
+kv storage:
+The KVCommandProcessor (KVCP) is responsible to receive commands from the CHT and return the result. Before a value is stored or retrieved, the KVCP utilizes the ServerRing to check whether the server is responsible for the provided key or not. In the latter case, a simple error message is returned back to the client, which would then connect to the responsible server. In the former case, the request is sent over to the KVStore. If it was a GET command issued, the KVStore first tries to retrieve the value from the cache. In case the value has not been found, the DiskStore checks if it is stored on disk.
+With a PUT request, the KVStore sends the key-value pair to both the cache and DiskStore and also to the RepManager. This allows it to get sent over to the two replica servers. The RepManager is also charged with updating the replica on the server whenever one of the coordinators processes a PUT command.
 
