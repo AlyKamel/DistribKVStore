@@ -5,11 +5,8 @@ In this section, we elaborate on some of the basic concepts that our key-value s
 \subsection{Key-value store}
 Key-value stores are perhaps the simplest type of a NoSQL database. Values, which in our case are limited to strings, can be easily stored and retrieved just by providing the key they were assigned with. 
 
-\subsection{Persistence}
-%TODO add how data gets stored on disk
-
 \subsection{Caching}
-write through policy
+Caching is a way of storing information so that information can be retrieved faster on demand. A storage method, namely write trough, enables to write the information into the cache as well as in to the disk store simultaneously. Thus, the data will not only be returned quickly because of caching, it will be saved in the disk ensuring that no data will get lost in case of any partitions in the network. Since the write operation is performed two times the storage system has redundancy. One of the upsides of redundancy is tolerating loss of data. However, it increases the latency by making the response times longer.
 
 \subsection{CAP Theorem}
 \label{sec:background_cap} 
