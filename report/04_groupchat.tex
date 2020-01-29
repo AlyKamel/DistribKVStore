@@ -1,67 +1,38 @@
 \section{Group Chat}
 \label{sec:groupchat}
-
-Besides replicated and distributed storage service, with the created extension clients are now able to exchange messages with each other.
-
-In the following sections the functionalities of the group chat is described by first representing newly added commands to the client library and then explaining the execution of the workflow.
-
-The main goal here is to clarify the usage of the system for a client, who does not have the full knowledge of how a distributed database system works.
+With the Milestone 5 we extended our program with a group chat feature which enables for clients to exchange messages with each other through chatrooms. Additionally, we developed our group chat in such a way that clients can access the databases while being in the chatroom with the help of a chatbot.
+ 
+In the following, the basic functionalities of the group chat are described step by step, subsequently the chat system consisting of three main components, namely ChatManager, ChatRoom and ChatBot is examined in depth. Lastly, since the client is allowed to perform read and write operations during chatting, the database access is discussed thoroughly.  
 
 \subsection{Basic Functionalities}
-\label{sec:groupchat_executionoftheworkflow}
+\label{sec:groupchat_functionalities}
+The main intention here is to clarify the usage of the system for a client, who does not have the full knowledge of how our group chat feature works.
 
 To start off, in the same sense as Milestone 4, initially the External Configuration Service (ECS), where the storage servers are monitored and controlled, is executed. Following that, depending on client's decision, a number of servers are created. A client must connect to one of the servers by typing its IP address and port number in order to use the database system.
 
 \subsubsection{Unique Username}
-\label{sec:groupchat_executionoftheworkflow_uniqueusername}
+\label{sec:groupchat_funtionalities_uniqueusername}
 After successfully connecting to a key-value server, the client has to either enter a username or use the command QUIT to have a username randomly assigned to him. Usernames are implemented as globally unique identifiers for the clients, which prevents different clients from having the same username in different chatrooms. That way users are guaranteed to know who they are communicating with as long as their partner is connected to the system. 
 
 In order to avoid unnecessary extra connections, the ECS stores a list of users. Whenever a client tries to set its username, the request gets sent through the server to the ECS, which then checks if the username has been already taken by a client connected to any of the servers online. The end user either receives a welcome message with the username displayed if the operation was succesful, or an error message.
  
 \subsubsection{Chat Command}
-\label{sec:groupchat_executionoftheworkflow_chatcommand}
+\label{sec:groupchat_funtionalities_chatcommand}
+Moreover, to use the chatroom client needs to type “chat” on the console and choose a chatID for the chatroom and type it right next to the command “chat”. A chatroom is created with the given id, which is also a globally unique identifier in the same sense as usernames. A chatID is hashed like a key and which chatroom located on which server depends on the hashed value. Afterwards client have two options: either enter a private room with a password feature or a public room. 
 
-Moreover, to use the chatroom client needs to type “chat” on the console and choose a chatID for the chatroom and type it right next to the command “chat”. A chatroom is created with the given id, subsequently client have two options: either enter a private room with a password feature or a public room. 
-\subsubsection{Private/Public Chatrooms}
-\label{sec:groupchat_executionoftheworkflow_chatrooms}
+\subsubsection{Public/Private Chatrooms}
+\label{sec:groupchat_funtionalities_chatrooms}
+Public rooms are not password protected, therefore every client can create one with a desired chatID or join one. In contrast, if the client wants to create a private chatroom, he has the right to give the room a password. Another client who is connected to the same server and wants to chat in the same chatroom can only access to the private room with the password given by the first client who created the room. The password is hashed in order to provide safety for the client.
 
-If the client is the first person to create a private chatroom, then the right to give a password to the room belongs to the same person.
-\subsubsection{Password}
-\label{sec:groupchat_executionoftheworkflow_chatrooms_password}
+\subsubsection{ACTIVE and WSP Commands}
+\label{sec:groupchat_funtionalities_commands}
+After joining or creating a chatroom, clients are able to chat. We implemented some new commands for the clients such as "ACTIVE" and "WSP". "ACTIVE" command returns a list of all users in the chatroom and "WSP" sends a whisper to the users by typing their usernames next to the command.
 
-Another client who is connected to the same server and wants to chat in the same chatroom can only access to the private room with the selected password by the client, who created the private chatroom. The password is hashed in order to provide safety for the client. If client wants to have a public chatroom, then a password is not needed.
-
-To prevent heavy workload for a server, a chatroom has the maximum capacity of 30 people. The chatroom offers a communication platform for all the clients sharing the same chatroom. Every message sent by the clients have timestamps in order to keep on track with the flow of the messages for other clients. One message can contain maximum 200 characters.
-
-When a client joins a chatroom, all the messages which sent until that time, will be visible to the latest joined client and all the members will be informed about who joined or left the chatroom. 
 \subsubsection{Saved Messages}
 \label{sec:groupchat_executionoftheworkflow_savedmessages}
+The messages are saved into a .txt file under the directory of the respective server. We provided this feature, in case of a network partition occurs in the system and messages get lost.
 
-The messages are saved into a .txt file under the directory of the respective server. We provided this feautere, in case a network partition occurs in the system and messages get lost.
-
-Whenever a client wants to leave the chatroom, QUIT can be typed in order to use the functionalities of replicated and distributed database service from Milestone 4. To enable the chatroom service client only needs to enter “chat” command with the desired chatID. 
-
-In addition to already implemented commands, such as "put" or "get" with the purpose of accessing the database, or commands like "logLevel" for changing the level of the logs dynamically, seven more commands are implemented in order to realise the group chat extension.
-
-Following commands are possible during a chat session:
-\begin{enumerate}
-  \item 	PUT <key> <value>: \\
-Stores the given value and allows future access to it through the provided key. 
-  \item PUT <key>:\\
-Deletes the value assigned to the given key.
-  \item GET{<key>}:\\
-Inserts the value assigned to the given key into the message.
-  \item WSP <user1>,..,<userN> <msg>:\\
-Sends a whisper to the users provided by the client. It is possible for a chatroom to have up to 30 clients in it. The logic behind whispering feature is a client should be able to send messages during a chat session, only to the people who he wants to share it with.  
-  \item QUIT:\\
-  Leaves the chat session.
-  \item ACTIVE:\\
-   Returns a list of all users in the chatroom. A client does not have to always keep up with the notifications about who joined the chat or left it. That is why the command "ACTIVE" eases for a client to check the members of the chatroom at any time.
-  \item HELP:\\
-  Displays the help text.
-\end{enumerate}
-
-Put and delete operations are fulfilled with the help of a chatbot. Most of the software systems include a chatbot in their system to work as a costumer service. Our intention by implementing a chatbot is to decrease the workload of the chatroom.
+Whenever a client wants to leave the chatroom, QUIT can be typed in order to end the chat session. To enable the chatroom service again client only needs to enter “chat” command with the desired chatID. 
 
 The chat system consists of three main components as namely:
 \begin{enumerate}
@@ -110,22 +81,42 @@ As already mentioned, it isn’t that big of an issue because that won’t happe
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth]{figures/chat/chat_graph.png}
-	\caption{Client side architecture}
+	\caption{Execution of a get command}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth]{figures/chat/chat_arch.png}
-	\caption{Client side architecture}
+	\caption{Chat system}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth]{figures/chat/chat_full_arch.png}
-	\caption{Client side architecture}
+	\caption{Server side architecture}
 \end{figure}
+
+addinitonals:
 
 chat system:
 All chat related requests get transferred by the CHT to the ChatManager. This has a list of Chatroom objects. When a client tries to connect to a chatroom, the ChatManager checks the list whether a chatroom with the provided chatID already exists or not. In the former case, 
 if the chatroom is public, the client is granted access or, in case of a private chatroom, requested to enter a password. In the event of no chatroom found with the given chatID, the client is allowed to create the chatroom by specifying its type and providing a password, if a private chatroom is chosen. In order to increase security, the password gets hashed on the client side and only the hash of the password is stored at the server side and used for validation.
 
+
+Each server owns a list containing the active chatrooms that it is responsible for. In order for a client to join one of those chatrooms is that it would first need to connect to that server, similar to the way storing key-value pair functions. The decision, to make chatrooms accessible only from one server has both its advantages and disadvantages. For one, it reduces the complexity of the system because otherwise servers would need a way to exchange updates regarding the active chatrooms and chat users whenever a user joins or leaves.
+
+A problem with our implementation is that if the chatIDs are not equally distributed across all servers, which may occur due to the unpredictable nature of the hashing function, a single server could then be in charge of most chatrooms. This would cause that a server to be overloaded with requests and would lead to greater response times and, in the worst-case scenario, would result in a bottleneck for the whole system. In order to combat this issue, we limit the number of chatrooms belonging to one server to 15 and the number of users in a single chatroom to 30. This means a server is responsible for up to 450 chat users. These limits could also be easily changed depending on the intended use case of the system.
+
+The biggest advantage of our decision is that it heavily reduces network traffic. Since all chatroom users are connected to the same server, that server can easily forward messages between them. Otherwise additional socket connections would have been required which would have both increased the load on the network and the overall complexity of the system.
+
+Our idea for the chatting functionality was for it to be as lightweight as possible with clients entering and leaving chatrooms regularly.
+
+To prevent heavy workload for a server, a chatroom has the maximum capacity of 30 people. The chatroom offers a communication platform for all the clients sharing the same chatroom. Every message sent by the clients have timestamps in order to keep on track with the flow of the messages for other clients. One message can contain maximum 200 characters.
+
+When a client joins a chatroom, all the messages which sent until that time, will be visible to the latest joined client and all the members will be informed about who joined or left the chatroom. 
+
+
+/*At the start of the connection, the CHT contacts the ECS in order to assign the client a unique username. After that the CHT interacts exclusively with KV storage and the chat system, depending on the command issued by the client.*/
+
+
+Put and delete operations are fulfilled with the help of a chatbot. Most of the software systems include a chatbot in their system to work as a costumer service. Our intention by implementing a chatbot is to decrease the workload of the chatroom.
